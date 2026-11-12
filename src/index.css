@@ -454,6 +454,84 @@ footer a:hover {
   color: #fff;
 }
 
+/* Legal documents (Terms of Use, Privacy Policy) */
+.legal-prose {
+  color: rgb(17 19 18 / 0.72);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.legal-prose > :first-child {
+  margin-top: 0;
+}
+
+.legal-prose h2 {
+  color: #111312;
+  letter-spacing: -0.03em;
+  scroll-margin-top: 100px;
+  margin-top: 3.25rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.legal-prose h3 {
+  color: #111312;
+  letter-spacing: -0.02em;
+  margin-top: 2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.legal-prose p,
+.legal-prose ul,
+.legal-prose ol {
+  margin-top: 1rem;
+}
+
+.legal-prose h2 + p,
+.legal-prose h3 + p {
+  margin-top: 0.85rem;
+}
+
+.legal-prose ul,
+.legal-prose ol {
+  padding-left: 1.4rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.legal-prose ul {
+  list-style: disc;
+}
+
+.legal-prose ol {
+  list-style: decimal;
+}
+
+.legal-prose li::marker {
+  color: rgb(17 19 18 / 0.35);
+}
+
+.legal-prose strong {
+  color: #111312;
+  font-weight: 700;
+}
+
+.legal-prose a {
+  color: #111312;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.legal-prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
 @keyframes pulse {
   50% {
     opacity: 0.5;

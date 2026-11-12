@@ -7,9 +7,8 @@ export const site = {
   phoneHref: 'tel:+14097578115',
   email: 'hello@reconms.com',
   address: ['2590 Calder Avenue', 'Beaumont, TX 77702'],
-  customerPortal: 'https://reconms.com/customer-portal/',
-  privacyPolicy: 'https://reconms.com/privacy-policy/',
-  termsOfUse: 'https://reconms.com/terms-of-use/',
+  customerPortal: 'https://portal.reconms.com',
+  careers: 'https://my.reconms.com',
   linkedIn: 'https://www.linkedin.com/company/reconms/',
 };
 

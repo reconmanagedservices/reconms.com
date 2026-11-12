@@ -38,7 +38,7 @@ Vercel, GitHub Pages, S3/CloudFront, or any web server:
 
 | What | File |
 | --- | --- |
-| Phone, email, address, nav, services, products, FAQs | `src/content.ts` |
+| Phone, email, address, portal/careers links, nav, services, products, FAQs | `src/content.ts` |
 | Page titles and meta descriptions | `src/seo.ts` |
 | Pages | `src/pages/*.tsx` |
 | Header / footer | `src/components/SiteLayout.tsx` |
@@ -46,4 +46,5 @@ Vercel, GitHub Pages, S3/CloudFront, or any web server:
 | Styles and design tokens | `src/index.css` |
 | Logo, favicon, social image | `public/` |
 | Business schema (JSON-LD) and default meta | `index.html` |
+| Terms of Use / Privacy Policy text | `src/legal/*.html` (plain HTML; edit the dates paragraph at the top when updating) |
 | Routes | `src/App.tsx` (add new pages to `src/seo.ts` too so they get prerendered) |

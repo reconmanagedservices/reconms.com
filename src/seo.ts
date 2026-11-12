@@ -34,6 +34,18 @@ export const pageMeta = {
       'Talk with Recon Managed Services about managed IT, cybersecurity, co-managed support, or technology planning in Southeast Texas.',
     path: '/contact',
   },
+  terms: {
+    title: 'Terms of Use',
+    description:
+      'The terms that govern your access to and use of the Recon Managed Services website, reconms.com.',
+    path: '/terms',
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    description:
+      'How Recon Managed Services collects, uses, discloses, retains, and protects personal information submitted through reconms.com.',
+    path: '/privacy-policy',
+  },
   notFound: {
     title: 'Page Not Found',
     description: 'The page you requested could not be found.',

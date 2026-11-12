@@ -5,11 +5,19 @@ import { Icon } from './Icon';
 
 export function SiteLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
+  // On page change, start at the top — or at the linked section when the URL has a #hash.
   useEffect(() => {
     setMenuOpen(false);
-    window.scrollTo(0, 0);
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    if (target) {
+      target.scrollIntoView({ behavior: 'instant' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    // Only react to page changes; in-page #anchor clicks are left to the browser.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -119,6 +127,7 @@ export function SiteLayout() {
                 <a href={site.phoneHref}>{site.phone}</a>
                 <a href={`mailto:${site.email}`}>{site.email}</a>
                 <a href={site.customerPortal}>Customer portal</a>
+                <a href={site.careers}>Careers</a>
                 <a href={site.linkedIn}>LinkedIn</a>
               </div>
             </div>
@@ -128,8 +137,8 @@ export function SiteLayout() {
               © {new Date().getFullYear()} {site.name}. All rights reserved.
             </p>
             <div className="flex gap-5">
-              <a href={site.privacyPolicy}>Privacy Policy</a>
-              <a href={site.termsOfUse}>Terms of Use</a>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+              <Link to="/terms">Terms of Use</Link>
             </div>
           </div>
         </div>
