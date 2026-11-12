@@ -1,0 +1,502 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Manrope', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    color: #111312;
+    -webkit-font-smoothing: antialiased;
+    background: #f4f4f1;
+    font-family: Manrope, sans-serif;
+  }
+
+  a,
+  button {
+    transition:
+      color 0.18s,
+      background-color 0.18s,
+      border-color 0.18s,
+      opacity 0.18s;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    color: #fff;
+    background: #111312;
+  }
+}
+
+/*
+ * Component styles. These intentionally live outside a cascade layer (as in the
+ * original Figma Make build) so they take precedence over Tailwind utilities.
+ */
+
+.skip-link {
+  z-index: 100;
+  color: #000;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  position: fixed;
+  top: -5rem;
+  left: 1rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Navigation */
+.nav-link {
+  font-size: 0.84rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  transform-origin: 100%;
+  background: currentColor;
+  width: 100%;
+  height: 1px;
+  transition: transform 0.22s;
+  position: absolute;
+  bottom: -0.45rem;
+  left: 0;
+  transform: scaleX(0);
+}
+
+.nav-link:hover::after {
+  transform-origin: 0;
+  transform: scaleX(1);
+}
+
+.nav-link-active::after {
+  transform: scaleX(1);
+}
+
+/* Buttons and links */
+.button {
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 48px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.button-dark {
+  color: #fff;
+  background: #111312;
+}
+
+.button-dark:hover {
+  background: #353836;
+}
+
+.button-light {
+  color: #111312;
+  background: #fff;
+}
+
+.button-light:hover {
+  background: #dfe0dc;
+}
+
+.button-ghost {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.24);
+}
+
+.button-ghost:hover {
+  background: rgb(255 255 255 / 0.06);
+  border-color: #fff;
+}
+
+.text-link {
+  border-bottom: 1px solid #111312;
+  align-items: center;
+  gap: 0.55rem;
+  width: max-content;
+  padding-bottom: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+/* Typography */
+.eyebrow {
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.69rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+}
+
+.eyebrow::before {
+  content: '';
+  opacity: 0.5;
+  background: currentColor;
+  width: 22px;
+  height: 1px;
+}
+
+.eyebrow:has(.signal-dot)::before {
+  display: none;
+}
+
+.signal-dot {
+  background: #aeb9a5;
+  border-radius: 999px;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  animation: 2.4s ease-in-out infinite pulse;
+  display: inline-block;
+  box-shadow: 0 0 0 4px rgb(174 185 165 / 0.12);
+}
+
+/* Layout */
+.hero-grid::before {
+  content: '';
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(#000, transparent 92%);
+}
+
+.section-shell {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 6.5rem 1.25rem;
+}
+
+.section-heading {
+  max-width: 800px;
+}
+
+.section-heading h2 {
+  letter-spacing: -0.052em;
+  max-width: 800px;
+  margin-top: 1.25rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.7rem, 5.4vw, 5.35rem);
+  line-height: 0.95;
+}
+
+.section-heading > p:last-child:not(.eyebrow) {
+  color: rgb(17 19 18 / 0.58);
+  max-width: 620px;
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle, #000 20%, transparent 74%);
+}
+
+/* Service cards */
+.service-card {
+  background: #fff;
+  border-radius: 1.75rem;
+  flex-direction: column;
+  min-height: 500px;
+  padding: 1.75rem;
+  transition:
+    background-color 0.2s,
+    transform 0.25s,
+    box-shadow 0.25s;
+  display: flex;
+  box-shadow: 0 12px 40px rgb(17 19 18 / 0.043);
+}
+
+.service-card-wide {
+  min-height: 460px;
+}
+
+.service-card:hover {
+  background: #fff;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 55px rgb(17 19 18 / 0.09);
+}
+
+.service-card h3 {
+  letter-spacing: -0.035em;
+  margin-top: 3rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.65rem;
+}
+
+/* Product cards */
+.product-card {
+  background: #fff;
+  border-radius: 1.75rem;
+  flex-direction: column;
+  min-height: 390px;
+  padding: 1.75rem;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+  display: flex;
+  box-shadow: 0 10px 35px rgb(17 19 18 / 0.043);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgb(17 19 18 / 0.078);
+}
+
+.product-icon {
+  color: #fff;
+  background: #111312;
+  border-radius: 1rem;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  transition: transform 0.25s;
+  display: grid;
+}
+
+.product-card:hover .product-icon {
+  transform: translateY(-4px);
+}
+
+.product-card h3 {
+  letter-spacing: -0.035em;
+  margin-top: 2.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.7rem;
+}
+
+/* Shared card internals */
+.service-card > p,
+.product-card > p {
+  color: rgb(0 0 0 / 0.56);
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+
+.service-card ul,
+.product-card ul {
+  border-top: 1px solid rgb(0 0 0 / 0.1);
+  gap: 0.7rem;
+  margin-top: 1.8rem;
+  padding-top: 1.5rem;
+  display: grid;
+}
+
+.service-card li,
+.product-card li {
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+}
+
+.service-card > a,
+.product-card > a {
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+/* "The Recon difference" orbit graphic */
+.mission-graphic {
+  place-items: center;
+  min-height: 390px;
+  display: grid;
+}
+
+.mission-orbit {
+  position: relative;
+  box-shadow: inset 0 0 60px rgb(255 255 255 / 0.024);
+}
+
+.value-orbit-track {
+  pointer-events: none;
+  animation: 24s linear infinite value-orbit;
+  position: absolute;
+  inset: 0;
+}
+
+.mission-orbit:has(.value-orb:hover) .value-orbit-track,
+.mission-orbit:has(.value-orb:focus-visible) .value-orbit-track {
+  animation-play-state: paused;
+}
+
+.value-orb {
+  cursor: pointer;
+  color: #fff;
+  pointer-events: auto;
+  background: #151716;
+  border: 1px solid rgb(255 255 255 / 0.24);
+  border-radius: 999px;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  transition:
+    transform 0.18s,
+    border-color 0.18s,
+    background-color 0.18s,
+    box-shadow 0.18s;
+  display: grid;
+  position: absolute;
+  box-shadow: 0 0 0 5px rgb(255 255 255 / 0.035);
+}
+
+.value-orb > span {
+  background: #dfe0dc;
+  border-radius: 999px;
+  width: 0.45rem;
+  height: 0.45rem;
+}
+
+.value-orb:hover,
+.value-orb:focus-visible,
+.value-orb.is-active {
+  background: #fff;
+  border-color: #fff;
+  outline: none;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 7px rgb(255 255 255 / 0.08);
+}
+
+.value-orb:hover > span,
+.value-orb:focus-visible > span,
+.value-orb.is-active > span {
+  background: #151716;
+}
+
+.value-orb-top {
+  top: -1rem;
+  left: calc(50% - 1rem);
+}
+
+.value-orb-right {
+  top: calc(50% - 1rem);
+  right: -1rem;
+}
+
+.value-orb-bottom {
+  bottom: -1rem;
+  left: calc(50% - 1rem);
+}
+
+.value-orb-left {
+  top: calc(50% - 1rem);
+  left: -1rem;
+}
+
+.value-detail {
+  text-align: center;
+  width: min(100%, 360px);
+  min-height: 96px;
+  margin-top: 2.25rem;
+}
+
+.value-detail p {
+  letter-spacing: -0.025em;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.value-detail span {
+  color: rgb(255 255 255 / 0.5);
+  margin-top: 0.45rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  display: block;
+}
+
+/* Footer */
+.footer-title {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.35);
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes value-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (width >= 640px) {
+  .section-shell {
+    padding-inline: 2rem;
+  }
+
+  .service-card,
+  .product-card {
+    padding: 2rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .section-shell {
+    padding: 8.5rem 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .value-orbit-track {
+    animation: none !important;
+  }
+}
