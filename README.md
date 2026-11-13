@@ -12,6 +12,17 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
+To work on the contact form locally, also run the Worker (it serves `/api/contact`,
+and the Vite dev server proxies to it):
+
+```bash
+cp .dev.vars.example .dev.vars   # Turnstile test secret + EMAIL_DRY_RUN=true
+npm run build && npx wrangler dev   # http://127.0.0.1:8787
+```
+
+With `EMAIL_DRY_RUN=true`, submissions are logged in the `wrangler dev` output
+instead of being emailed.
+
 ## Build
 
 ```bash
@@ -44,6 +55,28 @@ from your own machine instead: `npx wrangler login`, then `npm run deploy`.
 
 Redirects from old WordPress URLs live in `public/_redirects`.
 
+## Contact form
+
+The Contact page form posts to `/api/contact` (`worker/contact.ts`), which:
+
+1. rejects bots via a hidden honeypot field and a Cloudflare Turnstile check;
+2. validates the fields;
+3. emails the message to `CONTACT_TO` (hello@reconms.com) through Resend, with the
+   visitor's address as Reply-To.
+
+One-time setup in Cloudflare and Resend:
+
+| Setting | Where | Value |
+| --- | --- | --- |
+| Turnstile widget | Cloudflare dashboard → Turnstile → Add widget | Hostnames: `reconms.com`, `www.reconms.com`, and the `*.workers.dev` preview host. Mode: Managed |
+| `VITE_TURNSTILE_SITE_KEY` | Worker → Settings → Build → **Build variables** | the widget's **site key** (public) |
+| `TURNSTILE_SECRET_KEY` | Worker → Settings → **Variables and Secrets** (type: Secret) | the widget's **secret key** |
+| `RESEND_API_KEY` | Worker → Settings → **Variables and Secrets** (type: Secret) | a Resend API key with sending access for `reconms.com` |
+
+Then redeploy. Until the site key is set, the Contact page shows the plain
+"Email hello@reconms.com" button instead of the form. Sender and recipient
+addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
+
 ## Where things live
 
 | What | File |
@@ -57,6 +90,7 @@ Redirects from old WordPress URLs live in `public/_redirects`.
 | Logo, favicon, social image | `public/` |
 | Redirects from old URLs | `public/_redirects` |
 | Cloudflare hosting settings | `wrangler.jsonc` |
+| Contact form (front end / server) | `src/components/ContactForm.tsx` / `worker/` |
 | Business schema (JSON-LD) and default meta | `index.html` |
 | Terms of Use / Privacy Policy text | `src/legal/*.html` (plain HTML; edit the dates paragraph at the top when updating) |
 | Routes | `src/App.tsx` (add new pages to `src/seo.ts` too so they get prerendered) |

@@ -1,3 +1,4 @@
+import { ContactForm } from '../components/ContactForm';
 import { Icon } from '../components/Icon';
 import { FaqList, PageHero } from '../components/Sections';
 import { Seo } from '../components/Seo';
@@ -24,9 +25,7 @@ export default function ContactPage() {
             Share a little about your organization, recurring technology issues, or an upcoming project. Our team will
             follow up to learn more.
           </p>
-          <a href={`mailto:${site.email}?subject=IT%20assessment%20request`} className="button button-dark mt-9">
-            Email {site.email} <Icon name="arrow" className="size-4" />
-          </a>
+          <ContactForm />
         </div>
 
         <aside className="rounded-[2.5rem] bg-[#111312] p-7 text-white sm:p-10 lg:p-12">

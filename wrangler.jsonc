@@ -1,14 +1,30 @@
-// Cloudflare Workers config: serves the prerendered static site in ./dist (no Worker code).
-// Having this file also stops `wrangler deploy` from trying to auto-configure the project.
+// Cloudflare Workers config for reconms.com.
+// Pages are served straight from the prerendered ./dist folder; only /api/* runs Worker code
+// (worker/index.ts), which powers the contact form.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "reconms-com",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-11-10",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    // Only API requests run the Worker; everything else is served as a static file.
+    "run_worker_first": ["/api/*"],
     // Serve about/index.html at /about (canonical), and 307 /about/ -> /about.
     "html_handling": "drop-trailing-slash",
     // Unknown URLs get dist/404.html with a real 404 status.
     "not_found_handling": "404-page"
+  },
+  "vars": {
+    // Contact-form delivery. The sender's domain (reconms.com) is verified in Resend.
+    "CONTACT_TO": "hello@reconms.com",
+    "CONTACT_FROM": "Recon Website <website@reconms.com>"
+  },
+  "observability": {
+    "enabled": true
   }
+  // Secrets (set in the Cloudflare dashboard or with `npx wrangler secret put <NAME>`):
+  //   TURNSTILE_SECRET_KEY  Cloudflare Turnstile widget secret key
+  //   RESEND_API_KEY        Resend API key with "sending access"
 }
