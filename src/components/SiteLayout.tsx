@@ -195,9 +195,12 @@ export function SiteLayout() {
             </div>
           </div>
           <div className="flex flex-col gap-4 pt-7 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
-            <p suppressHydrationWarning>
-              © {new Date().getFullYear()} {site.name}. All rights reserved.
-            </p>
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:gap-x-5">
+              <p suppressHydrationWarning>
+                © {new Date().getFullYear()} {site.name}. All rights reserved.
+              </p>
+              <p>{site.securityLicense}</p>
+            </div>
             <div className="flex gap-5">
               <Link to="/privacy-policy/">Privacy Policy</Link>
               <Link to="/terms/">Terms of Use</Link>

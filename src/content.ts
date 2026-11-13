@@ -9,6 +9,8 @@ export const site = {
   address: ['2590 Calder Avenue', 'Beaumont, TX 77702'],
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
+  /** Texas Private Security license, shown in the footer on every page. */
+  securityLicense: 'TX Private Security License #B30823401',
   linkedIn: 'https://www.linkedin.com/company/reconms/',
   facebook: 'https://www.facebook.com/reconms',
 };
