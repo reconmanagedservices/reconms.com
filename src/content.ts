@@ -1,5 +1,5 @@
 import type { IconName } from './components/Icon';
-import { posts } from './news';
+import { posts } from './blog';
 
 export const site = {
   name: 'Recon Managed Services',
@@ -20,8 +20,8 @@ export const navItems: [label: string, path: string][] = [
   ['Services', '/services/'],
   ['Products', '/products/'],
   ['Why Recon', '/about/'],
-  // News appears once there is at least one published post in content/news/.
-  ...(posts.length > 0 ? ([['News', '/news/']] as [string, string][]) : []),
+  // Blog appears once there is at least one published post in content/blog/.
+  ...(posts.length > 0 ? ([['Blog', '/blog/']] as [string, string][]) : []),
   ['Contact', '/contact/'],
 ];
 

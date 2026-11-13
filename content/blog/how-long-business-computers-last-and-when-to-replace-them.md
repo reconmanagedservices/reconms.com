@@ -3,7 +3,7 @@ title: "How Long Business Computers Last and When to Replace Them"
 date: 2026-10-30
 description: "Three to five years is a practical replacement range for many business computers."
 category: "IT Management"
-image: /assets/news/how-long-business-computers-last-and-when-to-replace-them.jpg
+image: /assets/blog/how-long-business-computers-last-and-when-to-replace-them.jpg
 imageAlt: "Computer being repaired"
 ---
 _Summary: Three to five years is a practical replacement range for many business computers. The right time depends on security support, reliability, performance, warranty coverage, repair costs, and the employee’s work. Replace any computer that cannot run a supported operating system or the software your business requires._
@@ -56,7 +56,7 @@ Check the hardware requirements before renewing an important application or movi
 
 Poor performance does not always mean the computer is too old.
 
-![](/assets/news/how-long-business-computers-last-and-when-to-replace-them-1.jpg)
+![](/assets/blog/how-long-business-computers-last-and-when-to-replace-them-1.jpg)
 
 A full storage drive, insufficient memory, unnecessary startup programs, malware, overheating, or a damaged operating system can all make a computer slow. A failing storage device may cause similar symptoms and should be dealt with quickly.
 
@@ -120,7 +120,7 @@ Do not reassign a computer that is unsupported or already causing regular suppor
 
 Keep a record of each computer’s purchase date, model, assigned user, warranty expiry, operating system, and expected review date.
 
-![](/assets/news/how-long-business-computers-last-and-when-to-replace-them-2.jpg)
+![](/assets/blog/how-long-business-computers-last-and-when-to-replace-them-2.jpg)
 
 When a computer reaches three years old, check whether it can continue receiving security updates, whether it still runs the required applications, and how often it has needed support. Review its battery, warranty, repair costs, and the employee’s workload at the same time.
 

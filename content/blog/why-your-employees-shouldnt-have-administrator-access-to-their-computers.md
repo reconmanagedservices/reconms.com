@@ -3,7 +3,7 @@ title: "Why Your Employees Shouldn’t Have Administrator Access to Their Comput
 date: 2026-10-05
 description: "Employees should use standard accounts for email, web browsing, and everyday work."
 category: "IT Management"
-image: /assets/news/why-your-employees-shouldnt-have-administrator-access-to-their-computers.jpg
+image: /assets/blog/why-your-employees-shouldnt-have-administrator-access-to-their-computers.jpg
 imageAlt: "People working on computer"
 ---
 _Summary: Employees should use standard accounts for email, web browsing, and everyday work. Administrator access should be limited to approved IT tasks and protected with a separate account._
@@ -42,7 +42,7 @@ An employee may have local administrator access to a laptop without being a Micr
 
 Software launched by an employee normally starts with the permissions available to that employee.
 
-![](/assets/news/why-your-employees-shouldnt-have-administrator-access-to-their-computers-1.jpg)
+![](/assets/blog/why-your-employees-shouldnt-have-administrator-access-to-their-computers-1.jpg)
 
 If the software asks for administrator approval and the employee approves it, the program may be able to install system components, change settings, or affect information belonging to other users.
 
@@ -79,7 +79,7 @@ Older business applications sometimes expect the user to have administrator righ
 
 Staff can still get software installed and updated without keeping administrator rights.
 
-![](/assets/news/why-your-employees-shouldnt-have-administrator-access-to-their-computers-2.jpg)
+![](/assets/blog/why-your-employees-shouldnt-have-administrator-access-to-their-computers-2.jpg)
 
 ### **Let IT install approved software**
 

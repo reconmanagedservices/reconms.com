@@ -3,7 +3,7 @@ title: "Should Employees Use Personal Devices for Work?"
 date: 2026-10-10
 description: "Allow personal devices only for approved work, through approved apps, and when the device meets your security requirements."
 category: "IT Management"
-image: /assets/news/should-employees-use-personal-devices-for-work.jpg
+image: /assets/blog/should-employees-use-personal-devices-for-work.jpg
 imageAlt: "Lady holding phone while working on a laptop"
 ---
 _**Summary:** Allow personal devices only for approved work, through approved apps, and when the device meets your security requirements. Use company-owned devices for administration, sensitive work, or jobs that require large amounts of data to be stored locally._
@@ -34,7 +34,7 @@ Depending on the application, business information may remain in the cloud or be
 
 Your IT team can set and monitor security on company-owned devices. With personal devices, employees choose which apps to install, when to update the operating system, who else uses the device, and where files are backed up.
 
-![](/assets/news/should-employees-use-personal-devices-for-work-1.jpg)
+![](/assets/blog/should-employees-use-personal-devices-for-work-1.jpg)
 
 Management software can enforce some rules, but the available controls depend on the device, operating system, application, and enrollment method.
 
@@ -88,7 +88,7 @@ Apply the same rules to contractors. Their access should be limited to the appli
 
 A personal device should meet your requirements before it can access company information.
 
-![](/assets/news/should-employees-use-personal-devices-for-work-2.jpg)
+![](/assets/blog/should-employees-use-personal-devices-for-work-2.jpg)
 
 ### **Use a supported operating system**
 

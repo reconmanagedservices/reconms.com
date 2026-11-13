@@ -1,17 +1,17 @@
-# Pages CMS (https://pagescms.org) configuration: a free web editor for the News posts.
+# Pages CMS (https://pagescms.org) configuration: a free web editor for the blog posts.
 # Sign in at https://app.pagescms.org with GitHub, open this repository, and choose the branch
 # Cloudflare deploys. Saving a post commits it to GitHub, which triggers a rebuild and deploy.
 
 media:
-  input: public/assets/news
-  output: /assets/news
+  input: public/assets/blog
+  output: /assets/blog
   extensions: [jpg, jpeg, png, webp, gif]
 
 content:
-  - name: news
-    label: News posts
+  - name: blog
+    label: Blog posts
     type: collection
-    path: content/news
+    path: content/blog
     format: yaml-frontmatter
     # The file name becomes the post's web address: /<file-name>/. It's created from the title
     # and can be adjusted when the post is first created.
@@ -38,7 +38,7 @@ content:
         type: date
       - name: description
         label: Summary
-        description: One or two sentences shown on the News page and in Google results (about 150 characters).
+        description: One or two sentences shown on the Blog page and in Google results (about 150 characters).
         type: text
       - name: category
         label: Category

@@ -1,15 +1,15 @@
 import { PostCard } from '../components/PostCard';
 import { ClosingCta, PageHero } from '../components/Sections';
 import { Seo } from '../components/Seo';
-import { posts } from '../news';
+import { posts } from '../blog';
 import { pageMeta } from '../seo';
 
-export default function NewsIndexPage() {
+export default function BlogIndexPage() {
   return (
     <>
-      <Seo meta={pageMeta.newsIndex} />
+      <Seo meta={pageMeta.blogIndex} />
       <PageHero
-        eyebrow="News"
+        eyebrow="Blog"
         title="Insights for smarter, safer IT."
         text="Practical guidance on cybersecurity, technology planning, and getting more from your IT, from the Recon team in Beaumont."
       />

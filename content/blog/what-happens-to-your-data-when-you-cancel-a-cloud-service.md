@@ -3,7 +3,7 @@ title: "What Happens to Your Data When You Cancel a Cloud Service?"
 date: 2026-10-15
 description: "Before canceling a cloud service, export your data and confirm that the files can be opened or imported."
 category: "Cloud"
-image: /assets/news/what-happens-to-your-data-when-you-cancel-a-cloud-service.jpg
+image: /assets/blog/what-happens-to-your-data-when-you-cancel-a-cloud-service.jpg
 imageAlt: "Laptop with storage device plugged in"
 ---
 _Summary: Before canceling a cloud service, export your data and confirm that the files can be opened or imported. Move any connected applications and sign-ins, then check the provider’s current rules for access, billing, retention, and deletion._
@@ -42,7 +42,7 @@ If the service was purchased through a reseller or IT provider, ask them to conf
 
 Start by identifying what the service contains. Depending on the application, this could include customer details, documents, attachments, emails, calendar entries, invoices, support tickets, project history, reports, or audit records.
 
-![](/assets/news/what-happens-to-your-data-when-you-cancel-a-cloud-service-1.jpg)
+![](/assets/blog/what-happens-to-your-data-when-you-cancel-a-cloud-service-1.jpg)
 
 Do not assume the standard export includes everything. Some services export the main records but leave out attachments, comments, user permissions, deleted items, application settings, automation rules, or activity history.
 
@@ -80,7 +80,7 @@ After the move is complete, revoke old access tokens, API keys, and application 
 
 Your business may need to keep financial records, contracts, customer communications, consent records, project files, or employee information for a set period.
 
-![](/assets/news/what-happens-to-your-data-when-you-cancel-a-cloud-service-2.jpg)
+![](/assets/blog/what-happens-to-your-data-when-you-cancel-a-cloud-service-2.jpg)
 
 The requirements depend on the type of information, your industry, your contracts, and the countries where you operate. Speak with your accountant, legal adviser, or compliance specialist before deleting records that may need to be retained.
 

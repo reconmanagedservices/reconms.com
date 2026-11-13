@@ -1,5 +1,5 @@
 /**
- * News posts, read from content/news/*.md at build time (see vite-plugin-news.ts).
+ * Blog posts, read from content/blog/*.md at build time (see vite-plugin-blog.ts).
  * Post metadata is bundled for listings; each post's HTML body loads only on its own page.
  */
 export type PostMeta = {
@@ -11,7 +11,7 @@ export type PostMeta = {
   date: string;
   updated: string | null;
   category: string | null;
-  /** Path to the featured image, e.g. /assets/news/photo.jpg. */
+  /** Path to the featured image, e.g. /assets/blog/photo.jpg. */
   image: string | null;
   imageAlt: string | null;
   author: string;
@@ -19,13 +19,13 @@ export type PostMeta = {
   readingMinutes: number;
 };
 
-// Drafts compile to `null` in production builds (see vite-plugin-news.ts).
-const metaModules = import.meta.glob<PostMeta | null>(['/content/news/*.md', '!/content/news/README.md'], {
+// Drafts compile to `null` in production builds (see vite-plugin-blog.ts).
+const metaModules = import.meta.glob<PostMeta | null>(['/content/blog/*.md', '!/content/blog/README.md'], {
   query: '?meta',
   import: 'default',
   eager: true,
 });
-const bodyLoaders = import.meta.glob<string>(['/content/news/*.md', '!/content/news/README.md'], {
+const bodyLoaders = import.meta.glob<string>(['/content/blog/*.md', '!/content/blog/README.md'], {
   query: '?body',
   import: 'default',
 });
@@ -38,7 +38,7 @@ export const posts: PostMeta[] = Object.values(metaModules)
 export const postPath = (post: Pick<PostMeta, 'slug'>) => `/${post.slug}/`;
 
 export function loadPostBody(slug: string): Promise<string> {
-  const load = bodyLoaders[`/content/news/${slug}.md`];
+  const load = bodyLoaders[`/content/blog/${slug}.md`];
   if (!load) return Promise.reject(new Error(`No post named ${slug}`));
   return load();
 }

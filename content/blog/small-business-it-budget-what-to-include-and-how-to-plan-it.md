@@ -3,7 +3,7 @@ title: "Small Business IT Budget: What to Include and How to Plan It"
 date: 2026-10-25
 description: "Your IT budget should include the technology you already use, the support required to maintain it, and the upgrades you expect to make during the year."
 category: "IT Management"
-image: /assets/news/small-business-it-budget-what-to-include-and-how-to-plan-it.jpg
+image: /assets/blog/small-business-it-budget-what-to-include-and-how-to-plan-it.jpg
 imageAlt: "Two women with laptops"
 ---
 _Summary: Your IT budget should include the technology you already use, the support required to maintain it, and the upgrades you expect to make during the year. It should also cover cybersecurity, backups, employee changes, planned projects, and a reserve for urgent repairs or replacements._
@@ -44,7 +44,7 @@ The inventory may reveal duplicate services, licenses assigned to former employe
 
 Include every physical device the business expects to purchase or replace during the year.
 
-![](/assets/news/small-business-it-budget-what-to-include-and-how-to-plan-it-1.jpg)
+![](/assets/blog/small-business-it-budget-what-to-include-and-how-to-plan-it-1.jpg)
 
 The cost of a new computer may also include monitors, docking stations, keyboards, headsets, webcams, carrying cases, warranty coverage, and delivery.
 
@@ -240,7 +240,7 @@ You may also need to separate operating expenses from capital purchases for acco
 
 1.  Create an inventory of your hardware, software, services, suppliers, and contracts.
 
-![](/assets/news/small-business-it-budget-what-to-include-and-how-to-plan-it-2.jpg)
+![](/assets/blog/small-business-it-budget-what-to-include-and-how-to-plan-it-2.jpg)
 
 2.  Record current monthly and annual costs, renewal dates, and notice periods.
 3.  Identify equipment that needs to be replaced during the budget period.

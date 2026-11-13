@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
-import { formatPostDate, postPath, type PostMeta } from '../news';
+import { formatPostDate, postPath, type PostMeta } from '../blog';
 import { Icon } from './Icon';
 
-/** Card linking to a news post; used on /news/, the home page, and below posts. */
+/** Card linking to a blog post; used on /blog/, the home page, and below posts. */
 export function PostCard({ post }: { post: PostMeta }) {
   return (
     <Link

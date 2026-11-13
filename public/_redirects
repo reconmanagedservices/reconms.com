@@ -12,12 +12,17 @@
 /customer-portal/   https://portal.reconms.com    301
 
 # Old WordPress blog feed, category and author archives
-/feed               /news/feed.xml                301
-/feed/              /news/feed.xml                301
-/news/feed          /news/feed.xml                301
-/news/feed/         /news/feed.xml                301
-/category/*         /news/                        301
-/author/*           /news/                        301
+/feed               /blog/feed.xml                301
+/feed/              /blog/feed.xml                301
+/category/*         /blog/                        301
+/author/*           /blog/                        301
+
+# The blog index was /news/ on WordPress (and briefly on this site)
+/news               /blog/                        301
+/news/              /blog/                        301
+/news/feed          /blog/feed.xml                301
+/news/feed/         /blog/feed.xml                301
+/news/feed.xml      /blog/feed.xml                301
 
 # Old WordPress / Yoast sitemap URLs (may still be registered in Google Search Console)
 /sitemaps.xml           /sitemap.xml    301

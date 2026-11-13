@@ -3,7 +3,7 @@ title: "Still on Windows 10? Here’s Why You’re Putting Your Business at Risk
 date: 2026-08-20
 description: "Windows 10 reached the end of Microsoft support on October 14, 2025, which means it no longer gets security updates."
 category: "Microsoft"
-image: /assets/news/still-on-windows-10-heres-why-youre-putting-your-business-at-risk.jpg
+image: /assets/blog/still-on-windows-10-heres-why-youre-putting-your-business-at-risk.jpg
 imageAlt: "Flat-screen computer monitor turned on"
 ---
 Article Summary: _Windows 10 reached the end of Microsoft support on October 14, 2025, which means it no longer gets security updates. The computers still work, but any new flaw found in Windows 10 will never be fixed, which makes them easier to attack and can cause problems with compliance and cyber insurance. You have three options: upgrade eligible PCs to Windows 11 for free, pay for Extended Security Updates as a short-term bridge, or replace machines too old to upgrade._

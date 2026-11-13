@@ -1,8 +1,8 @@
 /**
- * Turns the Markdown posts in content/news/*.md into build-time modules, so no Markdown parser
+ * Turns the Markdown posts in content/blog/*.md into build-time modules, so no Markdown parser
  * ships to the browser:
- *   content/news/<slug>.md?meta → export default { slug, title, date, … }  (small; for listings)
- *   content/news/<slug>.md?body → export default "<p>…</p>"                (HTML; loaded per post)
+ *   content/blog/<slug>.md?meta → export default { slug, title, date, … }  (small; for listings)
+ *   content/blog/<slug>.md?body → export default "<p>…</p>"                (HTML; loaded per post)
  * The file name (without .md) is the post's URL: /<slug>/.
  */
 import { readFileSync } from 'node:fs';
@@ -11,7 +11,7 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 import type { Plugin } from 'vite';
 
-const NEWS_DIR = `${path.sep}content${path.sep}news${path.sep}`;
+const BLOG_DIR = `${path.sep}content${path.sep}blog${path.sep}`;
 
 const toIsoDate = (value: unknown, field: string, file: string) => {
   if (value === undefined || value === null || value === '') return undefined;
@@ -68,24 +68,24 @@ function parsePost(file: string) {
   return { meta, html };
 }
 
-export default function newsPlugin(): Plugin {
+export default function blogPlugin(): Plugin {
   // In production builds, drafts are compiled to nothing so their text never ships.
   let excludeDrafts = false;
   return {
-    name: 'recon-news',
+    name: 'recon-blog',
     enforce: 'pre',
     configResolved(config) {
       excludeDrafts = config.command === 'build';
     },
     load(id) {
       const [file, query] = id.split('?');
-      if (!file.endsWith('.md') || !file.includes(NEWS_DIR)) return null;
+      if (!file.endsWith('.md') || !file.includes(BLOG_DIR)) return null;
       this.addWatchFile(file);
       const { meta, html } = parsePost(file);
       if (excludeDrafts && meta.draft) return 'export default null;';
       if (query === 'meta') return `export default ${JSON.stringify(meta)};`;
       if (query === 'body') return `export default ${JSON.stringify(html)};`;
-      throw new Error(`Import news posts with ?meta or ?body (got ${id})`);
+      throw new Error(`Import blog posts with ?meta or ?body (got ${id})`);
     },
   };
 }

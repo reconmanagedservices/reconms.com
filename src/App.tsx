@@ -7,10 +7,10 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductsPage from './pages/ProductsPage';
 import DetailPage from './pages/DetailPage';
-import NewsIndexPage from './pages/NewsIndexPage';
+import BlogIndexPage from './pages/BlogIndexPage';
 import PostPage from './pages/PostPage';
 import ServicesPage from './pages/ServicesPage';
-import { posts } from './news';
+import { posts } from './blog';
 import { productPageList } from './productPages';
 import { pageMeta } from './seo';
 import { servicePageList } from './servicePages';
@@ -47,7 +47,7 @@ export default function App() {
         <Route path="contact" element={<ContactPage />} />
         <Route path="terms" element={deferred(<TermsPage />)} />
         <Route path="privacy-policy" element={deferred(<PrivacyPolicyPage />)} />
-        {posts.length > 0 && <Route path="news" element={<NewsIndexPage />} />}
+        {posts.length > 0 && <Route path="blog" element={<BlogIndexPage />} />}
         {posts.map((post) => (
           <Route key={post.slug} path={post.slug} element={<PostPage post={post} />} />
         ))}

@@ -83,12 +83,12 @@ still shows but says online messages are unavailable, with email/phone instead, 
 console lists which settings are missing. Sender and recipient addresses are `CONTACT_FROM` /
 `CONTACT_TO` in `wrangler.jsonc`.
 
-## News posts
+## Blog posts
 
-Posts are Markdown files in `content/news/` (one file per post; the file name is the URL, so
-`content/news/my-post.md` is published at `/my-post/`). Images go in `public/assets/news/`.
-See `content/news/README.md` for the file format. The News menu item, `/news/` page, home page
-"Latest news" section and RSS feed (`/news/feed.xml`) appear automatically once at least one
+Posts are Markdown files in `content/blog/` (one file per post; the file name is the URL, so
+`content/blog/my-post.md` is published at `/my-post/`). Images go in `public/assets/blog/`.
+See `content/blog/README.md` for the file format. The Blog menu item, `/blog/` page, home page
+"From the blog" section and RSS feed (`/blog/feed.xml`) appear automatically once at least one
 published post exists. Posts marked `draft: true` are left out of the production build entirely.
 
 ### Publishing with Pages CMS (recommended)
@@ -99,7 +99,7 @@ it's configured by `.pages.yml`.
 1. Go to <https://app.pagescms.org> and sign in with GitHub.
 2. Install the Pages CMS GitHub app when prompted and give it access to this repository.
 3. Open the repository and choose the branch that Cloudflare deploys.
-4. Under **News posts**, click **Add an entry**, fill in the title, date, summary, category and
+4. Under **Blog posts**, click **Add an entry**, fill in the title, date, summary, category and
    featured image, write the post, and save. Saving commits the post; Cloudflare rebuilds and
    it's live in about a minute.
 
@@ -107,8 +107,8 @@ To add a category option, edit the `values` list for `category` in `.pages.yml`.
 
 ### Publishing without Pages CMS
 
-Create or edit a file in `content/news/` directly on GitHub (Add file → Create new file) using the
-template in `content/news/README.md`, upload images to `public/assets/news/`, and commit.
+Create or edit a file in `content/blog/` directly on GitHub (Add file → Create new file) using the
+template in `content/blog/README.md`, upload images to `public/assets/blog/`, and commit.
 
 ## SEO
 
@@ -141,7 +141,7 @@ template in `content/news/README.md`, upload images to `public/assets/news/`, an
 | Favicons (`favicon.svg/.ico`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest`) | `public/`, generated from the `{r}` mark in `public/assets/recon-social-icon.png` |
 | Redirects from old URLs | `public/_redirects` |
 | Cloudflare hosting settings | `wrangler.jsonc` |
-| News posts (content / pages / build plugin) | `content/news/` / `src/pages/NewsIndexPage.tsx`, `src/pages/PostPage.tsx` / `vite-plugin-news.ts` |
+| Blog posts (content / pages / build plugin) | `content/blog/` / `src/pages/BlogIndexPage.tsx`, `src/pages/PostPage.tsx` / `vite-plugin-blog.ts` |
 | Contact form (front end / server) | `src/components/ContactForm.tsx` / `worker/` |
 | Business structured data (JSON-LD) | `structuredData()` in `src/seo.ts` |
 | Terms of Use / Privacy Policy text | `src/legal/*.html` (plain HTML; edit the dates paragraph at the top when updating) |

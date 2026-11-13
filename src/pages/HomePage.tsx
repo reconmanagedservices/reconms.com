@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Icon, type IconName } from '../components/Icon';
 import { PostCard } from '../components/PostCard';
 import { ClosingCta, ProductGrid, ServiceGrid } from '../components/Sections';
-import { posts } from '../news';
+import { posts } from '../blog';
 import { Seo } from '../components/Seo';
 import { pageMeta } from '../seo';
 
@@ -217,11 +217,11 @@ export default function HomePage() {
           <div className="mx-auto max-w-[1344px]">
             <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <div className="section-heading">
-                <p className="eyebrow">Latest news</p>
+                <p className="eyebrow">From the blog</p>
                 <h2>Practical advice for smarter IT.</h2>
               </div>
-              <Link to="/news/" className="text-link">
-                View all news <Icon name="arrow" className="size-4" />
+              <Link to="/blog/" className="text-link">
+                View all posts <Icon name="arrow" className="size-4" />
               </Link>
             </div>
             <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">

@@ -70,13 +70,13 @@ function headTags(meta) {
     );
   }
   if (posts.length) {
-    tags.push('<link rel="alternate" type="application/rss+xml" title="Recon Managed Services News" href="/news/feed.xml" />');
+    tags.push('<link rel="alternate" type="application/rss+xml" title="Recon Managed Services Blog" href="/blog/feed.xml" />');
   }
   tags.push(...fontPreloads);
   return tags.join('\n    ');
 }
 
-/** Open Graph/Twitter image tags: the page's own image (news posts) or the site-wide one. */
+/** Open Graph/Twitter image tags: the page's own image (blog posts) or the site-wide one. */
 function imageTags(meta) {
   if (meta.image) {
     return [
@@ -110,7 +110,7 @@ for (const meta of routes) {
   console.log(`prerendered ${path.relative(root, file)}`);
 }
 
-// <lastmod> only where we know the real date (news posts). A build date on every page each
+// <lastmod> only where we know the real date (blog posts). A build date on every page each
 // deploy would be inaccurate, and Google ignores lastmod values it can't trust.
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -123,7 +123,7 @@ ${routes
 await fs.writeFile(path.join(dist, 'sitemap.xml'), sitemap);
 console.log('wrote dist/sitemap.xml');
 
-// RSS feed of news posts (the old WordPress /feed/ URL redirects here).
+// RSS feed of blog posts (the old WordPress /feed/ URL redirects here).
 if (posts.length) {
   const escapeXml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const rfc822 = (iso) => new Date(`${iso}T12:00:00Z`).toUTCString();
@@ -143,9 +143,9 @@ if (posts.length) {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Recon Managed Services News</title>
-    <link>https://reconms.com/news/</link>
-    <atom:link href="https://reconms.com/news/feed.xml" rel="self" type="application/rss+xml" />
+    <title>Recon Managed Services Blog</title>
+    <link>https://reconms.com/blog/</link>
+    <atom:link href="https://reconms.com/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Practical IT, cybersecurity, and technology advice for Southeast Texas organizations.</description>
     <language>en-us</language>
     <lastBuildDate>${rfc822(posts[0].updated ?? posts[0].date)}</lastBuildDate>
@@ -153,9 +153,9 @@ ${items}
   </channel>
 </rss>
 `;
-  await fs.mkdir(path.join(dist, 'news'), { recursive: true });
-  await fs.writeFile(path.join(dist, 'news', 'feed.xml'), feed);
-  console.log(`wrote dist/news/feed.xml (${posts.length} posts)`);
+  await fs.mkdir(path.join(dist, 'blog'), { recursive: true });
+  await fs.writeFile(path.join(dist, 'blog', 'feed.xml'), feed);
+  console.log(`wrote dist/blog/feed.xml (${posts.length} posts)`);
 }
 
 // Permanent (301) redirects from each page's slash-less URL to its canonical "/…/" URL.

@@ -1,5 +1,5 @@
 import { products, services, site } from './content';
-import { postPath, posts, type PostMeta } from './news';
+import { postPath, posts, type PostMeta } from './blog';
 import { productPages } from './productPages';
 import { servicePages, type DetailPageContent } from './servicePages';
 
@@ -123,12 +123,12 @@ export const pageMeta = {
       'How Recon Managed Services collects, uses, discloses, retains, and protects personal information submitted through reconms.com.',
     path: '/privacy-policy/',
   },
-  newsIndex: {
-    title: 'News',
-    titleTag: 'IT Tips & News for Businesses | Recon Managed Services',
+  blogIndex: {
+    title: 'Blog',
+    titleTag: 'IT & Cybersecurity Blog | Recon Managed Services',
     description:
       'Practical IT, cybersecurity, and technology advice for Southeast Texas organizations from the team at Recon Managed Services in Beaumont.',
-    path: '/news/',
+    path: '/blog/',
   },
   notFound: {
     title: 'Page Not Found',
@@ -137,7 +137,7 @@ export const pageMeta = {
   },
 } satisfies Record<string, PageMeta>;
 
-/** Metadata + BlogPosting/BreadcrumbList structured data for a news post. */
+/** Metadata + BlogPosting/BreadcrumbList structured data for a blog post. */
 export function postPageMeta(post: PostMeta): PageMeta {
   const path = postPath(post);
   const url = `${site.url}${path}`;
@@ -169,7 +169,7 @@ export function postPageMeta(post: PostMeta): PageMeta {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
-          { '@type': 'ListItem', position: 2, name: 'News', item: `${site.url}/news/` },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${site.url}/blog/` },
           { '@type': 'ListItem', position: 3, name: post.title, item: url },
         ],
       },
@@ -177,9 +177,9 @@ export function postPageMeta(post: PostMeta): PageMeta {
   };
 }
 
-/** Every page to prerender: the fixed pages plus one per published news post. */
+/** Every page to prerender: the fixed pages plus one per published blog post. */
 export function allPages(): PageMeta[] {
-  const fixed = Object.values(pageMeta).filter((meta) => meta.path !== '/news/' || posts.length > 0);
+  const fixed = Object.values(pageMeta).filter((meta) => meta.path !== '/blog/' || posts.length > 0);
   return [...fixed, ...posts.map(postPageMeta)];
 }
 

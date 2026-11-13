@@ -4,7 +4,7 @@ import { Icon } from '../components/Icon';
 import { PostCard } from '../components/PostCard';
 import { ClosingCta } from '../components/Sections';
 import { Seo } from '../components/Seo';
-import { formatPostDate, loadPostBody, posts, type PostMeta } from '../news';
+import { formatPostDate, loadPostBody, posts, type PostMeta } from '../blog';
 import { postPageMeta } from '../seo';
 
 // Each post's HTML is its own chunk, loaded only on that post's page (prerendering waits for it).
@@ -36,8 +36,8 @@ export default function PostPage({ post }: { post: PostMeta }) {
           <nav aria-label="Breadcrumb">
             <ol className="eyebrow text-white/55">
               <li>
-                <Link to="/news/" className="hover:text-white">
-                  News
+                <Link to="/blog/" className="hover:text-white">
+                  Blog
                 </Link>
               </li>
               {post.category && (
@@ -100,8 +100,8 @@ export default function PostPage({ post }: { post: PostMeta }) {
                 <p className="eyebrow">Keep reading</p>
                 <h2>More from Recon.</h2>
               </div>
-              <Link to="/news/" className="text-link">
-                All news <Icon name="arrow" className="size-4" />
+              <Link to="/blog/" className="text-link">
+                All posts <Icon name="arrow" className="size-4" />
               </Link>
             </div>
             <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">

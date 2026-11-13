@@ -4,7 +4,7 @@ import { StaticRouter } from 'react-router';
 import App from './App';
 
 export { allPages, canonicalUrl, fullTitle, isNotFound, pageMeta, socialImage, structuredData } from './seo';
-export { posts, formatPostDate } from './news';
+export { posts, formatPostDate } from './blog';
 
 /** Renders a route to HTML, waiting for lazy-loaded pages (unlike renderToString). */
 export async function render(url: string): Promise<string> {

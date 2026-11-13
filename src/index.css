@@ -572,7 +572,7 @@ footer a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* News posts: builds on .legal-prose with media and a slightly larger reading size. */
+/* Blog posts: builds on .legal-prose with media and a slightly larger reading size. */
 .post-prose {
   font-size: 1.075rem;
 }

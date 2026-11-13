@@ -4,7 +4,7 @@ date: 2026-08-15
 updated: 2026-08-20
 description: "AI note-takers join your meetings, transcribe everything said, and save the recording and summary to the vendor’s servers."
 category: "AI"
-image: /assets/news/who-can-see-what-your-ai-note-taker-records.jpg
+image: /assets/blog/who-can-see-what-your-ai-note-taker-records.jpg
 imageAlt: "Teacher video-calling with his students using a computer"
 ---
 Article Summary: _AI note-takers join your meetings, transcribe everything said, and save the recording and summary to the vendor’s servers. Who can see that recording depends on the tool. Some keep your data inside your own Microsoft or Google environment and never use it for training, while others store it on their own servers and may use it to improve their AI. Some also auto-join meetings from your calendar without anyone pressing record. Before you let one into a client or staff meeting, it’s worth knowing where the recording goes and getting everyone’s consent._

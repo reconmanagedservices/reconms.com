@@ -3,7 +3,7 @@ title: "Why Guest Wi-Fi Should Be Separate From Your Business Network"
 date: 2026-10-20
 description: "Guest Wi-Fi should provide internet access while blocking connections to your internal business network."
 category: "IT Management"
-image: /assets/news/why-guest-wi-fi-should-be-separate-from-your-business-network.jpg
+image: /assets/blog/why-guest-wi-fi-should-be-separate-from-your-business-network.jpg
 imageAlt: "White wifi router"
 ---
 _Summary: Guest Wi-Fi should provide internet access while blocking connections to your internal business network. A different Wi-Fi name and password do not confirm that the networks are separated. The router, access points, and firewall must also be configured to prevent guest devices from reaching internal systems._
@@ -18,7 +18,7 @@ A properly configured guest network gives visitors internet access without allow
 
 When someone connects to your guest Wi-Fi, they should be able to browse the internet, use email, and access online services. They should not be able to connect to anything on your internal network.
 
-![](/assets/news/why-guest-wi-fi-should-be-separate-from-your-business-network-1.jpg)
+![](/assets/blog/why-guest-wi-fi-should-be-separate-from-your-business-network-1.jpg)
 
 That includes:
 
@@ -81,7 +81,7 @@ Client isolation and business-network separation are two different controls. Cli
 
 A personal phone that only needs internet access can usually use the guest network. The same applies to a personal laptop that does not need to connect to internal business systems.
 
-![](/assets/news/why-guest-wi-fi-should-be-separate-from-your-business-network-2.jpg)
+![](/assets/blog/why-guest-wi-fi-should-be-separate-from-your-business-network-2.jpg)
 
 If employees use personal devices to access company files, applications, or internal systems, the business needs a clear bring-your-own-device policy. Those devices may require security software, device management, encryption, and specific access rules.
 
