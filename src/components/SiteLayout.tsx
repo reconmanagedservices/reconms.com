@@ -2,20 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { navItems, products, services, site } from '../content';
 import { postPath, posts } from '../blog';
+import { BrandIcon, type Brand } from './BrandIcons';
 import { Icon } from './Icon';
 
-/** Brand marks for the footer social links (filled glyphs on a 24×24 grid). */
-const socialLinks = [
-  {
-    label: 'LinkedIn',
-    href: site.linkedIn,
-    path: 'M5 9h3.2v10.5H5V9Zm1.6-5a1.85 1.85 0 1 1 0 3.7 1.85 1.85 0 0 1 0-3.7ZM10.2 9h3.07v1.44h.04c.43-.81 1.47-1.66 3.03-1.66 3.24 0 3.84 2.13 3.84 4.9v5.82H17v-5.16c0-1.23-.02-2.81-1.71-2.81-1.71 0-1.97 1.34-1.97 2.72v5.25H10.2V9Z',
-  },
-  {
-    label: 'Facebook',
-    href: site.facebook,
-    path: 'M13.6 21.5v-8h2.7l.4-3.13h-3.1V8.38c0-.9.25-1.52 1.55-1.52h1.65V4.07c-.29-.04-1.27-.12-2.41-.12-2.38 0-4.02 1.46-4.02 4.13v2.29H7.67v3.13h2.7v8h3.23Z',
-  },
+const socialLinks: { label: string; href: string; brand: Brand }[] = [
+  { label: 'LinkedIn', href: site.linkedIn, brand: 'linkedin' },
+  { label: 'Facebook', href: site.facebook, brand: 'facebook' },
 ];
 
 // Dedicated service pages live outside /services/ (old URLs), but belong to the Services menu item.
@@ -143,9 +135,7 @@ export function SiteLayout() {
                     aria-label={`${site.name} on ${social.label}`}
                     className="grid size-10 place-items-center rounded-full border border-white/20 text-white/75 hover:border-white hover:bg-white hover:text-[#0a0b0b]"
                   >
-                    <svg className="size-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d={social.path} />
-                    </svg>
+                    <BrandIcon brand={social.brand} />
                   </a>
                 ))}
               </div>

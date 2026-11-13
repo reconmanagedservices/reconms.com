@@ -4,6 +4,7 @@ import { Icon } from '../components/Icon';
 import { PostCard } from '../components/PostCard';
 import { ClosingCta } from '../components/Sections';
 import { Seo } from '../components/Seo';
+import { ShareButtons } from '../components/ShareButtons';
 import { categorySlug, formatPostDate, loadPostBody, posts, type PostBody, type PostMeta } from '../blog';
 import { postPageMeta } from '../seo';
 
@@ -75,13 +76,15 @@ function PostContent({ post, body }: { post: PostMeta; body: PostBody }) {
               <TocList toc={body.toc} activeId={activeId} />
             </nav>
           </details>
-          <nav
-            className="sticky top-[110px] hidden max-h-[calc(100vh-140px)] overflow-y-auto pr-2 pb-4 lg:block"
-            aria-label="In this article"
-          >
-            <p className="eyebrow mb-5">In this article</p>
-            <TocList toc={body.toc} activeId={activeId} />
-          </nav>
+          <div className="sticky top-[110px] hidden max-h-[calc(100vh-140px)] overflow-y-auto pr-2 pb-4 lg:block">
+            <nav aria-label="In this article">
+              <p className="eyebrow mb-5">In this article</p>
+              <TocList toc={body.toc} activeId={activeId} />
+            </nav>
+            <div className="mt-10 border-t border-black/12 pt-8">
+              <ShareButtons post={post} label="Share" />
+            </div>
+          </div>
         </aside>
       )}
 
@@ -97,6 +100,9 @@ function PostContent({ post, body }: { post: PostMeta; body: PostBody }) {
           )}
           <div className="p-7 sm:p-12 lg:p-16">
             <div className="legal-prose post-prose" dangerouslySetInnerHTML={{ __html: body.html }} />
+            <div className="mt-12 border-t border-black/10 pt-8">
+              <ShareButtons post={post} />
+            </div>
           </div>
         </article>
 

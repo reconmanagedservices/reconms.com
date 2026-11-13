@@ -117,6 +117,18 @@ const paths = {
       <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
     </>
   ),
+  link: (
+    <>
+      <path d="M10 13.5a4.5 4.5 0 0 0 6.36.04l3-3a4.5 4.5 0 0 0-6.36-6.36l-1.3 1.29" />
+      <path d="M14 10.5a4.5 4.5 0 0 0-6.36-.04l-3 3a4.5 4.5 0 0 0 6.36 6.36l1.29-1.29" />
+    </>
+  ),
+  share: (
+    <>
+      <path d="M12 3v12M7.5 7.5 12 3l4.5 4.5" />
+      <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;
