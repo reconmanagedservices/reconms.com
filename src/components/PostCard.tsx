@@ -23,7 +23,7 @@ export function PostCard({ post }: { post: PostMeta }) {
         </div>
       )}
       <div className="flex flex-1 flex-col p-7 sm:p-8">
-        <p className="text-xs font-semibold tracking-[.12em] text-black/50 uppercase">
+        <p className="text-xs font-semibold tracking-[.12em] text-black/60 uppercase">
           <time dateTime={post.date}>{formatPostDate(post.date)}</time>
           {post.category && <> · {post.category}</>}
         </p>

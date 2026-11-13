@@ -45,7 +45,7 @@ content:
         description: To add a category, add it to this list in .pages.yml.
         type: select
         options:
-          values: [Cybersecurity, Managed IT, Technology Planning, AI, Hardware, Tips]
+          values: [IT Management, Security, Cloud, Microsoft, AI]
       - name: image
         label: Featured image
         description: Shown at the top of the post and when it's shared. Wide images (16:9) work best.

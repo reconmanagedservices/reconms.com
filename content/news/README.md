@@ -12,7 +12,7 @@ add a file here that starts like this:
 title: How Long Business Computers Last
 date: 2026-11-20
 description: One or two sentences for the News page and Google (about 150 characters).
-category: Technology Planning
+category: IT Management
 image: /assets/news/computers.jpg
 imageAlt: A row of office laptops
 draft: false
