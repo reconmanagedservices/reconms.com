@@ -30,12 +30,91 @@ const values = [
   },
 ];
 
-const statusTiles: [label: string, status: string, icon: IconName][] = [
-  ['Devices', 'Protected', 'shield'],
-  ['Backups', 'Verified', 'cloud'],
-  ['Network', 'Monitored', 'network'],
-  ['Support', 'Ready to help', 'headset'],
+/** Cards in the hero's "Your environment" panel; hovering/focusing one shows its detail. */
+const statusTiles: { label: string; status: string; icon: IconName; detail: string; link: [label: string, path: string] }[] = [
+  {
+    label: 'Devices',
+    status: 'Protected',
+    icon: 'shield',
+    detail: 'Endpoint and identity protection, updates, and patching keep every computer secure and current.',
+    link: ['How we protect devices', '/cybersecurity/'],
+  },
+  {
+    label: 'Backups',
+    status: 'Verified',
+    icon: 'cloud',
+    detail: 'Monitored backups and a recovery plan, so an outage or ransomware attack doesn’t become a crisis.',
+    link: ['Backup and recovery', '/managed/'],
+  },
+  {
+    label: 'Network',
+    status: 'Monitored',
+    icon: 'network',
+    detail: 'We monitor your network and servers so small issues are caught before they turn into downtime.',
+    link: ['Proactive monitoring', '/managed/'],
+  },
+  {
+    label: 'Support',
+    status: 'Ready to help',
+    icon: 'headset',
+    detail: 'Responsive help desk support from people who already know your team and your environment.',
+    link: ['Talk to our team', '/contact/'],
+  },
 ];
+
+/** The interactive "Your environment" panel in the home page hero. */
+function EnvironmentPanel() {
+  const [active, setActive] = useState(0);
+  const tile = statusTiles[active];
+
+  return (
+    <div className="relative flex h-full flex-col rounded-[2rem] border border-white/15 bg-[#171918]/90 p-5 shadow-2xl backdrop-blur sm:p-7">
+      <div className="flex items-center justify-between border-b border-white/10 pb-5">
+        <div>
+          <p className="text-[10px] font-bold tracking-[.24em] text-white/40 uppercase">Recon Operations</p>
+          <p className="mt-1.5 font-display text-xl tracking-tight">Your environment</p>
+        </div>
+        <span className="flex items-center gap-2 text-xs text-white/60">
+          <span className="signal-dot" /> Systems monitored
+        </span>
+      </div>
+      <div className="grid flex-1 grid-cols-2 gap-3 py-5" role="group" aria-label="What Recon looks after">
+        {statusTiles.map((item, index) => {
+          const isActive = index === active;
+          return (
+            <button
+              key={item.label}
+              type="button"
+              aria-pressed={isActive}
+              aria-controls="environment-detail"
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              onClick={() => setActive(index)}
+              className={`flex flex-col justify-between rounded-2xl p-4 text-left transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:p-5 ${
+                isActive ? 'bg-white text-black shadow-[0_12px_30px_rgba(0,0,0,.25)]' : 'bg-white/[.055] hover:-translate-y-0.5 hover:bg-white/[.09]'
+              }`}
+            >
+              <Icon name={item.icon} className={`size-6 ${isActive ? 'text-black' : 'text-white/50'}`} />
+              <span className="block">
+                <span className={`block text-xs ${isActive ? 'text-black/55' : 'text-white/45'}`}>{item.label}</span>
+                <span className="mt-1 block font-display text-lg tracking-tight">{item.status}</span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <div id="environment-detail" aria-live="polite" className="min-h-[92px] border-t border-white/10 pt-5 sm:min-h-[76px]">
+        <p key={active} className="environment-detail text-sm leading-6 text-white/70">
+          <span className="font-semibold text-white">{tile.label}: </span>
+          {tile.detail}{' '}
+          <Link to={tile.link[1]} className="inline-flex items-center gap-1 font-semibold whitespace-nowrap text-white underline-offset-4 hover:underline">
+            {tile.link[0]} <Icon name="arrow" className="size-3.5" />
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function MissionGraphic() {
   const [active, setActive] = useState(values[0]);
@@ -111,40 +190,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div
-            className="relative min-h-[520px] border-t border-white/10 lg:border-l lg:border-t-0"
-            role="img"
-            aria-label="Illustration of a monitored IT environment: devices protected, backups verified, network monitored, support ready to help."
-          >
+          <div className="relative border-t border-white/10 py-14 lg:min-h-[520px] lg:border-t-0 lg:border-l lg:py-0">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_55%_45%,rgba(255,255,255,.13),transparent_32%)]" />
-            <div className="absolute top-[11%] right-[8%] bottom-[9%] left-[8%]">
+            {/* Below lg (stacked layout) the panel grows with its content; lg+: the original fixed-position layout. */}
+            <div className="relative mx-[8%] lg:absolute lg:top-[11%] lg:right-[8%] lg:bottom-[9%] lg:left-[8%] lg:mx-0">
               <div className="absolute inset-0 rotate-[5deg] rounded-[2rem] bg-white/[.04]" />
-              <div className="relative flex h-full flex-col rounded-[2rem] border border-white/15 bg-[#171918]/90 p-5 shadow-2xl backdrop-blur sm:p-7">
-                <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                  <div>
-                    <p className="text-[10px] font-bold tracking-[.24em] text-white/40 uppercase">Recon Operations</p>
-                    <p className="mt-1.5 font-display text-xl tracking-tight">Your environment</p>
-                  </div>
-                  <span className="flex items-center gap-2 text-xs text-white/60">
-                    <span className="signal-dot" /> Systems monitored
-                  </span>
-                </div>
-                <div className="grid flex-1 grid-cols-2 gap-3 py-5">
-                  {statusTiles.map(([label, status, icon], index) => (
-                    <div
-                      key={label}
-                      className={`flex flex-col justify-between rounded-2xl p-4 sm:p-5 ${index === 0 ? 'bg-white text-black' : 'bg-white/[.055]'}`}
-                    >
-                      <Icon name={icon} className={`size-6 ${index === 0 ? 'text-black' : 'text-white/50'}`} />
-                      <div>
-                        <p className={`text-xs ${index === 0 ? 'text-black/50' : 'text-white/40'}`}>{label}</p>
-                        <p className="mt-1 font-display text-lg tracking-tight">{status}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="border-t border-white/10 pt-5 text-xs text-white/45">Technology should move you forward.</p>
-              </div>
+              <EnvironmentPanel />
             </div>
           </div>
         </div>
