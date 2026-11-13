@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { navItems, products, services, site } from '../content';
+import { postPath, posts } from '../news';
 import { Icon } from './Icon';
 
 /** Brand marks for the footer social links (filled glyphs on a 24×24 grid). */
@@ -19,6 +20,8 @@ const socialLinks = [
 
 // Dedicated service pages live outside /services/ (old URLs), but belong to the Services menu item.
 const servicePaths = new Set(services.map((service) => service.path));
+// News posts live at top-level URLs (/<slug>/) but belong to the News menu item.
+const postPaths = new Set(posts.map(postPath));
 
 export function SiteLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,7 +64,7 @@ export function SiteLayout() {
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `nav-link ${isActive || (path === '/services/' && servicePaths.has(pathname)) ? 'nav-link-active' : ''}`
+                  `nav-link ${isActive || (path === '/services/' && servicePaths.has(pathname)) || (path === '/news/' && postPaths.has(pathname)) ? 'nav-link-active' : ''}`
                 }
               >
                 {label}

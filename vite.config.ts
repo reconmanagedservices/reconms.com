@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import news from './vite-plugin-news';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [news(), react(), tailwindcss()],
   build: {
     // Hashed JS/CSS/fonts go in /_app/ (cached for a year via public/_headers), separate from
     // the un-hashed images in public/assets/.

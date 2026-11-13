@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const ssrDir = path.join(root, 'dist-ssr');
 
-const { render, pageMeta, fullTitle, canonicalUrl, isNotFound, socialImage, structuredData } = await import(
+const { render, allPages, fullTitle, canonicalUrl, isNotFound, socialImage, structuredData, posts } = await import(
   pathToFileURL(path.join(ssrDir, 'entry-server.js')).href
 );
 // Drop developer-only HTML comments (keeping the <!--seo:…--> and <!--app-html--> markers).
@@ -50,25 +50,48 @@ function headTags(meta) {
     const url = canonicalUrl(meta);
     tags.push(
       `<link rel="canonical" href="${escapeAttr(url)}" />`,
-      `<meta property="og:type" content="website" />`,
+      `<meta property="og:type" content="${meta.ogType ?? 'website'}" />`,
       `<meta property="og:site_name" content="Recon Managed Services" />`,
       `<meta property="og:locale" content="en_US" />`,
       `<meta property="og:url" content="${escapeAttr(url)}" />`,
       `<meta property="og:title" content="${escapeAttr(title)}" />`,
       `<meta property="og:description" content="${escapeAttr(meta.description)}" />`,
-      `<meta property="og:image" content="${escapeAttr(socialImage.url)}" />`,
-      `<meta property="og:image:width" content="${socialImage.width}" />`,
-      `<meta property="og:image:height" content="${socialImage.height}" />`,
-      `<meta property="og:image:alt" content="${escapeAttr(socialImage.alt)}" />`,
+      ...imageTags(meta),
       `<meta name="twitter:card" content="summary_large_image" />`,
       `<meta name="twitter:title" content="${escapeAttr(title)}" />`,
       `<meta name="twitter:description" content="${escapeAttr(meta.description)}" />`,
-      `<meta name="twitter:image" content="${escapeAttr(socialImage.url)}" />`,
+      ...(meta.ogType === 'article'
+        ? [
+            `<meta property="article:published_time" content="${meta.published}" />`,
+            `<meta property="article:modified_time" content="${meta.modified}" />`,
+          ]
+        : []),
       jsonLd(meta),
     );
   }
+  if (posts.length) {
+    tags.push('<link rel="alternate" type="application/rss+xml" title="Recon Managed Services News" href="/news/feed.xml" />');
+  }
   tags.push(...fontPreloads);
   return tags.join('\n    ');
+}
+
+/** Open Graph/Twitter image tags: the page's own image (news posts) or the site-wide one. */
+function imageTags(meta) {
+  if (meta.image) {
+    return [
+      `<meta property="og:image" content="${escapeAttr(meta.image.url)}" />`,
+      `<meta property="og:image:alt" content="${escapeAttr(meta.image.alt)}" />`,
+      `<meta name="twitter:image" content="${escapeAttr(meta.image.url)}" />`,
+    ];
+  }
+  return [
+    `<meta property="og:image" content="${escapeAttr(socialImage.url)}" />`,
+    `<meta property="og:image:width" content="${socialImage.width}" />`,
+    `<meta property="og:image:height" content="${socialImage.height}" />`,
+    `<meta property="og:image:alt" content="${escapeAttr(socialImage.alt)}" />`,
+    `<meta name="twitter:image" content="${escapeAttr(socialImage.url)}" />`,
+  ];
 }
 
 async function buildPage(meta, url) {
@@ -78,7 +101,7 @@ async function buildPage(meta, url) {
     .replace('<!--app-html-->', html);
 }
 
-const routes = Object.values(pageMeta);
+const routes = allPages();
 for (const meta of routes) {
   const notFound = isNotFound(meta);
   const file = notFound ? path.join(dist, '404.html') : path.join(dist, meta.path.slice(1), 'index.html');
@@ -87,18 +110,53 @@ for (const meta of routes) {
   console.log(`prerendered ${path.relative(root, file)}`);
 }
 
-// No <lastmod>: a build date on every page each deploy is inaccurate, and Google ignores
-// lastmod values it can't trust.
+// <lastmod> only where we know the real date (news posts). A build date on every page each
+// deploy would be inaccurate, and Google ignores lastmod values it can't trust.
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
   .filter((m) => !isNotFound(m))
-  .map((m) => `  <url><loc>${canonicalUrl(m)}</loc></url>`)
+  .map((m) => `  <url><loc>${canonicalUrl(m)}</loc>${m.modified ? `<lastmod>${m.modified}</lastmod>` : ''}</url>`)
   .join('\n')}
 </urlset>
 `;
 await fs.writeFile(path.join(dist, 'sitemap.xml'), sitemap);
 console.log('wrote dist/sitemap.xml');
+
+// RSS feed of news posts (the old WordPress /feed/ URL redirects here).
+if (posts.length) {
+  const escapeXml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const rfc822 = (iso) => new Date(`${iso}T12:00:00Z`).toUTCString();
+  const items = posts
+    .slice(0, 50)
+    .map((post) => {
+      const url = `https://reconms.com/${post.slug}/`;
+      return `    <item>
+      <title>${escapeXml(post.title)}</title>
+      <link>${url}</link>
+      <guid isPermaLink="true">${url}</guid>
+      <pubDate>${rfc822(post.date)}</pubDate>${post.category ? `\n      <category>${escapeXml(post.category)}</category>` : ''}
+      <description>${escapeXml(post.description)}</description>
+    </item>`;
+    })
+    .join('\n');
+  const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recon Managed Services News</title>
+    <link>https://reconms.com/news/</link>
+    <atom:link href="https://reconms.com/news/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Practical IT, cybersecurity, and technology advice for Southeast Texas organizations.</description>
+    <language>en-us</language>
+    <lastBuildDate>${rfc822(posts[0].updated ?? posts[0].date)}</lastBuildDate>
+${items}
+  </channel>
+</rss>
+`;
+  await fs.mkdir(path.join(dist, 'news'), { recursive: true });
+  await fs.writeFile(path.join(dist, 'news', 'feed.xml'), feed);
+  console.log(`wrote dist/news/feed.xml (${posts.length} posts)`);
+}
 
 // Permanent (301) redirects from each page's slash-less URL to its canonical "/…/" URL.
 // Cloudflare would otherwise answer these with a temporary 307. Rules go first in _redirects.

@@ -1,0 +1,64 @@
+# Pages CMS (https://pagescms.org) configuration: a free web editor for the News posts.
+# Sign in at https://app.pagescms.org with GitHub, open this repository, and choose the branch
+# Cloudflare deploys. Saving a post commits it to GitHub, which triggers a rebuild and deploy.
+
+media:
+  input: public/assets/news
+  output: /assets/news
+  extensions: [jpg, jpeg, png, webp, gif]
+
+content:
+  - name: news
+    label: News posts
+    type: collection
+    path: content/news
+    format: yaml-frontmatter
+    # The file name becomes the post's web address: /<file-name>/. It's created from the title
+    # and can be adjusted when the post is first created.
+    filename:
+      template: "{title}.md"
+      field: create
+    exclude: [README.md]
+    view:
+      primary: title
+      fields: [title, date, category, draft]
+      sort: date
+      order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Publish date
+        type: date
+        required: true
+      - name: updated
+        label: Last updated (optional)
+        type: date
+      - name: description
+        label: Summary
+        description: One or two sentences shown on the News page and in Google results (about 150 characters).
+        type: text
+      - name: category
+        label: Category
+        description: To add a category, add it to this list in .pages.yml.
+        type: select
+        options:
+          values: [Cybersecurity, Managed IT, Technology Planning, AI, Hardware, Tips]
+      - name: image
+        label: Featured image
+        description: Shown at the top of the post and when it's shared. Wide images (16:9) work best.
+        type: image
+      - name: imageAlt
+        label: Featured image description
+        description: A short description of the image for screen readers.
+        type: string
+      - name: draft
+        label: Draft (hide from the live site)
+        type: boolean
+      - name: body
+        label: Post
+        type: rich-text
+        options:
+          format: markdown

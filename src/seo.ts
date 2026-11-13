@@ -1,4 +1,5 @@
 import { products, services, site } from './content';
+import { postPath, posts, type PostMeta } from './news';
 import { productPages } from './productPages';
 import { servicePages, type DetailPageContent } from './servicePages';
 
@@ -13,6 +14,13 @@ export type PageMeta = {
   path: string;
   /** Extra schema.org nodes for this page, added to the site-wide graph. */
   schema?: Record<string, unknown>[];
+  /** Open Graph type; defaults to "website". */
+  ogType?: 'website' | 'article';
+  /** Articles: ISO publish / last-modified dates (also used as sitemap <lastmod>). */
+  published?: string;
+  modified?: string;
+  /** Page-specific share image (absolute URL); defaults to the site-wide social image. */
+  image?: { url: string; alt: string };
 };
 
 const orgId = `${site.url}/#organization`;
@@ -115,12 +123,65 @@ export const pageMeta = {
       'How Recon Managed Services collects, uses, discloses, retains, and protects personal information submitted through reconms.com.',
     path: '/privacy-policy/',
   },
+  newsIndex: {
+    title: 'News',
+    titleTag: 'IT Tips & News for Businesses | Recon Managed Services',
+    description:
+      'Practical IT, cybersecurity, and technology advice for Southeast Texas organizations from the team at Recon Managed Services in Beaumont.',
+    path: '/news/',
+  },
   notFound: {
     title: 'Page Not Found',
     description: 'The page you requested could not be found.',
     path: '/404',
   },
 } satisfies Record<string, PageMeta>;
+
+/** Metadata + BlogPosting/BreadcrumbList structured data for a news post. */
+export function postPageMeta(post: PostMeta): PageMeta {
+  const path = postPath(post);
+  const url = `${site.url}${path}`;
+  const image = post.image ? { url: `${site.url}${post.image}`, alt: post.imageAlt ?? post.title } : undefined;
+  return {
+    title: post.title,
+    description: post.description,
+    path,
+    ogType: 'article',
+    published: post.date,
+    modified: post.updated ?? post.date,
+    image,
+    schema: [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: post.updated ?? post.date,
+        url,
+        mainEntityOfPage: url,
+        image: image?.url ?? `${site.url}/assets/og-image.png`,
+        ...(post.category ? { articleSection: post.category } : {}),
+        author: { '@id': orgId },
+        publisher: { '@id': orgId },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+          { '@type': 'ListItem', position: 2, name: 'News', item: `${site.url}/news/` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+/** Every page to prerender: the fixed pages plus one per published news post. */
+export function allPages(): PageMeta[] {
+  const fixed = Object.values(pageMeta).filter((meta) => meta.path !== '/news/' || posts.length > 0);
+  return [...fixed, ...posts.map(postPageMeta)];
+}
 
 export const fullTitle = (meta: PageMeta) => meta.titleTag ?? `${meta.title} | ${site.name}`;
 export const canonicalUrl = (meta: PageMeta) => `${site.url}${meta.path}`;

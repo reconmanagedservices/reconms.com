@@ -11,6 +11,14 @@
 /customer-portal    https://portal.reconms.com    301
 /customer-portal/   https://portal.reconms.com    301
 
+# Old WordPress blog feed, category and author archives
+/feed               /news/feed.xml                301
+/feed/              /news/feed.xml                301
+/news/feed          /news/feed.xml                301
+/news/feed/         /news/feed.xml                301
+/category/*         /news/                        301
+/author/*           /news/                        301
+
 # Old WordPress / Yoast sitemap URLs (may still be registered in Google Search Console)
 /sitemaps.xml           /sitemap.xml    301
 /sitemap_index.xml      /sitemap.xml    301
