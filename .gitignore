@@ -8,3 +8,4 @@ dist-ssr
 .dev.vars
 .env.local
 .env.*.local
+*.whl
