@@ -1,22 +1,40 @@
 import { useEffect } from 'react';
-import { canonicalUrl, fullTitle, type PageMeta } from '../seo';
+import { canonicalUrl, fullTitle, isNotFound, type PageMeta } from '../seo';
 
-function setAttr(selector: string, attr: string, value: string) {
-  document.querySelector(selector)?.setAttribute(attr, value);
+/** Sets (creating if needed) or removes a <meta>/<link> tag in <head>. */
+function upsert(tag: 'meta' | 'link', key: [attr: string, value: string], valueAttr: string, value: string | null) {
+  let el = document.head.querySelector<HTMLElement>(`${tag}[${key[0]}="${key[1]}"]`);
+  if (value === null) {
+    el?.remove();
+    return;
+  }
+  if (!el) {
+    el = document.createElement(tag);
+    el.setAttribute(key[0], key[1]);
+    document.head.appendChild(el);
+  }
+  el.setAttribute(valueAttr, value);
 }
 
-/** Keeps <head> metadata in sync during client-side navigation. Prerendered pages already ship it. */
+/**
+ * Keeps <head> metadata in sync during client-side navigation. Prerendered pages already
+ * ship the full set (see scripts/prerender.mjs); this mirrors the parts that vary by page.
+ */
 export function Seo({ meta }: { meta: PageMeta }) {
   useEffect(() => {
     const title = fullTitle(meta);
-    const url = canonicalUrl(meta);
+    const notFound = isNotFound(meta);
+    const url = notFound ? null : canonicalUrl(meta);
+
     document.title = title;
-    setAttr('meta[name="description"]', 'content', meta.description);
-    setAttr('link[rel="canonical"]', 'href', url);
-    setAttr('meta[property="og:url"]', 'content', url);
-    setAttr('meta[property="og:title"]', 'content', title);
-    setAttr('meta[property="og:description"]', 'content', meta.description);
-    setAttr('meta[name="robots"]', 'content', meta.path === '/404' ? 'noindex, follow' : 'index, follow');
+    upsert('meta', ['name', 'description'], 'content', meta.description);
+    upsert('meta', ['name', 'robots'], 'content', notFound ? 'noindex, follow' : 'index, follow, max-image-preview:large');
+    upsert('link', ['rel', 'canonical'], 'href', url);
+    upsert('meta', ['property', 'og:url'], 'content', url);
+    upsert('meta', ['property', 'og:title'], 'content', title);
+    upsert('meta', ['property', 'og:description'], 'content', meta.description);
+    upsert('meta', ['name', 'twitter:title'], 'content', title);
+    upsert('meta', ['name', 'twitter:description'], 'content', meta.description);
   }, [meta]);
   return null;
 }

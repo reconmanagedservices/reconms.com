@@ -3,54 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Everything between seo:start and seo:end is replaced per page at build time by
+      scripts/prerender.mjs (title, description, canonical, Open Graph, Twitter, JSON-LD).
+      Edit page metadata in src/seo.ts. The defaults below are only used by `npm run dev`.
+    -->
+    <!--seo:start-->
     <title>Managed IT Services in Beaumont, TX | Recon Managed Services</title>
-    <meta
-      name="description"
-      content="Responsive managed IT, cybersecurity, co-managed IT, and technology strategy for organizations across Southeast Texas."
-    />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://reconms.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Recon Managed Services" />
-    <meta property="og:url" content="https://reconms.com/" />
-    <meta property="og:title" content="Managed IT Services in Beaumont, TX | Recon Managed Services" />
-    <meta
-      property="og:description"
-      content="Responsive managed IT, cybersecurity, co-managed IT, and technology strategy for organizations across Southeast Texas."
-    />
-    <meta property="og:image" content="https://reconms.com/assets/social-share.png" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="description" content="Beaumont-based managed IT services for Southeast Texas." />
+    <!--seo:end-->
     <meta name="theme-color" content="#101211" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-    />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ITService",
-        "name": "Recon Managed Services",
-        "url": "https://reconms.com/",
-        "logo": "https://reconms.com/assets/recon-logo.png",
-        "image": "https://reconms.com/assets/social-share.png",
-        "description": "Managed IT services, cybersecurity, co-managed IT, and technology strategy for organizations across Southeast Texas.",
-        "telephone": "+1-409-757-8115",
-        "email": "hello@reconms.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "2590 Calder Ave.",
-          "addressLocality": "Beaumont",
-          "addressRegion": "TX",
-          "postalCode": "77702",
-          "addressCountry": "US"
-        },
-        "areaServed": "Southeast Texas",
-        "sameAs": ["https://www.facebook.com/reconms", "https://www.linkedin.com/company/reconms/"]
-      }
-    </script>
+    <link rel="apple-touch-icon" href="/assets/social-share.png" />
   </head>
   <body>
     <div id="root"><!--app-html--></div>

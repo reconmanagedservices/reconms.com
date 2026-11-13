@@ -43,7 +43,7 @@ function MissionGraphic() {
       <div className="mission-orbit grid size-[250px] place-items-center rounded-full border border-white/15">
         <div className="grid size-[160px] place-items-center rounded-full border border-white/25 bg-white/[.04]">
           <div className="grid size-20 place-items-center rounded-full bg-white text-black shadow-[0_14px_45px_rgba(255,255,255,.15)]">
-            <img src="/assets/recon-social-icon.png" alt="Recon" className="size-14 object-contain" />
+            <img src="/assets/recon-social-icon.png" alt="Recon" width={180} height={177} loading="lazy" decoding="async" className="size-14 object-contain" />
           </div>
         </div>
         <div className="value-orbit-track">
@@ -90,10 +90,10 @@ export default function HomePage() {
               productive, and ready for what’s next.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Link to="/contact" className="button button-light">
+              <Link to="/contact/" className="button button-light">
                 Get your IT assessment <Icon name="arrow" className="size-4" />
               </Link>
-              <Link to="/services" className="button button-ghost">
+              <Link to="/services/" className="button button-ghost">
                 Explore services
               </Link>
             </div>
@@ -154,7 +154,7 @@ export default function HomePage() {
             <p className="eyebrow">What we do</p>
             <h2>One partner for your technology environment.</h2>
           </div>
-          <Link to="/services" className="text-link">
+          <Link to="/services/" className="text-link">
             View all services <Icon name="arrow" className="size-4" />
           </Link>
         </div>
@@ -180,11 +180,11 @@ export default function HomePage() {
             <h2 className="mt-5 font-display text-[clamp(2.7rem,5vw,4.8rem)] leading-[.94] tracking-[-.05em]">
               Expect better from your technology.
             </h2>
-            <p className="mt-7 text-lg leading-8 text-black/60">
+            <p className="mt-7 text-lg leading-8 text-black/65">
               We learn how your organization works, then build a practical technology plan around your mission,
               people, and goals.
             </p>
-            <Link to="/about" className="button button-dark mt-9 self-start">
+            <Link to="/about/" className="button button-dark mt-9 self-start">
               Why organizations choose Recon <Icon name="arrow" className="size-4" />
             </Link>
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
               and support the right technology.
             </p>
           </div>
-          <Link to="/products" className="text-link">
+          <Link to="/products/" className="text-link">
             Explore products <Icon name="arrow" className="size-4" />
           </Link>
         </div>

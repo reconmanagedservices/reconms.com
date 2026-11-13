@@ -54,7 +54,7 @@ export function SiteLayout() {
             <a href={site.phoneHref} className="text-sm font-semibold tracking-tight">
               {site.phone}
             </a>
-            <Link to="/contact" className="button button-dark">
+            <Link to="/contact/" className="button button-dark">
               Talk to an expert <Icon name="arrow" className="size-4" />
             </Link>
           </div>
@@ -82,7 +82,7 @@ export function SiteLayout() {
               <a href={site.phoneHref} className="py-4 font-semibold">
                 {site.phone}
               </a>
-              <Link to="/contact" className="button button-dark mt-2 justify-center">
+              <Link to="/contact/" className="button button-dark mt-2 justify-center">
                 Talk to an expert <Icon name="arrow" className="size-4" />
               </Link>
             </nav>
@@ -104,6 +104,8 @@ export function SiteLayout() {
                   alt={site.name}
                   width={500}
                   height={124}
+                  loading="lazy"
+                  decoding="async"
                   className="h-auto w-[210px] brightness-0 invert"
                 />
               </Link>
@@ -130,15 +132,22 @@ export function SiteLayout() {
                 <a href={site.careers}>Careers</a>
                 <a href={site.linkedIn}>LinkedIn</a>
               </div>
+              <address className="mt-6 text-sm leading-6 text-white/55 not-italic">
+                {site.address.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </address>
             </div>
           </div>
-          <div className="flex flex-col gap-4 pt-7 text-xs text-white/30 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4 pt-7 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
             <p suppressHydrationWarning>
               © {new Date().getFullYear()} {site.name}. All rights reserved.
             </p>
             <div className="flex gap-5">
-              <Link to="/privacy-policy">Privacy Policy</Link>
-              <Link to="/terms">Terms of Use</Link>
+              <Link to="/privacy-policy/">Privacy Policy</Link>
+              <Link to="/terms/">Terms of Use</Link>
             </div>
           </div>
         </div>

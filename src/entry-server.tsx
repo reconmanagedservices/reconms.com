@@ -1,18 +1,20 @@
 import { StrictMode } from 'react';
-import { renderToString } from 'react-dom/server';
+import { prerenderToNodeStream } from 'react-dom/static';
 import { StaticRouter } from 'react-router';
 import App from './App';
-import { pageMeta } from './seo';
 
-export { pageMeta };
-export { canonicalUrl, fullTitle } from './seo';
+export { canonicalUrl, fullTitle, isNotFound, pageMeta, socialImage, structuredData } from './seo';
 
-export function render(url: string) {
-  return renderToString(
+/** Renders a route to HTML, waiting for lazy-loaded pages (unlike renderToString). */
+export async function render(url: string): Promise<string> {
+  const { prelude } = await prerenderToNodeStream(
     <StrictMode>
       <StaticRouter location={url}>
         <App />
       </StaticRouter>
     </StrictMode>,
   );
+  const chunks: Buffer[] = [];
+  for await (const chunk of prelude) chunks.push(Buffer.from(chunk));
+  return Buffer.concat(chunks).toString('utf8');
 }

@@ -84,7 +84,7 @@ export default function AboutPage() {
             <h2 className="mt-5 font-display text-4xl leading-none tracking-[-.04em] sm:text-5xl">
               Let’s talk about where technology is getting in the way.
             </h2>
-            <Link to="/contact" className="button button-dark mt-9 self-start">
+            <Link to="/contact/" className="button button-dark mt-9 self-start">
               Meet with Recon <Icon name="arrow" className="size-4" />
             </Link>
           </div>

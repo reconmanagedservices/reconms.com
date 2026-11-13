@@ -13,10 +13,10 @@ export const site = {
 };
 
 export const navItems: [label: string, path: string][] = [
-  ['Services', '/services'],
-  ['Products', '/products'],
-  ['Why Recon', '/about'],
-  ['Contact', '/contact'],
+  ['Services', '/services/'],
+  ['Products', '/products/'],
+  ['Why Recon', '/about/'],
+  ['Contact', '/contact/'],
 ];
 
 export type Service = { icon: IconName; title: string; text: string; points: string[] };

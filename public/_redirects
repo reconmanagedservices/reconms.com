@@ -1,16 +1,26 @@
 # Permanent redirects from the old WordPress site to the closest new page.
 # Format: <old path> <new path or URL> <status>. Top-most match wins.
-# Old URLs ended in "/", so both forms are listed.
+# Pages that kept their URL (/, /about/, /contact/, /terms/, /privacy-policy/) need no rule.
 
-/managed            /services                     301
-/managed/           /services                     301
-/comanaged          /services                     301
-/comanaged/         /services                     301
-/ai                 /services                     301
-/ai/                /services                     301
-/other              /products                     301
-/other/             /products                     301
-/interest-form      /contact                      301
-/interest-form/     /contact                      301
+# Old service pages
+/managed            /services/                    301
+/managed/           /services/                    301
+/comanaged          /services/                    301
+/comanaged/         /services/                    301
+/ai                 /services/                    301
+/ai/                /services/                    301
+/other              /products/                    301
+/other/             /products/                    301
+/interest-form      /contact/                     301
+/interest-form/     /contact/                     301
 /customer-portal    https://portal.reconms.com    301
 /customer-portal/   https://portal.reconms.com    301
+
+# Old WordPress / Yoast sitemap URLs (may still be registered in Google Search Console)
+/sitemaps.xml           /sitemap.xml    301
+/sitemap_index.xml      /sitemap.xml    301
+/wp-sitemap.xml         /sitemap.xml    301
+/page-sitemap.xml       /sitemap.xml    301
+/page-sitemap1.xml      /sitemap.xml    301
+/post-sitemap1.xml      /sitemap.xml    301
+/category-sitemap1.xml  /sitemap.xml    301

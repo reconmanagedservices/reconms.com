@@ -34,8 +34,9 @@ export function ServiceGrid({ compact = false }: { compact?: boolean }) {
               </li>
             ))}
           </ul>
-          <Link to="/contact" aria-label={`Discuss ${service.title}`}>
-            Discuss your needs <Icon name="arrow" className="size-4" />
+          <Link to="/contact/">
+            Discuss your needs<span className="sr-only"> about {service.title}</span>
+            <Icon name="arrow" className="size-4" />
           </Link>
         </article>
       ))}
@@ -62,8 +63,9 @@ export function ProductGrid({ compact = false }: { compact?: boolean }) {
               ))}
             </ul>
           )}
-          <Link to="/contact" aria-label={`Request a consultation about ${product.title}`}>
-            Request a consultation <Icon name="arrow" className="size-4" />
+          <Link to="/contact/">
+            Request a consultation<span className="sr-only"> about {product.title}</span>
+            <Icon name="arrow" className="size-4" />
           </Link>
         </article>
       ))}
@@ -117,7 +119,7 @@ export function ClosingCta() {
             Let’s make IT feel simple again.
           </h2>
         </div>
-        <Link to="/contact" className="button button-dark shrink-0">
+        <Link to="/contact/" className="button button-dark shrink-0">
           Start a conversation <Icon name="arrow" className="size-4" />
         </Link>
       </div>
@@ -147,7 +149,7 @@ export function DarkCtaPanel({
           </h2>
           {text && <p className="mt-6 max-w-2xl leading-7 text-white/55">{text}</p>}
         </div>
-        <Link to="/contact" className="button button-light mt-10 shrink-0">
+        <Link to="/contact/" className="button button-light mt-10 shrink-0">
           {linkLabel} <Icon name="arrow" className="size-4" />
         </Link>
       </div>

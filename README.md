@@ -49,8 +49,8 @@ from your own machine instead: `npx wrangler login`, then `npm run deploy`.
 
 `wrangler.jsonc` sets two things:
 
-- `html_handling: drop-trailing-slash`: pages are served at `/about` (the canonical
-  URL); `/about/` redirects there.
+- `html_handling: force-trailing-slash`: pages are served at `/about/` (the canonical URL,
+  same as the old WordPress site); `/about` redirects there.
 - `not_found_handling: 404-page`: unknown URLs get `404.html` with a 404 status.
 
 Redirects from old WordPress URLs live in `public/_redirects`.
@@ -77,6 +77,20 @@ Then redeploy. Until the site key is set, the Contact page shows the plain
 "Email hello@reconms.com" button instead of the form. Sender and recipient
 addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
 
+## SEO
+
+- **Metadata:** titles, descriptions and canonical paths for every page are in `src/seo.ts`.
+  `scripts/prerender.mjs` writes them into each page's `<head>`, together with Open Graph and
+  Twitter tags, the social image (`public/assets/og-image.png`, 1200×630) and schema.org
+  structured data (`ProfessionalService` + `WebSite`, built from `src/content.ts`).
+- **URLs end in `/`** (`/about/`, `/contact/`, …) to match the URLs Google indexed on the old
+  WordPress site. The build adds 301s from the slash-less form; internal links must use the
+  trailing slash.
+- **New page checklist:** add it to `src/App.tsx` and `src/seo.ts` (it is then prerendered and
+  listed in `sitemap.xml` automatically).
+- **Redirects** for retired URLs go in `public/_redirects`.
+- **Fonts** are self-hosted (`src/index.css`) and preloaded; no third-party requests on page load.
+
 ## Where things live
 
 | What | File |
@@ -87,10 +101,10 @@ addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
 | Header / footer | `src/components/SiteLayout.tsx` |
 | Shared sections (cards, hero, CTA, FAQ) | `src/components/Sections.tsx` |
 | Styles and design tokens | `src/index.css` |
-| Logo, favicon, social image | `public/` |
+| Logo, favicon, social share image | `public/` |
 | Redirects from old URLs | `public/_redirects` |
 | Cloudflare hosting settings | `wrangler.jsonc` |
 | Contact form (front end / server) | `src/components/ContactForm.tsx` / `worker/` |
-| Business schema (JSON-LD) and default meta | `index.html` |
+| Business structured data (JSON-LD) | `structuredData()` in `src/seo.ts` |
 | Terms of Use / Privacy Policy text | `src/legal/*.html` (plain HTML; edit the dates paragraph at the top when updating) |
 | Routes | `src/App.tsx` (add new pages to `src/seo.ts` too so they get prerendered) |

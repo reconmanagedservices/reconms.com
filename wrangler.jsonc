@@ -11,8 +11,8 @@
     "binding": "ASSETS",
     // Only API requests run the Worker; everything else is served as a static file.
     "run_worker_first": ["/api/*"],
-    // Serve about/index.html at /about (canonical), and 307 /about/ -> /about.
-    "html_handling": "drop-trailing-slash",
+    // Pages live at /about/ (matching the old WordPress URLs); /about redirects to /about/.
+    "html_handling": "force-trailing-slash",
     // Unknown URLs get dist/404.html with a real 404 status.
     "not_found_handling": "404-page"
   },
