@@ -2,8 +2,33 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { site } from '../content';
 import { Icon } from './Icon';
 
-/** Public Turnstile site key, provided at build time (see README). */
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
+/**
+ * Optional build-time Turnstile site key. Normally the key is read at runtime from
+ * /api/contact/config (the Worker's TURNSTILE_SITE_KEY variable), so it doesn't need to be set
+ * when the site is built; this is a fallback (and what `npm run dev` uses via .env.development).
+ */
+const BUILD_SITE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined) || null;
+
+type FormConfig = { siteKey: string | null; ready: boolean };
+
+/** Asks the Worker for the public site key and whether the form can accept submissions. */
+async function loadConfig(): Promise<FormConfig> {
+  try {
+    const res = await fetch('/api/contact/config', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const config = (await res.json()) as { siteKey: string | null; missing: string[] };
+    const siteKey = config.siteKey || BUILD_SITE_KEY;
+    const missing = config.missing.filter((name) => !(name === 'TURNSTILE_SITE_KEY' && siteKey));
+    if (missing.length) {
+      console.warn(`Contact form is not set up yet. Missing Worker settings: ${missing.join(', ')}. See README → Contact form.`);
+    }
+    return { siteKey, ready: missing.length === 0 };
+  } catch (error) {
+    // No Worker (e.g. plain `vite dev`): rely on the build-time key, if any.
+    console.warn('Could not load contact form settings from /api/contact/config.', error);
+    return { siteKey: BUILD_SITE_KEY, ready: Boolean(BUILD_SITE_KEY) };
+  }
+}
 const TURNSTILE_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 type TurnstileApi = {
@@ -49,6 +74,7 @@ const inputClass =
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: 'idle' });
+  const [config, setConfig] = useState<FormConfig | null>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const token = useRef<string | null>(null);
@@ -60,13 +86,23 @@ export function ContactForm() {
   };
 
   useEffect(() => {
-    if (!TURNSTILE_SITE_KEY || status.state === 'success') return;
+    let cancelled = false;
+    loadConfig().then((loaded) => !cancelled && setConfig(loaded));
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const siteKey = config?.siteKey ?? null;
+
+  useEffect(() => {
+    if (!siteKey || status.state === 'success') return;
     let cancelled = false;
     loadTurnstile()
       .then((turnstile) => {
         if (cancelled || !widgetRef.current) return;
         widgetId.current = turnstile.render(widgetRef.current, {
-          sitekey: TURNSTILE_SITE_KEY,
+          sitekey: siteKey,
           action: 'contact',
           appearance: 'interaction-only',
           callback: (value: string) => settleToken(value),
@@ -90,7 +126,7 @@ export function ContactForm() {
       widgetId.current = null;
       token.current = null;
     };
-  }, [status.state === 'success']); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [siteKey, status.state === 'success']); // eslint-disable-line react-hooks/exhaustive-deps
 
   /** Returns the current Turnstile token, waiting briefly if the check is still running. */
   function getToken(): Promise<string | null> {
@@ -141,15 +177,6 @@ export function ContactForm() {
     }
   }
 
-  // Without a Turnstile key (e.g. before the form is configured), fall back to email.
-  if (!TURNSTILE_SITE_KEY) {
-    return (
-      <a href={`mailto:${site.email}?subject=IT%20assessment%20request`} className="button button-dark mt-9">
-        Email {site.email} <Icon name="arrow" className="size-4" />
-      </a>
-    );
-  }
-
   if (status.state === 'success') {
     return (
       <div className="mt-9 rounded-[1.75rem] bg-[#f4f4f1] p-7" role="status">
@@ -172,6 +199,8 @@ export function ContactForm() {
   }
 
   const submitting = status.state === 'submitting';
+  // Settings missing on the Worker: keep the form visible but point people to email/phone.
+  const unavailable = config !== null && !config.ready;
   const invalid = status.state === 'error' ? (status.fields ?? []) : [];
 
   return (
@@ -213,6 +242,20 @@ export function ContactForm() {
         </label>
       </div>
 
+      {unavailable && (
+        <p role="status" className="rounded-2xl bg-[#f4f4f1] px-4 py-3.5 text-sm leading-6 text-black/70">
+          Online messages aren’t available right now. Please email{' '}
+          <a href={`mailto:${site.email}`} className="font-semibold text-[#111312] underline underline-offset-2">
+            {site.email}
+          </a>{' '}
+          or call{' '}
+          <a href={site.phoneHref} className="font-semibold whitespace-nowrap text-[#111312] underline underline-offset-2">
+            {site.phone}
+          </a>
+          .
+        </p>
+      )}
+
       {status.state === 'error' && (
         <p role="alert" className="rounded-2xl bg-[#fdecea] px-4 py-3.5 text-sm leading-6 text-[#7a1b12]">
           {status.message} You can also email{' '}
@@ -224,7 +267,11 @@ export function ContactForm() {
       )}
 
       <div className="flex flex-wrap items-center gap-4">
-        <button type="submit" className="button button-dark disabled:opacity-60" disabled={submitting}>
+        <button
+          type="submit"
+          className="button button-dark disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={submitting || unavailable}
+        >
           {submitting ? 'Sending…' : 'Send message'} {!submitting && <Icon name="arrow" className="size-4" />}
         </button>
         {/* Cloudflare Turnstile spam check; only becomes visible if it needs the visitor to interact. */}

@@ -66,16 +66,22 @@ The Contact page form posts to `/api/contact` (`worker/contact.ts`), which:
 
 One-time setup in Cloudflare and Resend:
 
-| Setting | Where | Value |
-| --- | --- | --- |
-| Turnstile widget | Cloudflare dashboard → Turnstile → Add widget | Hostnames: `reconms.com`, `www.reconms.com`, and the `*.workers.dev` preview host. Mode: Managed |
-| `VITE_TURNSTILE_SITE_KEY` | Worker → Settings → Build → **Build variables** | the widget's **site key** (public) |
-| `TURNSTILE_SECRET_KEY` | Worker → Settings → **Variables and Secrets** (type: Secret) | the widget's **secret key** |
-| `RESEND_API_KEY` | Worker → Settings → **Variables and Secrets** (type: Secret) | a Resend API key with sending access for `reconms.com` |
+1. **Cloudflare → Turnstile → Add widget.** Hostnames: `reconms.com`, `www.reconms.com`, and the
+   `*.workers.dev` preview host. Mode: Managed.
+2. **Resend → API Keys:** create a key with sending access for `reconms.com`.
+3. **Worker → Settings → Variables and Secrets** (all three go here; no build variables needed):
 
-Then redeploy. Until the site key is set, the Contact page shows the plain
-"Email hello@reconms.com" button instead of the form. Sender and recipient
-addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
+| Name | Type | Value |
+| --- | --- | --- |
+| `TURNSTILE_SITE_KEY` | Text | the widget's **site key** (public) |
+| `TURNSTILE_SECRET_KEY` | Secret | the widget's **secret key** |
+| `RESEND_API_KEY` | Secret | the Resend API key |
+
+The form reads the site key at runtime from `/api/contact/config` (`VITE_TURNSTILE_SITE_KEY` is
+accepted under either name, and as a build variable, too). Until everything is set, the form
+still shows but says online messages are unavailable, with email/phone instead, and the browser
+console lists which settings are missing. Sender and recipient addresses are `CONTACT_FROM` /
+`CONTACT_TO` in `wrangler.jsonc`.
 
 ## SEO
 

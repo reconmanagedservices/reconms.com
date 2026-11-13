@@ -25,6 +25,7 @@
     "enabled": true
   }
   // Secrets (set in the Cloudflare dashboard or with `npx wrangler secret put <NAME>`):
+  //   TURNSTILE_SITE_KEY    Turnstile widget site key (public; a plain-text variable is fine)
   //   TURNSTILE_SECRET_KEY  Cloudflare Turnstile widget secret key
   //   RESEND_API_KEY        Resend API key with "sending access"
 }

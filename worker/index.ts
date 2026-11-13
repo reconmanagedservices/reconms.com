@@ -5,7 +5,7 @@
  * reach this code. Only requests matching `run_worker_first` in wrangler.jsonc (/api/*)
  * run here.
  */
-import { handleContact } from './contact';
+import { handleContact, handleContactConfig } from './contact';
 
 export interface Env {
   ASSETS: Fetcher;
@@ -13,6 +13,13 @@ export interface Env {
   CONTACT_TO: string;
   /** Sender shown on the notification email; its domain must be verified in Resend. */
   CONTACT_FROM: string;
+  /**
+   * Cloudflare Turnstile site key (public, not a secret). Set as a plain-text variable in the
+   * Worker's "Variables and Secrets". VITE_TURNSTILE_SITE_KEY is also accepted, so a key added
+   * under that name at runtime works too.
+   */
+  TURNSTILE_SITE_KEY?: string;
+  VITE_TURNSTILE_SITE_KEY?: string;
   /** Secret: Cloudflare Turnstile secret key. */
   TURNSTILE_SECRET_KEY?: string;
   /** Secret: Resend API key used to send the email. */
@@ -25,6 +32,9 @@ export default {
   async fetch(request, env): Promise<Response> {
     const { pathname } = new URL(request.url);
 
+    if (pathname === '/api/contact/config') {
+      return handleContactConfig(request, env);
+    }
     if (pathname === '/api/contact') {
       return handleContact(request, env);
     }

@@ -20,6 +20,30 @@ const json = (body: Record<string, unknown>, status = 200) =>
 
 const fail = (status: number, error: string, message: string) => json({ ok: false, error, message }, status);
 
+/** The public Turnstile site key, from whichever variable name it was configured under. */
+export const turnstileSiteKey = (env: Env) => env.TURNSTILE_SITE_KEY || env.VITE_TURNSTILE_SITE_KEY || null;
+
+/** Names of settings the contact form still needs (names only, never values). */
+function missingSettings(env: Env): string[] {
+  const missing: string[] = [];
+  if (!turnstileSiteKey(env)) missing.push('TURNSTILE_SITE_KEY');
+  if (!env.TURNSTILE_SECRET_KEY) missing.push('TURNSTILE_SECRET_KEY');
+  if (!env.RESEND_API_KEY && env.EMAIL_DRY_RUN !== 'true') missing.push('RESEND_API_KEY');
+  return missing;
+}
+
+/**
+ * GET /api/contact/config: tells the form its public Turnstile site key and whether it can
+ * accept submissions. Read at runtime so the key doesn't have to be present at build time.
+ */
+export function handleContactConfig(request: Request, env: Env): Response {
+  if (request.method !== 'GET') {
+    return new Response(null, { status: 405, headers: { Allow: 'GET' } });
+  }
+  const missing = missingSettings(env);
+  return json({ siteKey: turnstileSiteKey(env), ready: missing.length === 0, missing });
+}
+
 export async function handleContact(request: Request, env: Env): Promise<Response> {
   if (request.method !== 'POST') {
     return new Response(null, { status: 405, headers: { Allow: 'POST' } });
@@ -31,8 +55,9 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
     return fail(403, 'forbidden', 'Submissions are only accepted from reconms.com.');
   }
 
-  if (!env.TURNSTILE_SECRET_KEY || (!env.RESEND_API_KEY && env.EMAIL_DRY_RUN !== 'true')) {
-    console.error('Contact form is not configured: missing TURNSTILE_SECRET_KEY or RESEND_API_KEY.');
+  const missing = missingSettings(env).filter((name) => name !== 'TURNSTILE_SITE_KEY');
+  if (missing.length || !env.TURNSTILE_SECRET_KEY) {
+    console.error(`Contact form is not configured: missing ${missing.join(', ')}.`);
     return fail(503, 'not_configured', 'The contact form is temporarily unavailable.');
   }
 
