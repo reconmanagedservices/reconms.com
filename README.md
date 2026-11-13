@@ -88,7 +88,9 @@ console lists which settings are missing. Sender and recipient addresses are `CO
 Posts are Markdown files in `content/blog/` (one file per post; the file name is the URL, so
 `content/blog/my-post.md` is published at `/my-post/`). Images go in `public/assets/blog/`.
 See `content/blog/README.md` for the file format. The Blog menu item, `/blog/` page, home page
-"From the blog" section and RSS feed (`/blog/feed.xml`) appear automatically once at least one
+"From the blog" section and RSS feed (`/blog/feed.xml`). The blog page has category filters and search
+(shareable as `/blog/?category=security&q=backup`), and each post with 3+ `##` sections gets an
+automatic table of contents built from them appear automatically once at least one
 published post exists. Posts marked `draft: true` are left out of the production build entirely.
 
 ### Publishing with Pages CMS (recommended)

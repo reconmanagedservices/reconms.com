@@ -25,7 +25,10 @@ const metaModules = import.meta.glob<PostMeta | null>(['/content/blog/*.md', '!/
   import: 'default',
   eager: true,
 });
-const bodyLoaders = import.meta.glob<string>(['/content/blog/*.md', '!/content/blog/README.md'], {
+/** A post's rendered HTML plus its table of contents (the post's h2 headings). */
+export type PostBody = { html: string; toc: { id: string; text: string }[] };
+
+const bodyLoaders = import.meta.glob<PostBody>(['/content/blog/*.md', '!/content/blog/README.md'], {
   query: '?body',
   import: 'default',
 });
@@ -37,11 +40,30 @@ export const posts: PostMeta[] = Object.values(metaModules)
 
 export const postPath = (post: Pick<PostMeta, 'slug'>) => `/${post.slug}/`;
 
-export function loadPostBody(slug: string): Promise<string> {
+export function loadPostBody(slug: string): Promise<PostBody> {
   const load = bodyLoaders[`/content/blog/${slug}.md`];
   if (!load) return Promise.reject(new Error(`No post named ${slug}`));
   return load();
 }
+
+/** URL-friendly category name, e.g. "IT Management" → "it-management" (used in /blog/?category=). */
+export const categorySlug = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+/** Categories in use, most posts first. */
+export const categories = Object.values(
+  posts.reduce<Record<string, { slug: string; name: string; count: number }>>((all, post) => {
+    if (post.category) {
+      const slug = categorySlug(post.category);
+      all[slug] ??= { slug, name: post.category, count: 0 };
+      all[slug].count += 1;
+    }
+    return all;
+  }, {}),
+).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
 export function formatPostDate(iso: string) {
   return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', {

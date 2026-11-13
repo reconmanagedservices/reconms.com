@@ -1,8 +1,8 @@
 /**
  * Turns the Markdown posts in content/blog/*.md into build-time modules, so no Markdown parser
- * ships to the browser:
+ * ships to the browser (h2/h3 headings get ids, and the h2s form the table of contents):
  *   content/blog/<slug>.md?meta → export default { slug, title, date, … }  (small; for listings)
- *   content/blog/<slug>.md?body → export default "<p>…</p>"                (HTML; loaded per post)
+ *   content/blog/<slug>.md?body → export default { html, toc }           (loaded per post)
  * The file name (without .md) is the post's URL: /<slug>/.
  */
 import { readFileSync } from 'node:fs';
@@ -29,6 +29,29 @@ const stripHtml = (html: string) =>
     .replace(/&quot;/g, '"')
     .replace(/\s+/g, ' ')
     .trim();
+
+/** Lowercase, hyphenated id for a heading, e.g. "Why It Matters?" → "why-it-matters". */
+const headingId = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'section';
+
+/** Gives every h2/h3 a unique id and returns the h2s as a table of contents. */
+function addHeadingIds(html: string) {
+  const used = new Set<string>();
+  const toc: { id: string; text: string }[] = [];
+  const withIds = html.replace(/<h([23])>([\s\S]*?)<\/h\1>/g, (_m, level: string, inner: string) => {
+    const text = stripHtml(inner);
+    let id = headingId(text);
+    for (let n = 2; used.has(id); n++) id = `${headingId(text)}-${n}`;
+    used.add(id);
+    if (level === '2') toc.push({ id, text });
+    return `<h${level} id="${id}">${inner}</h${level}>`;
+  });
+  return { html: withIds, toc };
+}
 
 function parsePost(file: string) {
   const slug = path.basename(file, '.md');
@@ -65,7 +88,8 @@ function parsePost(file: string) {
     draft: data.draft === true,
     readingMinutes: Math.max(1, Math.round(text.split(' ').length / 220)),
   };
-  return { meta, html };
+  const { html: body, toc } = addHeadingIds(html);
+  return { meta, body: { html: body, toc } };
 }
 
 export default function blogPlugin(): Plugin {
@@ -81,10 +105,10 @@ export default function blogPlugin(): Plugin {
       const [file, query] = id.split('?');
       if (!file.endsWith('.md') || !file.includes(BLOG_DIR)) return null;
       this.addWatchFile(file);
-      const { meta, html } = parsePost(file);
+      const { meta, body } = parsePost(file);
       if (excludeDrafts && meta.draft) return 'export default null;';
       if (query === 'meta') return `export default ${JSON.stringify(meta)};`;
-      if (query === 'body') return `export default ${JSON.stringify(html)};`;
+      if (query === 'body') return `export default ${JSON.stringify(body)};`;
       throw new Error(`Import blog posts with ?meta or ?body (got ${id})`);
     },
   };
