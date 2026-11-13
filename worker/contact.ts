@@ -21,7 +21,8 @@ const json = (body: Record<string, unknown>, status = 200) =>
 const fail = (status: number, error: string, message: string) => json({ ok: false, error, message }, status);
 
 /** The public Turnstile site key, from whichever variable name it was configured under. */
-export const turnstileSiteKey = (env: Env) => env.TURNSTILE_SITE_KEY || env.VITE_TURNSTILE_SITE_KEY || null;
+export const turnstileSiteKey = (env: Env) =>
+  (env.TURNSTILE_SITE_KEY || env.VITE_TURNSTILE_SITE_KEY || '').trim() || null;
 
 /** Names of settings the contact form still needs (names only, never values). */
 function missingSettings(env: Env): string[] {
@@ -101,7 +102,7 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
 
   const verified = await verifyTurnstile(
     submission.turnstileToken,
-    env.TURNSTILE_SECRET_KEY,
+    env.TURNSTILE_SECRET_KEY.trim(),
     request.headers.get('CF-Connecting-IP'),
   );
   if (!verified) {
@@ -192,7 +193,7 @@ ${rows
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY?.trim()}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
   if (!res.ok) {

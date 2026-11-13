@@ -62,6 +62,66 @@ function loadTurnstile(): Promise<TurnstileApi> {
 
 type Status = { state: 'idle' | 'submitting' | 'success' } | { state: 'error'; message: string; fields?: string[] };
 
+type CheckError = { code: string; message: string; fatal: boolean };
+
+/**
+ * Explains a Turnstile client error code (developers.cloudflare.com/turnstile/troubleshooting/
+ * client-side-errors/error-codes/). `message` is shown to visitors; `hint` goes to the console
+ * for whoever maintains the site. Fatal errors won't resolve by retrying.
+ */
+function describeCheckError(code: string): CheckError & { hint: string } {
+  const host = typeof location === 'undefined' ? 'this site' : location.hostname;
+  if (['110100', '110110', '400020', '400021', '400070'].includes(code)) {
+    return {
+      code,
+      fatal: true,
+      message: `Our spam check isn’t set up correctly (error ${code}).`,
+      hint: 'The Turnstile site key is invalid, disabled, or mistyped. Check TURNSTILE_SITE_KEY in the Worker’s Variables and Secrets: it must be the widget’s *site key*, not its secret key.',
+    };
+  }
+  if (code === '110200') {
+    return {
+      code,
+      fatal: true,
+      message: `Our spam check isn’t set up for this web address yet (error ${code}).`,
+      hint: `Add "${host}" to the Turnstile widget’s hostnames: Cloudflare dashboard → Turnstile → your widget → Hostname Management.`,
+    };
+  }
+  if (code === '200100') {
+    return {
+      code,
+      fatal: true,
+      message: 'Your device’s clock appears to be wrong, so the spam check can’t run (error 200100).',
+      hint: 'The visitor’s system clock is incorrect, or something cached the challenge.',
+    };
+  }
+  if (code.startsWith('2005')) {
+    return {
+      code,
+      fatal: false,
+      message: `The spam check couldn’t load (error ${code}). A browser extension or network filter may be blocking challenges.cloudflare.com.`,
+      hint: 'The Turnstile iframe failed to load; challenges.cloudflare.com may be blocked.',
+    };
+  }
+  if (code === '110600' || code === '110620') {
+    return { code, fatal: false, message: 'The spam check timed out. Please try again.', hint: 'Turnstile challenge or interaction timed out.' };
+  }
+  if (code.startsWith('3') || code.startsWith('6')) {
+    return {
+      code,
+      fatal: false,
+      message: `We couldn’t verify your browser (error ${code}). Please refresh the page and try again.`,
+      hint: 'Turnstile challenge failed (generic client failure).',
+    };
+  }
+  return {
+    code,
+    fatal: false,
+    message: `The spam check failed (error ${code}). Please refresh the page and try again.`,
+    hint: 'Unrecognized Turnstile error code.',
+  };
+}
+
 const fields = [
   { name: 'name', label: 'Your name', type: 'text', autoComplete: 'name', maxLength: 100 },
   { name: 'email', label: 'Email address', type: 'email', autoComplete: 'email', maxLength: 254 },
@@ -75,6 +135,8 @@ const inputClass =
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: 'idle' });
   const [config, setConfig] = useState<FormConfig | null>(null);
+  const [checkError, setCheckError] = useState<CheckError | null>(null);
+  const checkErrorRef = useRef<CheckError | null>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const token = useRef<string | null>(null);
@@ -83,6 +145,11 @@ export function ContactForm() {
   const settleToken = (value: string | null) => {
     token.current = value;
     tokenWaiters.current.splice(0).forEach((resolve) => resolve(value));
+  };
+
+  const reportCheckError = (error: CheckError | null) => {
+    checkErrorRef.current = error;
+    setCheckError(error);
   };
 
   useEffect(() => {
@@ -96,6 +163,14 @@ export function ContactForm() {
   const siteKey = config?.siteKey ?? null;
 
   useEffect(() => {
+    // Site keys are 24 characters; secret keys are longer. Catch the most common mix-up.
+    if (siteKey && !/^[0-3]x/.test(siteKey)) console.warn('The Turnstile site key looks malformed:', siteKey);
+    else if (siteKey && siteKey.length > 30) {
+      console.warn('The Turnstile site key looks like a *secret* key. Use the widget’s site key for TURNSTILE_SITE_KEY.');
+    }
+  }, [siteKey]);
+
+  useEffect(() => {
     if (!siteKey || status.state === 'success') return;
     let cancelled = false;
     loadTurnstile()
@@ -105,13 +180,19 @@ export function ContactForm() {
           sitekey: siteKey,
           action: 'contact',
           appearance: 'interaction-only',
-          callback: (value: string) => settleToken(value),
+          callback: (value: string) => {
+            reportCheckError(null);
+            settleToken(value);
+          },
           'expired-callback': () => {
             token.current = null;
           },
-          'error-callback': () => {
-            settleToken(null);
-            return true; // let Turnstile retry on its own
+          'error-callback': (code: string | number) => {
+            const error = describeCheckError(String(code));
+            console.error(`Turnstile error ${error.code}: ${error.hint}`);
+            reportCheckError(error);
+            // Stop waiting on errors that retrying won't fix; Turnstile retries the others itself.
+            if (error.fatal) settleToken(null);
           },
         });
       })
@@ -131,6 +212,7 @@ export function ContactForm() {
   /** Returns the current Turnstile token, waiting briefly if the check is still running. */
   function getToken(): Promise<string | null> {
     if (token.current) return Promise.resolve(token.current);
+    if (checkErrorRef.current?.fatal) return Promise.resolve(null);
     return new Promise((resolve) => {
       tokenWaiters.current.push(resolve);
       setTimeout(() => resolve(token.current), 20000);
@@ -144,7 +226,12 @@ export function ContactForm() {
 
     const turnstileToken = await getToken();
     if (!turnstileToken) {
-      setStatus({ state: 'error', message: 'Please complete the verification check above the button, then try again.' });
+      const error = checkErrorRef.current;
+      if (!error) console.error('Turnstile produced no token within 20 seconds and reported no error.');
+      setStatus({
+        state: 'error',
+        message: error?.message ?? 'The spam check didn’t finish. If a “Verify you are human” box appears next to the button, complete it and try again.',
+      });
       return;
     }
 
@@ -256,13 +343,23 @@ export function ContactForm() {
         </p>
       )}
 
+      {checkError?.fatal && status.state !== 'error' && (
+        <p role="alert" className="rounded-2xl bg-[#fdecea] px-4 py-3.5 text-sm leading-6 text-[#7a1b12]">
+          {checkError.message} Please email{' '}
+          <a href={`mailto:${site.email}`} className="font-semibold underline underline-offset-2">
+            {site.email}
+          </a>{' '}
+          or call <span className="whitespace-nowrap">{site.phone}</span>.
+        </p>
+      )}
+
       {status.state === 'error' && (
         <p role="alert" className="rounded-2xl bg-[#fdecea] px-4 py-3.5 text-sm leading-6 text-[#7a1b12]">
           {status.message} You can also email{' '}
           <a href={`mailto:${site.email}`} className="font-semibold underline underline-offset-2">
             {site.email}
           </a>{' '}
-          or call {site.phone}.
+          or call <span className="whitespace-nowrap">{site.phone}</span>.
         </p>
       )}
 
@@ -270,7 +367,7 @@ export function ContactForm() {
         <button
           type="submit"
           className="button button-dark disabled:cursor-not-allowed disabled:opacity-60"
-          disabled={submitting || unavailable}
+          disabled={submitting || unavailable || Boolean(checkError?.fatal)}
         >
           {submitting ? 'Sending…' : 'Send message'} {!submitting && <Icon name="arrow" className="size-4" />}
         </button>
