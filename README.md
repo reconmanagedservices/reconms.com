@@ -104,7 +104,8 @@ addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
 | Header / footer | `src/components/SiteLayout.tsx` |
 | Shared sections (cards, hero, CTA, FAQ) | `src/components/Sections.tsx` |
 | Styles and design tokens | `src/index.css` |
-| Logo, favicon, social share image | `public/` |
+| Logo and social share image | `public/assets/` |
+| Favicons (`favicon.svg/.ico`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest`) | `public/`, generated from the `{r}` mark in `public/assets/recon-social-icon.png` |
 | Redirects from old URLs | `public/_redirects` |
 | Cloudflare hosting settings | `wrangler.jsonc` |
 | Contact form (front end / server) | `src/components/ContactForm.tsx` / `worker/` |

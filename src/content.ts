@@ -10,6 +10,7 @@ export const site = {
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
   linkedIn: 'https://www.linkedin.com/company/reconms/',
+  facebook: 'https://www.facebook.com/reconms',
 };
 
 export const navItems: [label: string, path: string][] = [
@@ -85,12 +86,23 @@ export const services: Service[] = [
   },
 ];
 
-export type Product = { icon: IconName; title: string; text: string; items: string[] };
+export type Product = {
+  icon: IconName;
+  title: string;
+  /** Short name used in link text and breadcrumbs. */
+  shortName: string;
+  /** URL of the dedicated product page (see src/productPages.ts). */
+  path: string;
+  text: string;
+  items: string[];
+};
 
 export const products: Product[] = [
   {
     icon: 'server',
     title: 'Computer Hardware',
+    shortName: 'Computer Hardware',
+    path: '/products/computer-hardware/',
     text: 'Business-ready computers, servers, and infrastructure selected, configured, and supported for the way your team works.',
     items: [
       'Desktops and laptops',
@@ -102,6 +114,8 @@ export const products: Product[] = [
   {
     icon: 'camera',
     title: 'Security Cameras',
+    shortName: 'Security Cameras',
+    path: '/products/security-cameras/',
     text: 'Clear, reliable video surveillance that helps you monitor facilities, investigate events, and protect the people and property that matter.',
     items: [
       'Indoor and outdoor cameras',
@@ -113,6 +127,8 @@ export const products: Product[] = [
   {
     icon: 'door',
     title: 'Access Control',
+    shortName: 'Access Control',
+    path: '/products/access-control/',
     text: 'Modern entry systems that make it easier to manage who can access your property, sensitive rooms, and critical areas.',
     items: [
       'Card and mobile credentials',
@@ -124,6 +140,8 @@ export const products: Product[] = [
   {
     icon: 'phone',
     title: 'VoIP Phone Systems',
+    shortName: 'VoIP Phone Systems',
+    path: '/products/voip-phone-systems/',
     text: 'Flexible business phone systems that keep your team connected in the office, on the road, and across multiple locations.',
     items: [
       'Desk and conference phones',

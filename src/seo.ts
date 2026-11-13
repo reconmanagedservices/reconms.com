@@ -1,5 +1,6 @@
 import { products, services, site } from './content';
-import { servicePages, type ServicePageContent } from './servicePages';
+import { productPages } from './productPages';
+import { servicePages, type DetailPageContent } from './servicePages';
 
 export type PageMeta = {
   /** Short page name; becomes "<title> | Recon Managed Services" unless `titleTag` is set. */
@@ -16,8 +17,14 @@ export type PageMeta = {
 
 const orgId = `${site.url}/#organization`;
 
-/** Metadata + Service/BreadcrumbList structured data for a dedicated service page. */
-function servicePageMeta(page: ServicePageContent): PageMeta {
+const sectionCrumbs = {
+  service: { name: 'Services', path: '/services/' },
+  product: { name: 'Products', path: '/products/' },
+};
+
+/** Metadata + Service/BreadcrumbList structured data for a dedicated service or product page. */
+function detailPageMeta(page: DetailPageContent, kind: keyof typeof sectionCrumbs): PageMeta {
+  const parent = sectionCrumbs[kind];
   const url = `${site.url}${page.path}`;
   return {
     title: page.shortName,
@@ -42,7 +49,7 @@ function servicePageMeta(page: ServicePageContent): PageMeta {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
-          { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
+          { '@type': 'ListItem', position: 2, name: parent.name, item: `${site.url}${parent.path}` },
           { '@type': 'ListItem', position: 3, name: page.shortName, item: url },
         ],
       },
@@ -67,17 +74,22 @@ export const pageMeta = {
       'Managed IT, co-managed IT, cybersecurity, and managed AI services for Southeast Texas organizations from a local Beaumont team. Talk through your needs.',
     path: '/services/',
   },
-  managed: servicePageMeta(servicePages.managed),
-  comanaged: servicePageMeta(servicePages.comanaged),
-  cybersecurity: servicePageMeta(servicePages.cybersecurity),
-  ai: servicePageMeta(servicePages.ai),
+  managed: detailPageMeta(servicePages.managed, 'service'),
+  comanaged: detailPageMeta(servicePages.comanaged, 'service'),
+  cybersecurity: detailPageMeta(servicePages.cybersecurity, 'service'),
+  ai: detailPageMeta(servicePages.ai, 'service'),
   products: {
     title: 'Business Technology Products',
-    titleTag: 'Business Computers, Security Cameras & VoIP in Beaumont, TX',
+    // Broad hub title; each product has its own page targeting its specific keyword.
+    titleTag: 'Business Technology Products in Beaumont, TX | Recon Managed Services',
     description:
       'Business computers, servers, security cameras, access control, and VoIP phone systems, selected, installed, and supported by Recon in Beaumont, Texas.',
     path: '/products/',
   },
+  hardware: detailPageMeta(productPages.hardware, 'product'),
+  cameras: detailPageMeta(productPages.cameras, 'product'),
+  accessControl: detailPageMeta(productPages.accessControl, 'product'),
+  voip: detailPageMeta(productPages.voip, 'product'),
   about: {
     title: 'About Recon Managed Services',
     titleTag: 'About Recon Managed Services | Beaumont, TX IT Company',
@@ -149,7 +161,7 @@ export function structuredData() {
         { '@type': 'City', name: 'Beaumont, TX' },
         { '@type': 'AdministrativeArea', name: 'Southeast Texas' },
       ],
-      sameAs: [site.linkedIn, 'https://www.facebook.com/reconms'],
+      sameAs: [site.linkedIn, site.facebook],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'IT services and business technology',
@@ -159,7 +171,7 @@ export function structuredData() {
             '@type': 'Service',
             name: item.title,
             description: item.text,
-            ...('path' in item ? { url: `${site.url}${item.path}` } : {}),
+            url: `${site.url}${item.path}`,
           },
         })),
       },

@@ -9,12 +9,14 @@ import type { IconName } from './components/Icon';
  */
 export type ServicePageKey = 'managed' | 'comanaged' | 'cybersecurity' | 'ai';
 
-export type ServicePageContent = {
-  key: ServicePageKey;
+/** Shared content shape for dedicated service and product pages (rendered by src/pages/DetailPage.tsx). */
+export type DetailPageContent = {
+  /** Key into `pageMeta` in src/seo.ts. */
+  key: string;
   path: string;
   /** Matches `shortName` in src/content.ts. Used in breadcrumbs and link text. */
   shortName: string;
-  /** schema.org Service.serviceType */
+  /** schema.org Service.serviceType (also used as the Service name). */
   serviceType: string;
   titleTag: string;
   description: string;
@@ -23,9 +25,12 @@ export type ServicePageContent = {
   reasons?: { eyebrow: string; title: string; items: { title: string; text: string }[] };
   included: { eyebrow: string; title: string; text?: string; items: { icon: IconName; title: string; text: string }[] };
   highlight: { eyebrow: string; title: string; paragraphs: string[]; points: string[] };
+  /** Three or four steps. */
   process: { eyebrow: string; title: string; steps: { title: string; text: string }[] };
   faqs: { question: string; answer: string }[];
 };
+
+export type ServicePageContent = DetailPageContent & { key: ServicePageKey };
 
 export const servicePages: Record<ServicePageKey, ServicePageContent> = {
   managed: {

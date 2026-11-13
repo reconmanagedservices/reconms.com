@@ -1,7 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
-import { navItems, services, site } from '../content';
+import { navItems, products, services, site } from '../content';
 import { Icon } from './Icon';
+
+/** Brand marks for the footer social links (filled glyphs on a 24×24 grid). */
+const socialLinks = [
+  {
+    label: 'LinkedIn',
+    href: site.linkedIn,
+    path: 'M5 9h3.2v10.5H5V9Zm1.6-5a1.85 1.85 0 1 1 0 3.7 1.85 1.85 0 0 1 0-3.7ZM10.2 9h3.07v1.44h.04c.43-.81 1.47-1.66 3.03-1.66 3.24 0 3.84 2.13 3.84 4.9v5.82H17v-5.16c0-1.23-.02-2.81-1.71-2.81-1.71 0-1.97 1.34-1.97 2.72v5.25H10.2V9Z',
+  },
+  {
+    label: 'Facebook',
+    href: site.facebook,
+    path: 'M13.6 21.5v-8h2.7l.4-3.13h-3.1V8.38c0-.9.25-1.52 1.55-1.52h1.65V4.07c-.29-.04-1.27-.12-2.41-.12-2.38 0-4.02 1.46-4.02 4.13v2.29H7.67v3.13h2.7v8h3.23Z',
+  },
+];
 
 // Dedicated service pages live outside /services/ (old URLs), but belong to the Services menu item.
 const servicePaths = new Set(services.map((service) => service.path));
@@ -101,8 +115,8 @@ export function SiteLayout() {
 
       <footer className="bg-[#0a0b0b] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
-          <div className="grid gap-12 border-b border-white/12 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-            <div>
+          <div className="grid gap-12 border-b border-white/12 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+            <div className="sm:col-span-2 lg:col-span-1">
               <Link to="/" aria-label={`${site.name} home`}>
                 <img
                   src="/assets/recon-logo.png"
@@ -117,6 +131,21 @@ export function SiteLayout() {
               <p className="mt-6 max-w-sm leading-7 text-white/45">
                 Managed IT, cybersecurity, and technology strategy for organizations across Southeast Texas.
               </p>
+              <div className="mt-6 flex gap-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    rel="me noopener"
+                    aria-label={`${site.name} on ${social.label}`}
+                    className="grid size-10 place-items-center rounded-full border border-white/20 text-white/75 hover:border-white hover:bg-white hover:text-[#0a0b0b]"
+                  >
+                    <svg className="size-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d={social.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
             </div>
             <div>
               <p className="footer-title">Explore</p>
@@ -139,13 +168,22 @@ export function SiteLayout() {
               </div>
             </div>
             <div>
+              <p className="footer-title">Products</p>
+              <div className="mt-5 grid gap-3 text-sm text-white/55">
+                {products.map((product) => (
+                  <Link key={product.path} to={product.path}>
+                    {product.shortName}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
               <p className="footer-title">Connect</p>
               <div className="mt-5 grid gap-3 text-sm text-white/55">
                 <a href={site.phoneHref}>{site.phone}</a>
                 <a href={`mailto:${site.email}`}>{site.email}</a>
                 <a href={site.customerPortal}>Customer portal</a>
                 <a href={site.careers}>Careers</a>
-                <a href={site.linkedIn}>LinkedIn</a>
               </div>
               <address className="mt-6 text-sm leading-6 text-white/55 not-italic">
                 {site.address.map((line) => (

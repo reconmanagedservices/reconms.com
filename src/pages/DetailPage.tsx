@@ -2,25 +2,56 @@ import { Link } from 'react-router';
 import { Icon } from '../components/Icon';
 import { ClosingCta, FaqList } from '../components/Sections';
 import { Seo } from '../components/Seo';
-import { services, site } from '../content';
-import { pageMeta } from '../seo';
-import type { ServicePageContent } from '../servicePages';
+import { products, services, site } from '../content';
+import type { PageMeta } from '../seo';
+import type { DetailPageContent } from '../servicePages';
 
-/** Template for the dedicated service pages (/managed/, /comanaged/, /cybersecurity/, /ai/). */
-export default function ServiceDetailPage({ page }: { page: ServicePageContent }) {
-  const related = services.filter((service) => service.path !== page.path);
+const sections = {
+  service: {
+    label: 'Services',
+    path: '/services/',
+    items: services,
+    relatedEyebrow: 'Related services',
+    relatedTitle: 'One partner for your whole environment.',
+    allLabel: 'View all services',
+  },
+  product: {
+    label: 'Products',
+    path: '/products/',
+    items: products,
+    relatedEyebrow: 'Related products',
+    relatedTitle: 'Technology that works together.',
+    allLabel: 'View all products',
+  },
+};
+
+/**
+ * Template for dedicated service pages (/managed/, /comanaged/, /cybersecurity/, /ai/) and
+ * product pages (/products/…/). Content lives in src/servicePages.ts and src/productPages.ts.
+ */
+export default function DetailPage({
+  page,
+  kind,
+  meta,
+}: {
+  page: DetailPageContent;
+  kind: keyof typeof sections;
+  meta: PageMeta;
+}) {
+  const section = sections[kind];
+  const related = section.items.filter((item) => item.path !== page.path);
 
   return (
     <>
-      <Seo meta={pageMeta[page.key]} />
+      <Seo meta={meta} />
 
       <section className="hero-grid relative overflow-hidden bg-[#101211] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
           <nav aria-label="Breadcrumb">
             <ol className="eyebrow text-white/55">
               <li>
-                <Link to="/services/" className="hover:text-white">
-                  Services
+                <Link to={section.path} className="hover:text-white">
+                  {section.label}
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
@@ -131,7 +162,9 @@ export default function ServiceDetailPage({ page }: { page: ServicePageContent }
             <p className="eyebrow">{page.process.eyebrow}</p>
             <h2>{page.process.title}</h2>
           </div>
-          <ol className="mt-14 grid gap-5 md:grid-cols-3">
+          <ol
+            className={`mt-14 grid gap-5 ${page.process.steps.length === 4 ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-3'}`}
+          >
             {page.process.steps.map((step, index) => (
               <li key={step.title} className="rounded-[1.75rem] bg-[#f4f4f1] p-8 lg:p-10">
                 <span aria-hidden="true" className="font-display text-5xl tracking-[-.04em] text-black/50">
@@ -162,27 +195,27 @@ export default function ServiceDetailPage({ page }: { page: ServicePageContent }
         <div className="mx-auto max-w-[1344px]">
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <div className="section-heading">
-              <p className="eyebrow">Related services</p>
-              <h2>One partner for your whole environment.</h2>
+              <p className="eyebrow">{section.relatedEyebrow}</p>
+              <h2>{section.relatedTitle}</h2>
             </div>
-            <Link to="/services/" className="text-link">
-              View all services <Icon name="arrow" className="size-4" />
+            <Link to={section.path} className="text-link">
+              {section.allLabel} <Icon name="arrow" className="size-4" />
             </Link>
           </div>
           <div className="mt-14 grid gap-5 md:grid-cols-3">
-            {related.map((service) => (
+            {related.map((item) => (
               <Link
-                key={service.path}
-                to={service.path}
+                key={item.path}
+                to={item.path}
                 className="group flex flex-col rounded-[1.75rem] bg-white p-8 transition-transform duration-300 hover:-translate-y-1"
               >
                 <span className="grid size-12 place-items-center rounded-2xl bg-[#111312] text-white">
-                  <Icon name={service.icon} />
+                  <Icon name={item.icon} />
                 </span>
-                <h3 className="mt-9 font-display text-2xl tracking-tight">{service.title}</h3>
-                <p className="mt-4 leading-7 text-black/58">{service.text}</p>
+                <h3 className="mt-9 font-display text-2xl tracking-tight">{item.title}</h3>
+                <p className="mt-4 leading-7 text-black/58">{item.text}</p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-bold">
-                  Explore {service.shortName}
+                  Explore {item.shortName}
                   <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>

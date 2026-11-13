@@ -6,8 +6,10 @@ import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductsPage from './pages/ProductsPage';
-import ServiceDetailPage from './pages/ServiceDetailPage';
+import DetailPage from './pages/DetailPage';
 import ServicesPage from './pages/ServicesPage';
+import { productPageList } from './productPages';
+import { pageMeta } from './seo';
 import { servicePageList } from './servicePages';
 
 // The legal pages carry ~55 KB of policy text, so they load as separate chunks instead of
@@ -24,9 +26,20 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="services" element={<ServicesPage />} />
         {servicePageList.map((page) => (
-          <Route key={page.key} path={page.path.slice(1, -1)} element={<ServiceDetailPage page={page} />} />
+          <Route
+            key={page.key}
+            path={page.path.slice(1, -1)}
+            element={<DetailPage page={page} kind="service" meta={pageMeta[page.key]} />}
+          />
         ))}
         <Route path="products" element={<ProductsPage />} />
+        {productPageList.map((page) => (
+          <Route
+            key={page.key}
+            path={page.path.slice(1, -1)}
+            element={<DetailPage page={page} kind="product" meta={pageMeta[page.key]} />}
+          />
+        ))}
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="terms" element={deferred(<TermsPage />)} />

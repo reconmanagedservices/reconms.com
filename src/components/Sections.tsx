@@ -63,8 +63,8 @@ export function ProductGrid({ compact = false }: { compact?: boolean }) {
               ))}
             </ul>
           )}
-          <Link to="/contact/">
-            Request a consultation<span className="sr-only"> about {product.title}</span>
+          <Link to={product.path}>
+            Explore {product.shortName}
             <Icon name="arrow" className="size-4" />
           </Link>
         </article>
