@@ -24,15 +24,25 @@ static HTML (`dist/index.html`, `dist/services/index.html`, … plus `dist/404.h
 and `dist/sitemap.xml`). Each page ships with its own `<title>`, description,
 canonical URL and Open Graph tags, and React hydrates it in the browser.
 
-## Deploy
+## Deploy (Cloudflare Workers)
 
-`dist/` is a plain static site. It works as-is on Netlify, Cloudflare Pages,
-Vercel, GitHub Pages, S3/CloudFront, or any web server:
+The site is deployed as a static-assets-only Cloudflare Worker, configured in
+`wrangler.jsonc`. In the Cloudflare dashboard (Workers & Pages → the
+`reconms-com` project → Settings → Build):
 
 - Build command: `npm run build`
-- Output directory: `dist`
-- Unknown URLs should serve `404.html` (Netlify, Cloudflare Pages and GitHub
-  Pages do this automatically).
+- Deploy command: `npx wrangler deploy`
+
+Every push to the production branch rebuilds and deploys automatically. To deploy
+from your own machine instead: `npx wrangler login`, then `npm run deploy`.
+
+`wrangler.jsonc` sets two things:
+
+- `html_handling: drop-trailing-slash`: pages are served at `/about` (the canonical
+  URL); `/about/` redirects there.
+- `not_found_handling: 404-page`: unknown URLs get `404.html` with a 404 status.
+
+Redirects from old WordPress URLs live in `public/_redirects`.
 
 ## Where things live
 
@@ -45,6 +55,8 @@ Vercel, GitHub Pages, S3/CloudFront, or any web server:
 | Shared sections (cards, hero, CTA, FAQ) | `src/components/Sections.tsx` |
 | Styles and design tokens | `src/index.css` |
 | Logo, favicon, social image | `public/` |
+| Redirects from old URLs | `public/_redirects` |
+| Cloudflare hosting settings | `wrangler.jsonc` |
 | Business schema (JSON-LD) and default meta | `index.html` |
 | Terms of Use / Privacy Policy text | `src/legal/*.html` (plain HTML; edit the dates paragraph at the top when updating) |
 | Routes | `src/App.tsx` (add new pages to `src/seo.ts` too so they get prerendered) |

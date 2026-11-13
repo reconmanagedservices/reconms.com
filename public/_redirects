@@ -1,0 +1,16 @@
+# Permanent redirects from the old WordPress site to the closest new page.
+# Format: <old path> <new path or URL> <status>. Top-most match wins.
+# Old URLs ended in "/", so both forms are listed.
+
+/managed            /services                     301
+/managed/           /services                     301
+/comanaged          /services                     301
+/comanaged/         /services                     301
+/ai                 /services                     301
+/ai/                /services                     301
+/other              /products                     301
+/other/             /products                     301
+/interest-form      /contact                      301
+/interest-form/     /contact                      301
+/customer-portal    https://portal.reconms.com    301
+/customer-portal/   https://portal.reconms.com    301

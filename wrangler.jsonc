@@ -1,0 +1,14 @@
+// Cloudflare Workers config: serves the prerendered static site in ./dist (no Worker code).
+// Having this file also stops `wrangler deploy` from trying to auto-configure the project.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "reconms-com",
+  "compatibility_date": "2026-11-10",
+  "assets": {
+    "directory": "./dist",
+    // Serve about/index.html at /about (canonical), and 307 /about/ -> /about.
+    "html_handling": "drop-trailing-slash",
+    // Unknown URLs get dist/404.html with a real 404 status.
+    "not_found_handling": "404-page"
+  }
+}
