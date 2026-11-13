@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
-import { navItems, site } from '../content';
+import { navItems, services, site } from '../content';
 import { Icon } from './Icon';
+
+// Dedicated service pages live outside /services/ (old URLs), but belong to the Services menu item.
+const servicePaths = new Set(services.map((service) => service.path));
 
 export function SiteLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,7 +46,9 @@ export function SiteLayout() {
               <NavLink
                 key={path}
                 to={path}
-                className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}
+                className={({ isActive }) =>
+                  `nav-link ${isActive || (path === '/services/' && servicePaths.has(pathname)) ? 'nav-link-active' : ''}`
+                }
               >
                 {label}
               </NavLink>
@@ -96,7 +101,7 @@ export function SiteLayout() {
 
       <footer className="bg-[#0a0b0b] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
-          <div className="grid gap-12 border-b border-white/12 pb-12 md:grid-cols-[1.4fr_1fr_1fr]">
+          <div className="grid gap-12 border-b border-white/12 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
             <div>
               <Link to="/" aria-label={`${site.name} home`}>
                 <img
@@ -119,6 +124,16 @@ export function SiteLayout() {
                 {navItems.map(([label, path]) => (
                   <Link key={path} to={path}>
                     {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="footer-title">Services</p>
+              <div className="mt-5 grid gap-3 text-sm text-white/55">
+                {services.map((service) => (
+                  <Link key={service.path} to={service.path}>
+                    {service.shortName}
                   </Link>
                 ))}
               </div>

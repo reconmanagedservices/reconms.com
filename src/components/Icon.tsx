@@ -72,6 +72,51 @@ const paths = {
     </>
   ),
   x: <path d="m6 6 12 12M18 6 6 18" />,
+  lock: (
+    <>
+      <rect x="4" y="11" width="16" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </>
+  ),
+  users: (
+    <>
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1" />
+      <path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M21.5 20v-1a5 5 0 0 0-3.5-4.8" />
+    </>
+  ),
+  pulse: <path d="M2 12h4l3-8 4 16 3-8h6" />,
+  clipboard: (
+    <>
+      <rect x="8" y="2.5" width="8" height="4" rx="1" />
+      <path d="M16 4.5h2a2 2 0 0 1 2 2V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2h2" />
+      <path d="m9 14 2 2 4-4" />
+    </>
+  ),
+  laptop: (
+    <>
+      <rect x="4" y="4" width="16" height="11" rx="1.5" />
+      <path d="M2 19h20" />
+    </>
+  ),
+  cap: (
+    <>
+      <path d="M22 9.5 12 4.5 2 9.5l10 5 10-5Z" />
+      <path d="M6 11.5V16c3.5 2.5 8.5 2.5 12 0v-4.5" />
+    </>
+  ),
+  layers: (
+    <>
+      <path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z" />
+      <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;

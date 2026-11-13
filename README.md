@@ -86,6 +86,8 @@ addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
 - **URLs end in `/`** (`/about/`, `/contact/`, …) to match the URLs Google indexed on the old
   WordPress site. The build adds 301s from the slash-less form; internal links must use the
   trailing slash.
+- **Service pages** reuse the old WordPress URLs (/managed/, /comanaged/, /ai/) so their
+  rankings carry over, and each emits `Service` + `BreadcrumbList` structured data.
 - **New page checklist:** add it to `src/App.tsx` and `src/seo.ts` (it is then prerendered and
   listed in `sitemap.xml` automatically).
 - **Redirects** for retired URLs go in `public/_redirects`.
@@ -95,7 +97,8 @@ addresses are `CONTACT_FROM` / `CONTACT_TO` in `wrangler.jsonc`.
 
 | What | File |
 | --- | --- |
-| Phone, email, address, portal/careers links, nav, services, products, FAQs | `src/content.ts` |
+| Phone, email, address, portal/careers links, nav, service/product cards, FAQs | `src/content.ts` |
+| Dedicated service pages (/managed/, /comanaged/, /cybersecurity/, /ai/) | content in `src/servicePages.ts`, layout in `src/pages/ServiceDetailPage.tsx` |
 | Page titles and meta descriptions | `src/seo.ts` |
 | Pages | `src/pages/*.tsx` |
 | Header / footer | `src/components/SiteLayout.tsx` |

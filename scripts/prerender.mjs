@@ -33,7 +33,10 @@ const fontPreloads = ['manrope-latin-wght-normal', 'space-grotesk-latin-wght-nor
   return `<link rel="preload" href="/_app/${file}" as="font" type="font/woff2" crossorigin />`;
 });
 
-const jsonLd = `<script type="application/ld+json">${safeJson({ '@context': 'https://schema.org', '@graph': structuredData().map(({ ['@context']: _, ...node }) => node) })}</script>`;
+// Site-wide graph (business + website) plus any page-specific nodes (e.g. Service, BreadcrumbList).
+const siteGraph = structuredData().map(({ ['@context']: _, ...node }) => node);
+const jsonLd = (meta) =>
+  `<script type="application/ld+json">${safeJson({ '@context': 'https://schema.org', '@graph': [...siteGraph, ...(meta.schema ?? [])] })}</script>`;
 
 function headTags(meta) {
   const title = fullTitle(meta);
@@ -61,7 +64,7 @@ function headTags(meta) {
       `<meta name="twitter:title" content="${escapeAttr(title)}" />`,
       `<meta name="twitter:description" content="${escapeAttr(meta.description)}" />`,
       `<meta name="twitter:image" content="${escapeAttr(socialImage.url)}" />`,
-      jsonLd,
+      jsonLd(meta),
     );
   }
   tags.push(...fontPreloads);

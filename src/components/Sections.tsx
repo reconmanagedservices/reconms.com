@@ -34,8 +34,8 @@ export function ServiceGrid({ compact = false }: { compact?: boolean }) {
               </li>
             ))}
           </ul>
-          <Link to="/contact/">
-            Discuss your needs<span className="sr-only"> about {service.title}</span>
+          <Link to={service.path}>
+            Explore {service.shortName}
             <Icon name="arrow" className="size-4" />
           </Link>
         </article>
@@ -73,14 +73,20 @@ export function ProductGrid({ compact = false }: { compact?: boolean }) {
   );
 }
 
-export function FaqList() {
+export function FaqList({
+  items = faqs,
+  idPrefix = 'faq',
+}: {
+  items?: { question: string; answer: string }[];
+  idPrefix?: string;
+}) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <div className="border-t border-black/15">
-      {faqs.map((faq, index) => {
+      {items.map((faq, index) => {
         const isOpen = openIndex === index;
-        const answerId = `faq-answer-${index}`;
+        const answerId = `${idPrefix}-answer-${index}`;
         return (
           <div key={faq.question} className="border-b border-black/15">
             <h3>

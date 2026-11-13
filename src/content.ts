@@ -19,12 +19,23 @@ export const navItems: [label: string, path: string][] = [
   ['Contact', '/contact/'],
 ];
 
-export type Service = { icon: IconName; title: string; text: string; points: string[] };
+export type Service = {
+  icon: IconName;
+  title: string;
+  /** Short name used in link text, e.g. "Explore Managed IT". */
+  shortName: string;
+  /** URL of the dedicated service page (see src/servicePages.ts). */
+  path: string;
+  text: string;
+  points: string[];
+};
 
 export const services: Service[] = [
   {
     icon: 'headset',
     title: 'Managed IT Services',
+    shortName: 'Managed IT',
+    path: '/managed/',
     text: 'Complete, proactive management for your people, devices, network, and cloud—backed by responsive experts who know your environment.',
     points: [
       'Proactive monitoring and support',
@@ -36,6 +47,8 @@ export const services: Service[] = [
   {
     icon: 'network',
     title: 'Co-Managed IT',
+    shortName: 'Co-Managed IT',
+    path: '/comanaged/',
     text: 'Give your internal IT team the tools, capacity, and specialized expertise they need to focus on strategic work.',
     points: [
       'Flexible team augmentation',
@@ -47,6 +60,8 @@ export const services: Service[] = [
   {
     icon: 'shield',
     title: 'Cybersecurity',
+    shortName: 'Cybersecurity',
+    path: '/cybersecurity/',
     text: 'Layered protection designed to reduce risk, secure your data, and keep your team ready for evolving threats.',
     points: [
       'Endpoint and identity protection',
@@ -58,6 +73,8 @@ export const services: Service[] = [
   {
     icon: 'spark',
     title: 'Managed AI Services',
+    shortName: 'Managed AI',
+    path: '/ai/',
     text: 'Prepare, implement, and optimize practical AI solutions that create measurable value without adding unnecessary risk.',
     points: [
       'AI readiness planning',

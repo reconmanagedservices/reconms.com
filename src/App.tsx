@@ -6,7 +6,9 @@ import ContactPage from './pages/ContactPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductsPage from './pages/ProductsPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
 import ServicesPage from './pages/ServicesPage';
+import { servicePageList } from './servicePages';
 
 // The legal pages carry ~55 KB of policy text, so they load as separate chunks instead of
 // being shipped to every visitor. Prerendering waits for them, so their HTML is complete.
@@ -21,6 +23,9 @@ export default function App() {
       <Route element={<SiteLayout />}>
         <Route index element={<HomePage />} />
         <Route path="services" element={<ServicesPage />} />
+        {servicePageList.map((page) => (
+          <Route key={page.key} path={page.path.slice(1, -1)} element={<ServiceDetailPage page={page} />} />
+        ))}
         <Route path="products" element={<ProductsPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />

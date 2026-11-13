@@ -1,4 +1,5 @@
 import { products, services, site } from './content';
+import { servicePages, type ServicePageContent } from './servicePages';
 
 export type PageMeta = {
   /** Short page name; becomes "<title> | Recon Managed Services" unless `titleTag` is set. */
@@ -9,23 +10,67 @@ export type PageMeta = {
   description: string;
   /** Canonical path. Pages end in "/" to match the URLs Google indexed on the old WordPress site. */
   path: string;
+  /** Extra schema.org nodes for this page, added to the site-wide graph. */
+  schema?: Record<string, unknown>[];
 };
+
+const orgId = `${site.url}/#organization`;
+
+/** Metadata + Service/BreadcrumbList structured data for a dedicated service page. */
+function servicePageMeta(page: ServicePageContent): PageMeta {
+  const url = `${site.url}${page.path}`;
+  return {
+    title: page.shortName,
+    titleTag: page.titleTag,
+    description: page.description,
+    path: page.path,
+    schema: [
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: page.serviceType,
+        serviceType: page.serviceType,
+        description: page.description,
+        url,
+        provider: { '@id': orgId },
+        areaServed: [
+          { '@type': 'City', name: 'Beaumont, TX' },
+          { '@type': 'AdministrativeArea', name: 'Southeast Texas' },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
+          { '@type': 'ListItem', position: 3, name: page.shortName, item: url },
+        ],
+      },
+    ],
+  };
+}
 
 /** Per-route metadata, shared by the client <Seo> component and the build-time prerenderer. */
 export const pageMeta = {
   home: {
-    title: 'Managed IT Services in Beaumont, TX',
+    title: 'IT Support in Beaumont, TX',
+    // Brand-first so the home page doesn't compete with /managed/ for "managed IT services".
+    titleTag: 'Recon Managed Services | IT Support in Beaumont, TX',
     description:
       'Beaumont-based managed IT services for Southeast Texas. Get responsive IT support, proactive cybersecurity, co-managed IT, and practical technology strategy.',
     path: '/',
   },
   services: {
-    title: 'Managed IT Services',
-    titleTag: 'Managed IT, Co-Managed IT & Cybersecurity in Beaumont, TX',
+    title: 'IT Services in Beaumont, TX',
+    // Broad "IT services" hub; each service has its own page targeting its specific keyword.
     description:
       'Managed IT, co-managed IT, cybersecurity, and managed AI services for Southeast Texas organizations from a local Beaumont team. Talk through your needs.',
     path: '/services/',
   },
+  managed: servicePageMeta(servicePages.managed),
+  comanaged: servicePageMeta(servicePages.comanaged),
+  cybersecurity: servicePageMeta(servicePages.cybersecurity),
+  ai: servicePageMeta(servicePages.ai),
   products: {
     title: 'Business Technology Products',
     titleTag: 'Business Computers, Security Cameras & VoIP in Beaumont, TX',
@@ -78,7 +123,6 @@ export const socialImage = {
 
 /** schema.org structured data describing the business, embedded on every page at build time. */
 export function structuredData() {
-  const orgId = `${site.url}/#organization`;
   return [
     {
       '@context': 'https://schema.org',
@@ -111,7 +155,12 @@ export function structuredData() {
         name: 'IT services and business technology',
         itemListElement: [...services, ...products].map((item) => ({
           '@type': 'Offer',
-          itemOffered: { '@type': 'Service', name: item.title, description: item.text },
+          itemOffered: {
+            '@type': 'Service',
+            name: item.title,
+            description: item.text,
+            ...('path' in item ? { url: `${site.url}${item.path}` } : {}),
+          },
         })),
       },
     },

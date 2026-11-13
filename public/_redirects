@@ -1,14 +1,9 @@
 # Permanent redirects from the old WordPress site to the closest new page.
 # Format: <old path> <new path or URL> <status>. Top-most match wins.
-# Pages that kept their URL (/, /about/, /contact/, /terms/, /privacy-policy/) need no rule.
+# Pages that kept their URL (/, /about/, /contact/, /terms/, /privacy-policy/, /managed/,
+# /comanaged/, /ai/) need no rule.
 
-# Old service pages
-/managed            /services/                    301
-/managed/           /services/                    301
-/comanaged          /services/                    301
-/comanaged/         /services/                    301
-/ai                 /services/                    301
-/ai/                /services/                    301
+# Old service pages. /managed/, /comanaged/ and /ai/ are live pages again (src/servicePages.ts).
 /other              /products/                    301
 /other/             /products/                    301
 /interest-form      /contact/                     301
