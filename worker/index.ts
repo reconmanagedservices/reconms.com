@@ -2,8 +2,8 @@
  * Cloudflare Worker for reconms.com.
  *
  * Static pages are served straight from ./dist by Cloudflare's asset handling and never
- * reach this code. Only requests matching `run_worker_first` in wrangler.jsonc (/api/*)
- * run here.
+ * reach this code. Only requests matching `run_worker_first` in wrangler.jsonc (/api/* and
+ * /robots.txt) run here.
  */
 import { handleContact, handleContactConfig } from './contact';
 
@@ -30,7 +30,15 @@ export interface Env {
 
 export default {
   async fetch(request, env): Promise<Response> {
-    const { pathname } = new URL(request.url);
+    const { pathname, hostname } = new URL(request.url);
+
+    // Preview/test hostnames (…workers.dev, …pages.dev) serve a full copy of the site; keep
+    // search engines off them so only reconms.com is indexed. reconms.com gets public/robots.txt.
+    if (pathname === '/robots.txt' && /\.(workers|pages)\.dev$/.test(hostname)) {
+      return new Response('User-agent: *\nDisallow: /\n', {
+        headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+      });
+    }
 
     if (pathname === '/api/contact/config') {
       return handleContactConfig(request, env);

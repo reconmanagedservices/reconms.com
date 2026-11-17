@@ -9,8 +9,9 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    // Only API requests run the Worker; everything else is served as a static file.
-    "run_worker_first": ["/api/*"],
+    // Only API requests (and robots.txt, see worker/index.ts) run the Worker; everything else is
+    // served straight from the static files.
+    "run_worker_first": ["/api/*", "/robots.txt"],
     // Pages live at /about/ (matching the old WordPress URLs); /about redirects to /about/.
     "html_handling": "force-trailing-slash",
     // Unknown URLs get dist/404.html with a real 404 status.

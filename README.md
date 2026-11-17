@@ -128,6 +128,22 @@ template in `content/blog/README.md`, upload images to `public/assets/blog/`, an
 - **Redirects** for retired URLs go in `public/_redirects`.
 - **Fonts** are self-hosted (`src/index.css`) and preloaded; no third-party requests on page load.
 
+### Cloudflare settings that affect SEO
+
+These live in the Cloudflare dashboard, not in this repo:
+
+- **www → root redirect:** DNS needs a proxied `www` record (e.g. `CNAME www → reconms.com`,
+  orange cloud), plus Rules → Redirect Rules → "Redirect from WWW to root" (301).
+- **SSL/TLS → Edge Certificates → Always Use HTTPS:** on, so `http://` 301s to `https://`.
+- **Caching → Configuration → Crawler Hints:** on (pings Bing and others via IndexNow when
+  pages change).
+- **Leave off:** Rocket Loader and Scrape Shield → Email Address Obfuscation. Both rewrite the
+  prerendered HTML, which breaks React hydration (and Rocket Loader delays the page).
+- **robots.txt:** served from `public/robots.txt`. If AI Crawl Control → "Manage robots.txt" is
+  ever enabled, Cloudflare prepends its own rules; check `https://reconms.com/robots.txt` after.
+- `*.workers.dev` / preview hostnames get a `Disallow: /` robots.txt from the Worker, so only
+  reconms.com is indexed.
+
 ## Where things live
 
 | What | File |
