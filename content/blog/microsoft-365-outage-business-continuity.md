@@ -6,7 +6,7 @@ description: The November 12 Microsoft 365 outage disrupted businesses. Learn
   how a business continuity plan and Recon Managed Services can help minimize
   downtime.
 category: Microsoft
-image: /assets/blog/a_realistic_professional_office_workspace_scene_s.png
+image: /assets/blog/recon_microsoft_365_outage_featured.webp
 imageAlt: Laptop showing a cloud service disruption beside an office business
   continuity checklist.
 draft: false
