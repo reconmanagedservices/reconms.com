@@ -322,7 +322,7 @@ export type Leader = {
   /** 1200x960 WebP in public/assets/team/. */
   photo: string;
   bio: string[];
-  contact?: { label: string; href: string };
+  contacts?: { label: string; href: string }[];
   /** Languages spoken, for schema.org knowsLanguage. */
   languages?: string[];
 };
@@ -340,7 +340,10 @@ export const leadership: Leader[] = [
       'Justin has also served in emergency management leadership roles for several government agencies, and has founded and served on the boards of several nonprofits focused on emergency management. He has been a partner at First Baptist Church of Beaumont since 2011.',
       'Justin and his wife are both from Beaumont, where they live with their three kids. His wife teaches at Legacy Christian Academy in Beaumont, where their kids also go to school.',
     ],
-    contact: { label: site.email, href: `mailto:${site.email}` },
+    contacts: [
+      { label: site.phone, href: site.phoneHref },
+      { label: site.email, href: `mailto:${site.email}` },
+    ],
   },
   {
     name: 'Betsy Elizondo',
@@ -352,6 +355,9 @@ export const leadership: Leader[] = [
       'Betsy joined Recon in 2025 and manages our client relationships. She’s often the voice you’ll hear when you call for support, and she makes sure you’re happy with Recon every day. Betsy is bilingual and fluent in Spanish.',
       'Betsy is a member of La Iglesia Apostólica in Beaumont, where she started and leads the translation team. She lives in Beaumont with her husband and their two children, who also go to school in Beaumont.',
     ],
-    contact: { label: site.phone, href: site.phoneHref },
+    contacts: [
+      { label: site.phone, href: site.phoneHref },
+      { label: site.email, href: `mailto:${site.email}` },
+    ],
   },
 ];

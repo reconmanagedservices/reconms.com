@@ -100,14 +100,19 @@ export default function AboutPage() {
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                {person.contact && (
-                  <a
-                    href={person.contact.href}
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 hover:underline"
-                  >
-                    <Icon name={person.contact.href.startsWith('tel:') ? 'phone' : 'mail'} className="size-4" />
-                    {person.contact.label}
-                  </a>
+                {person.contacts && (
+                  <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                    {person.contacts.map((contact) => (
+                      <a
+                        key={contact.href}
+                        href={contact.href}
+                        className="inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 hover:underline"
+                      >
+                        <Icon name={contact.href.startsWith('tel:') ? 'phone' : 'mail'} className="size-4" />
+                        {contact.label}
+                      </a>
+                    ))}
+                  </div>
                 )}
               </div>
             </article>
