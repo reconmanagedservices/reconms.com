@@ -333,8 +333,9 @@ export const leadership: Leader[] = [
     title: 'Chief Technology Officer',
     photo: '/assets/team/justin-hidalgo.webp',
     bio: [
-      'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he is a former volunteer firefighter and has served as a law enforcement officer since 2017, and he remains an active officer today.',
-      'At Recon, Justin leads the technical team and drives the innovation behind how we support and protect our clients. He is a certified Project Management Professional (PMP).',
+      'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he served as a volunteer firefighter for nearly 15 years and has served as a law enforcement officer since 2017, where he remains active today.',
+      'At Recon, Justin leads the technical team and drives the innovation behind how we support and protect our clients. He is a certified Project Management Professional (PMP) and holds dozens of IT certifications.',
+      'Justin has also served in emergency management leadership for a municipality, and has founded and served on the boards of several nonprofits focused on emergency management. He remains active as a volunteer and has served at First Baptist Church of Beaumont.',
     ],
     contact: { label: site.email, href: `mailto:${site.email}` },
   },
