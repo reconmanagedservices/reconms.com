@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
-import { faqs, products, services } from '../content';
+import { faqs, products, services, site } from '../content';
 import { Icon } from './Icon';
 
 export function PageHero({ eyebrow, title, text }: { eyebrow: string; title: ReactNode; text: string }) {
@@ -125,9 +125,19 @@ export function ClosingCta() {
             Let’s make IT feel simple again.
           </h2>
         </div>
-        <Link to="/contact/" className="button button-dark shrink-0">
-          Start a conversation <Icon name="arrow" className="size-4" />
-        </Link>
+        <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+          <Link to="/contact/" className="button button-dark">
+            Start a conversation <Icon name="arrow" className="size-4" />
+          </Link>
+          <a
+            href={site.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-outline"
+          >
+            <Icon name="calendar" className="size-4" /> Book a discovery call
+          </a>
+        </div>
       </div>
     </section>
   );

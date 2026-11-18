@@ -39,6 +39,8 @@ export const site = {
   },
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
+  /** Online scheduling for a discovery call (opens in a new tab). */
+  bookingUrl: 'https://crm.reconms.com/book/discovery-call-mkq8373wd9',
   /** Texas Private Security license, shown in the footer on every page. */
   securityLicense: 'TX Private Security License #B30823401',
   linkedIn: 'https://www.linkedin.com/company/reconms/',

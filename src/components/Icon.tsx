@@ -155,6 +155,12 @@ const paths = {
       <path d="M5 21v-9M9.7 21v-9M14.3 21v-9M19 21v-9M3 21h18" />
     </>
   ),
+  calendar: (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17.5h2" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;

@@ -25,6 +25,18 @@ export default function ContactPage() {
             Share a little about your organization, recurring technology issues, or an upcoming project. Our team will
             follow up to learn more.
           </p>
+          <p className="mt-4 max-w-xl leading-7 text-black/62">
+            Prefer to pick a time?{' '}
+            <a
+              href={site.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#111312] underline underline-offset-4"
+            >
+              Book a discovery call
+            </a>
+            .
+          </p>
           <ContactForm />
         </div>
 
@@ -35,6 +47,14 @@ export default function ContactPage() {
           </a>
           <a href={`mailto:${site.email}`} className="mt-3 block text-lg text-white/65">
             {site.email}
+          </a>
+          <a
+            href={site.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-light mt-8"
+          >
+            <Icon name="calendar" className="size-4" /> Book a discovery call
           </a>
           <address className="mt-10 border-t border-white/12 pt-7 leading-7 text-white/52 not-italic">
             {site.address.map((line) => (

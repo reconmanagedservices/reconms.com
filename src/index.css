@@ -158,6 +158,16 @@
   background: #dfe0dc;
 }
 
+.button-outline {
+  color: #111312;
+  border-color: rgb(17 19 18 / 0.3);
+}
+
+.button-outline:hover {
+  background: #fff;
+  border-color: #111312;
+}
+
 .button-ghost {
   color: #fff;
   border-color: rgb(255 255 255 / 0.24);
