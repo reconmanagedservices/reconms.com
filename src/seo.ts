@@ -84,12 +84,14 @@ export const pageMeta = {
     title: 'IT Services in Beaumont, TX',
     // Broad "IT services" hub; each service has its own page targeting its specific keyword.
     description:
-      'Managed IT, co-managed IT, cybersecurity, and managed AI services for Southeast Texas organizations from a local Beaumont team. Talk through your needs.',
+      'Managed IT, co-managed IT, cybersecurity, risk and compliance, business intelligence, and AI services for Southeast Texas from a local Beaumont team.',
     path: '/services/',
   },
   managed: detailPageMeta(servicePages.managed, 'service'),
   comanaged: detailPageMeta(servicePages.comanaged, 'service'),
   cybersecurity: detailPageMeta(servicePages.cybersecurity, 'service'),
+  compliance: detailPageMeta(servicePages.compliance, 'service'),
+  businessIntelligence: detailPageMeta(servicePages.businessIntelligence, 'service'),
   ai: detailPageMeta(servicePages.ai, 'service'),
   industries: {
     title: 'Industries',

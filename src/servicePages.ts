@@ -7,7 +7,7 @@ import type { IconName } from './components/Icon';
  * Paths reuse the old WordPress URLs where a page existed (/managed/, /comanaged/, /ai/) so
  * their search rankings carry over. Each page is registered in src/seo.ts and src/App.tsx.
  */
-export type ServicePageKey = 'managed' | 'comanaged' | 'cybersecurity' | 'ai';
+export type ServicePageKey = 'managed' | 'comanaged' | 'cybersecurity' | 'compliance' | 'businessIntelligence' | 'ai';
 
 /** Shared content shape for dedicated service and product pages (rendered by src/pages/DetailPage.tsx). */
 export type DetailPageContent = {
@@ -37,6 +37,7 @@ export type ServicePageContent = DetailPageContent & { key: ServicePageKey };
 export const servicePages: Record<ServicePageKey, ServicePageContent> = {
   managed: {
     key: 'managed',
+    related: ['/comanaged/', '/cybersecurity/', '/security-risk-compliance/'],
     path: '/managed/',
     shortName: 'Managed IT',
     serviceType: 'Managed IT services',
@@ -168,6 +169,7 @@ export const servicePages: Record<ServicePageKey, ServicePageContent> = {
 
   comanaged: {
     key: 'comanaged',
+    related: ['/managed/', '/cybersecurity/', '/business-intelligence/'],
     path: '/comanaged/',
     shortName: 'Co-Managed IT',
     serviceType: 'Co-managed IT services',
@@ -303,6 +305,7 @@ export const servicePages: Record<ServicePageKey, ServicePageContent> = {
 
   cybersecurity: {
     key: 'cybersecurity',
+    related: ['/security-risk-compliance/', '/managed/', '/comanaged/'],
     path: '/cybersecurity/',
     shortName: 'Cybersecurity',
     serviceType: 'Cybersecurity services',
@@ -409,8 +412,270 @@ export const servicePages: Record<ServicePageKey, ServicePageContent> = {
     ],
   },
 
+  compliance: {
+    key: 'compliance',
+    path: '/security-risk-compliance/',
+    shortName: 'Risk & Compliance',
+    serviceType: 'Security risk and compliance services',
+    titleTag: 'Security Risk & Compliance Services in Beaumont, TX | Recon',
+    description:
+      'Security risk assessments, policies, and compliance support for Southeast Texas organizations: know where you stand, close the gaps, and document your controls.',
+    hero: {
+      title: 'Security risk and compliance, made manageable.',
+      text: 'Understand your risks, close the gaps that matter most, and document the controls your clients, insurers, auditors, and regulators expect to see.',
+    },
+    intro: {
+      eyebrow: 'Know where you stand',
+      title: 'Security you can explain, not just security you have.',
+      paragraphs: [
+        'Protective tools are only part of a security program. Clients, cyber insurers, auditors, and regulators increasingly want to know how you manage risk: what you have assessed, what policies you follow, and how you would respond to an incident.',
+        'Recon helps Southeast Texas organizations answer those questions with confidence. We assess your environment against recognized security frameworks and the requirements that apply to you, prioritize the gaps, help close them, and keep documentation current as things change.',
+        'Recon doesn’t provide legal advice, audits, or certifications. We focus on the technical and practical side of compliance and work alongside your compliance lead, auditors, and advisers.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why Recon',
+      title: 'From findings to a finished plan.',
+      items: [
+        {
+          title: 'Clear priorities',
+          text: 'Findings ranked by risk and effort, so you know what to fix first and what can wait.',
+        },
+        {
+          title: 'We help close the gaps',
+          text: 'The same team that assesses your environment can implement and maintain the fixes.',
+        },
+        {
+          title: 'Documentation you can share',
+          text: 'Policies, records, and reports ready for questionnaires, renewals, audits, and reviews.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we help with',
+      title: 'What our risk and compliance services cover.',
+      items: [
+        {
+          icon: 'clipboard',
+          title: 'Security risk assessments',
+          text: 'A structured review of your systems, data, and practices, with prioritized, plain-language recommendations.',
+        },
+        {
+          icon: 'pulse',
+          title: 'Vulnerability scanning',
+          text: 'Regular scans for missing updates, misconfigurations, and exposed services, with tracking until they’re fixed.',
+        },
+        {
+          icon: 'layers',
+          title: 'Policies and procedures',
+          text: 'Practical security policies, such as acceptable use, access control, and incident response, written to fit how you work.',
+        },
+        {
+          icon: 'strategy',
+          title: 'Framework alignment',
+          text: 'Mapping your controls to frameworks such as the NIST Cybersecurity Framework and CIS Controls, and to requirements like HIPAA, GLBA, and CJIS.',
+        },
+        {
+          icon: 'shield',
+          title: 'Cyber insurance and questionnaires',
+          text: 'Help understanding insurer and client requirements and preparing accurate answers to security questionnaires.',
+        },
+        {
+          icon: 'users',
+          title: 'Incident response planning',
+          text: 'A written response plan and tabletop exercises, so your team knows who does what before an incident happens.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Ready when someone asks',
+      title: 'Turn a stack of requirements into a plan.',
+      paragraphs: [
+        'Whether the request comes from a cyber insurer, a large customer, an auditor, or a regulator, the questions are similar: Do you require multi-factor authentication? Are backups tested? Is there an incident response plan? Who reviews access?',
+        'Recon helps you build a risk register and roadmap that answers those questions, track progress over time, and keep the evidence organized, so the next questionnaire or renewal isn’t a scramble.',
+      ],
+      points: ['Risk register and prioritized roadmap', 'Policies and supporting evidence', 'Regular reviews as requirements change'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'A clear path from assessment to ongoing compliance.',
+      steps: [
+        {
+          title: 'Assess',
+          text: 'We learn which requirements apply to you, review your environment and practices, and identify the gaps.',
+        },
+        {
+          title: 'Prioritize',
+          text: 'You get a plain-language report and a roadmap ranked by risk, effort, and cost.',
+        },
+        {
+          title: 'Remediate',
+          text: 'We help close the gaps, from technical controls to written policies, alongside your team.',
+        },
+        {
+          title: 'Maintain',
+          text: 'Regular scans, reviews, and documentation updates keep your program current as threats and requirements change.',
+        },
+      ],
+    },
+    faqs: [
+      {
+        question: 'How is this different from your cybersecurity services?',
+        answer:
+          'Cybersecurity services put protective tools in place and keep them running. Risk and compliance services assess where you stand, set policies and priorities, and document your controls so you can demonstrate them to others. Most organizations benefit from both.',
+      },
+      {
+        question: 'Can you make us compliant?',
+        answer:
+          'No IT provider can make an organization compliant on its own, because compliance also includes policies, oversight, and administrative practices. Recon helps with the technical controls, policies, and documentation, and works alongside your compliance lead, auditors, and advisers.',
+      },
+      {
+        question: 'Which frameworks and regulations do you work with?',
+        answer:
+          'We commonly align programs to the NIST Cybersecurity Framework and CIS Controls, and help organizations with the technical side of requirements such as HIPAA, GLBA and the FTC Safeguards Rule, and the FBI CJIS Security Policy.',
+      },
+      {
+        question: 'Can you help with our cyber insurance application?',
+        answer:
+          'Yes. We help you understand what the insurer is asking, put common required controls in place, and gather accurate information for your answers. Your organization remains responsible for what it submits.',
+      },
+    ],
+    related: ['/cybersecurity/', '/managed/', '/ai/'],
+  },
+
+  businessIntelligence: {
+    key: 'businessIntelligence',
+    path: '/business-intelligence/',
+    shortName: 'Business Intelligence',
+    serviceType: 'Business intelligence services',
+    titleTag: 'Business Intelligence Services in Beaumont, TX | Recon',
+    description:
+      'Business intelligence for Southeast Texas organizations: connect your business data, build clear dashboards and reports, and make decisions with confidence.',
+    hero: {
+      title: 'Business intelligence that turns data into decisions.',
+      text: 'Connect the data spread across your systems and spreadsheets, and get clear, secure dashboards that show how your organization is really performing.',
+    },
+    intro: {
+      eyebrow: 'Your data, working for you',
+      title: 'Stop rebuilding the same spreadsheet every month.',
+      paragraphs: [
+        'Most organizations already have the data they need to make better decisions. It’s just spread across accounting software, CRMs, line-of-business systems, and spreadsheets that someone updates by hand, so reports take too long and different people end up with different numbers.',
+        'Recon helps you connect that data, define the metrics that matter, and build dashboards and reports that refresh automatically, using business intelligence tools such as Microsoft Power BI.',
+        'Because we also manage technology and security, your data connections, access, and sharing are set up securely from the start.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why Recon',
+      title: 'Answers, not more reports.',
+      items: [
+        {
+          title: 'One version of the truth',
+          text: 'Shared definitions and connected data, so everyone works from the same numbers.',
+        },
+        {
+          title: 'Less manual work',
+          text: 'Reports that refresh automatically instead of being rebuilt by hand every week or month.',
+        },
+        {
+          title: 'Secure by design',
+          text: 'Access controls that make sure people see only the data they should.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we help with',
+      title: 'From scattered data to clear dashboards.',
+      items: [
+        {
+          icon: 'strategy',
+          title: 'Metrics and reporting planning',
+          text: 'Identify the decisions you need to make and the key metrics that support them, before building anything.',
+        },
+        {
+          icon: 'network',
+          title: 'Data connections',
+          text: 'Connect accounting, CRM, operations, and other systems, plus the spreadsheets your team relies on.',
+        },
+        {
+          icon: 'layers',
+          title: 'Data preparation',
+          text: 'Clean, combine, and organize data so it’s consistent and reliable enough to report on.',
+        },
+        {
+          icon: 'chart',
+          title: 'Dashboards and reports',
+          text: 'Clear, interactive dashboards for leadership, managers, and teams, built around how each group works.',
+        },
+        {
+          icon: 'lock',
+          title: 'Secure sharing and access',
+          text: 'Permissions that control who can see which reports and data, including access from phones and tablets.',
+        },
+        {
+          icon: 'users',
+          title: 'Training and ongoing support',
+          text: 'Help your team use and trust the dashboards, and keep them accurate as your business and systems change.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Start small',
+      title: 'One useful dashboard beats a dozen unused ones.',
+      paragraphs: [
+        'Business intelligence projects succeed when they start with a real question, such as which jobs are most profitable, where cash is tied up, or which services are growing. We start with one or two high-value dashboards, prove they’re useful, and expand from there.',
+      ],
+      points: ['Start with the questions that matter', 'Automatically refreshed data', 'Expand as your needs grow'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'From first question to everyday tool.',
+      steps: [
+        {
+          title: 'Discover',
+          text: 'We learn which decisions you want to support, which metrics matter, and where your data lives today.',
+        },
+        {
+          title: 'Connect',
+          text: 'We connect and prepare your data, and agree on definitions so the numbers are consistent.',
+        },
+        {
+          title: 'Build',
+          text: 'We build your first dashboards, review them with you, and refine them until they’re genuinely useful.',
+        },
+        {
+          title: 'Support',
+          text: 'We keep data refreshing reliably, train your team, and add reports as your needs grow.',
+        },
+      ],
+    },
+    faqs: [
+      {
+        question: 'What is business intelligence?',
+        answer:
+          'Business intelligence is the process of collecting data from across your organization and turning it into dashboards and reports that help people make better decisions, without manually assembling spreadsheets.',
+      },
+      {
+        question: 'Which systems can you pull data from?',
+        answer:
+          'Many accounting, CRM, ERP, and line-of-business applications, as well as databases and spreadsheets. What’s possible depends on how each system makes its data available, so we confirm it during discovery.',
+      },
+      {
+        question: 'Do we need a large amount of data or a data warehouse?',
+        answer:
+          'No. Many organizations start with the data already in their existing systems and spreadsheets. If your needs grow, we can help plan a more structured data platform.',
+      },
+      {
+        question: 'Will we need additional software licenses?',
+        answer:
+          'Possibly, depending on the tool and how many people need to view or create reports. We recommend the right licensing during planning, so there are no surprises.',
+      },
+    ],
+    related: ['/ai/', '/managed/', '/comanaged/'],
+  },
+
   ai: {
     key: 'ai',
+    related: ['/business-intelligence/', '/security-risk-compliance/', '/managed/'],
     path: '/ai/',
     shortName: 'Managed AI',
     serviceType: 'Managed AI services',

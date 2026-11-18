@@ -109,6 +109,32 @@ export const services: Service[] = [
     ],
   },
   {
+    icon: 'clipboard',
+    title: 'Security Risk & Compliance',
+    shortName: 'Risk & Compliance',
+    path: '/security-risk-compliance/',
+    text: 'Assess your risks, close the gaps that matter most, and document the controls clients, insurers, and regulators expect.',
+    points: [
+      'Security risk assessments',
+      'Policies and procedures',
+      'Framework and requirement alignment',
+      'Questionnaire and insurance support',
+    ],
+  },
+  {
+    icon: 'chart',
+    title: 'Business Intelligence',
+    shortName: 'Business Intelligence',
+    path: '/business-intelligence/',
+    text: 'Connect the data spread across your systems and turn it into clear, secure dashboards that support better decisions.',
+    points: [
+      'Metrics and reporting planning',
+      'Data connections and preparation',
+      'Interactive dashboards',
+      'Secure sharing and training',
+    ],
+  },
+  {
     icon: 'spark',
     title: 'Managed AI Services',
     shortName: 'Managed AI',

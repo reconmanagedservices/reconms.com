@@ -19,7 +19,7 @@ export function PageHero({ eyebrow, title, text }: { eyebrow: string; title: Rea
 
 export function ServiceGrid({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={`grid gap-5 md:grid-cols-2 ${compact ? 'xl:grid-cols-4' : ''}`}>
+    <div className={`grid gap-5 md:grid-cols-2 ${compact ? 'xl:grid-cols-3' : ''}`}>
       {services.map((service) => (
         <article key={service.title} className={`service-card group ${compact ? '' : 'service-card-wide'}`}>
           <span className="grid size-12 place-items-center rounded-2xl bg-[#111312] text-white transition-transform duration-300 group-hover:-translate-y-1">
