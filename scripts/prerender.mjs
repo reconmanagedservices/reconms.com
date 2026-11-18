@@ -94,11 +94,18 @@ function imageTags(meta) {
   ];
 }
 
+// Cloudflare Web Analytics (cookieless). Added only to production pages, so local development
+// doesn't send visits. The token is public: it identifies the reconms.com site in Cloudflare.
+// Cloudflare's automatic injection doesn't apply to Worker-served pages, so it's added here.
+const CLOUDFLARE_ANALYTICS_TOKEN = '4bd7ba6929d84369b77f358faa822c9f';
+const analyticsTag = `<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "${CLOUDFLARE_ANALYTICS_TOKEN}"}'></script>`;
+
 async function buildPage(meta, url) {
   const html = await render(url);
   return template
     .replace(/<!--seo:start-->[\s\S]*<!--seo:end-->/, headTags(meta))
-    .replace('<!--app-html-->', html);
+    .replace('<!--app-html-->', html)
+    .replace('</body>', `  ${analyticsTag}\n  </body>`);
 }
 
 const routes = allPages();
