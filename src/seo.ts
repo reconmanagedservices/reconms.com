@@ -133,6 +133,7 @@ export const pageMeta = {
       name: person.name,
       ...(person.credential && { honorificSuffix: person.credential }),
       jobTitle: person.title,
+      ...(person.languages && { knowsLanguage: person.languages }),
       image: `${site.url}${person.photo}`,
       worksFor: { '@id': orgId },
     })),

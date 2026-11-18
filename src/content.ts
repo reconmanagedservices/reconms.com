@@ -323,6 +323,8 @@ export type Leader = {
   photo: string;
   bio: string[];
   contact?: { label: string; href: string };
+  /** Languages spoken, for schema.org knowsLanguage. */
+  languages?: string[];
 };
 
 /** Leadership shown on the Why Recon page (src/pages/AboutPage.tsx). */
@@ -335,17 +337,20 @@ export const leadership: Leader[] = [
     bio: [
       'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he served as a volunteer firefighter for nearly 15 years and has served as a law enforcement officer since 2017, where he remains active today.',
       'At Recon, Justin leads the technical team and drives the innovation behind how we support and protect our clients. He is a certified Project Management Professional (PMP) and holds dozens of IT certifications.',
-      'Justin has also served in emergency management leadership for a municipality, and has founded and served on the boards of several nonprofits focused on emergency management. He remains an active volunteer, including at First Baptist Church of Beaumont.',
+      'Justin has also served in emergency management leadership for a municipality, and has founded and served on the boards of several nonprofits focused on emergency management. He has been a partner at First Baptist Church of Beaumont since 2011.',
+      'Justin and his wife are both from Beaumont, where they live with their three kids. His wife teaches at Legacy Christian Academy in Beaumont, where their kids also go to school.',
     ],
     contact: { label: site.email, href: `mailto:${site.email}` },
   },
   {
     name: 'Betsy Elizondo',
     title: 'Client Services Coordinator',
+    languages: ['English', 'Spanish'],
     photo: '/assets/team/betsy-elizondo.webp',
     bio: [
-      'Betsy has been building relationships since she was 12, when she started working alongside her mother at a school. She went on to become the school’s manager, running its day-to-day operations.',
-      'Betsy joined Recon in 2025 and manages our client relationships. She’s often the voice you’ll hear when you call for support, and she makes sure you’re happy with Recon every day.',
+      'Betsy has been building relationships since she was 12, when she started working alongside her mother at a school. She went on to become the school’s manager, running its day-to-day operations. She has also held leadership roles in insurance claims adjusting, leading teams of adjusters.',
+      'Betsy joined Recon in 2025 and manages our client relationships. She’s often the voice you’ll hear when you call for support, and she makes sure you’re happy with Recon every day. Betsy is bilingual and fluent in Spanish, so she can help clients in English or Spanish.',
+      'Betsy is a member of La Iglesia Apostólica in Beaumont, where she started and leads the translation team. She lives in Beaumont with her husband and their two children, who also go to school in Beaumont.',
     ],
     contact: { label: site.phone, href: site.phoneHref },
   },
