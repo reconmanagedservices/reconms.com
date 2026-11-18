@@ -134,7 +134,6 @@ export const pageMeta = {
       ...(person.credential && { honorificSuffix: person.credential }),
       jobTitle: person.title,
       image: `${site.url}${person.photo}`,
-      ...(person.contact?.href.startsWith('mailto:') && { email: person.contact.label }),
       worksFor: { '@id': orgId },
     })),
   },

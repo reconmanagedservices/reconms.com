@@ -333,10 +333,10 @@ export const leadership: Leader[] = [
     title: 'Chief Technology Officer',
     photo: '/assets/team/justin-hidalgo.webp',
     bio: [
-      'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he has served as a volunteer firefighter since 2013 and as a law enforcement officer since 2017, and he remains an active officer today.',
+      'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he is a former volunteer firefighter and has served as a law enforcement officer since 2017, and he remains an active officer today.',
       'At Recon, Justin leads the technical team and drives the innovation behind how we support and protect our clients. He is a certified Project Management Professional (PMP).',
     ],
-    contact: { label: 'justin.hidalgo@reconms.com', href: 'mailto:justin.hidalgo@reconms.com' },
+    contact: { label: site.email, href: `mailto:${site.email}` },
   },
   {
     name: 'Betsy Elizondo',
