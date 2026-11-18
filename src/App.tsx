@@ -11,6 +11,8 @@ import BlogIndexPage from './pages/BlogIndexPage';
 import PostPage from './pages/PostPage';
 import ServicesPage from './pages/ServicesPage';
 import { posts } from './blog';
+import IndustriesPage from './pages/IndustriesPage';
+import { industryPageList } from './industryPages';
 import { productPageList } from './productPages';
 import { pageMeta } from './seo';
 import { servicePageList } from './servicePages';
@@ -33,6 +35,14 @@ export default function App() {
             key={page.key}
             path={page.path.slice(1, -1)}
             element={<DetailPage page={page} kind="service" meta={pageMeta[page.key]} />}
+          />
+        ))}
+        <Route path="industries" element={<IndustriesPage />} />
+        {industryPageList.map((page) => (
+          <Route
+            key={page.key}
+            path={page.path.slice(1, -1)}
+            element={<DetailPage page={page} kind="industry" meta={pageMeta[page.key]} />}
           />
         ))}
         <Route path="products" element={<ProductsPage />} />

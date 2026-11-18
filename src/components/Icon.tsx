@@ -129,6 +129,32 @@ const paths = {
       <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
     </>
   ),
+  factory: (
+    <>
+      <path d="M2 21h20" />
+      <path d="M4 21V10l5 3v-3l5 3V4h4l1 9v8" />
+      <path d="M8 17h1M12 17h1M16 17h1" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 12.5h18" />
+    </>
+  ),
+  medical: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="4" />
+      <path d="M12 8v8M8 12h8" />
+    </>
+  ),
+  heart: <path d="M19.5 12.6 12 20l-7.5-7.4A4.8 4.8 0 1 1 12 6.1a4.8 4.8 0 1 1 7.5 6.5Z" />,
+  landmark: (
+    <>
+      <path d="M2.5 9 12 3.5 21.5 9H2.5Z" />
+      <path d="M5 21v-9M9.7 21v-9M14.3 21v-9M19 21v-9M3 21h18" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;

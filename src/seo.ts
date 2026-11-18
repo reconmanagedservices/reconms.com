@@ -1,5 +1,6 @@
 import { products, services, site } from './content';
 import { postPath, posts, type PostMeta } from './blog';
+import { industryPages } from './industryPages';
 import { productPages } from './productPages';
 import { servicePages, type DetailPageContent } from './servicePages';
 
@@ -34,6 +35,7 @@ const serviceAreaSchema = [
 const sectionCrumbs = {
   service: { name: 'Services', path: '/services/' },
   product: { name: 'Products', path: '/products/' },
+  industry: { name: 'Industries', path: '/industries/' },
 };
 
 /** Metadata + Service/BreadcrumbList structured data for a dedicated service or product page. */
@@ -89,6 +91,18 @@ export const pageMeta = {
   comanaged: detailPageMeta(servicePages.comanaged, 'service'),
   cybersecurity: detailPageMeta(servicePages.cybersecurity, 'service'),
   ai: detailPageMeta(servicePages.ai, 'service'),
+  industries: {
+    title: 'Industries',
+    titleTag: 'IT Services by Industry in Southeast Texas | Recon Managed Services',
+    description:
+      'Managed IT and cybersecurity for manufacturing, professional services, healthcare, nonprofits, and local government across Southeast Texas.',
+    path: '/industries/',
+  },
+  manufacturing: detailPageMeta(industryPages.manufacturing, 'industry'),
+  professionalServices: detailPageMeta(industryPages.professionalServices, 'industry'),
+  healthcare: detailPageMeta(industryPages.healthcare, 'industry'),
+  nonprofits: detailPageMeta(industryPages.nonprofits, 'industry'),
+  localGovernment: detailPageMeta(industryPages.localGovernment, 'industry'),
   products: {
     title: 'Business Technology Products',
     // Broad hub title; each product has its own page targeting its specific keyword.

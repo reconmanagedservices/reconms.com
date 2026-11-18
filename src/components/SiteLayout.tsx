@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
-import { navItems, products, services, site } from '../content';
+import { industries, navItems, products, services, site } from '../content';
 import { postPath, posts } from '../blog';
 import { BrandIcon, type Brand } from './BrandIcons';
 import { Icon } from './Icon';
@@ -50,13 +50,13 @@ export function SiteLayout() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex" aria-label="Primary navigation">
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Primary navigation">
             {navItems.map(([label, path]) => (
               <NavLink
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `nav-link ${isActive || (path === '/services/' && servicePaths.has(pathname)) || (path === '/blog/' && postPaths.has(pathname)) ? 'nav-link-active' : ''}`
+                  `nav-link whitespace-nowrap ${isActive || (path === '/services/' && servicePaths.has(pathname)) || (path === '/blog/' && postPaths.has(pathname)) ? 'nav-link-active' : ''}`
                 }
               >
                 {label}
@@ -65,7 +65,7 @@ export function SiteLayout() {
           </nav>
 
           <div className="hidden items-center gap-5 lg:flex">
-            <a href={site.phoneHref} className="text-sm font-semibold tracking-tight">
+            <a href={site.phoneHref} className="hidden text-sm font-semibold tracking-tight xl:inline">
               {site.phone}
             </a>
             <Link to="/contact/" className="button button-dark">
@@ -110,8 +110,8 @@ export function SiteLayout() {
 
       <footer className="bg-[#0a0b0b] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
-          <div className="grid gap-12 border-b border-white/12 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
-            <div className="sm:col-span-2 lg:col-span-1">
+          <div className="grid gap-12 border-b border-white/12 pb-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1fr]">
+            <div className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
               <Link to="/" aria-label={`${site.name} home`}>
                 <img
                   src="/assets/recon-logo.png"
@@ -156,6 +156,16 @@ export function SiteLayout() {
                 {services.map((service) => (
                   <Link key={service.path} to={service.path}>
                     {service.shortName}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="footer-title">Industries</p>
+              <div className="mt-5 grid gap-3 text-sm text-white/55">
+                {industries.map((industry) => (
+                  <Link key={industry.path} to={industry.path}>
+                    {industry.shortName}
                   </Link>
                 ))}
               </div>

@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { Icon } from '../components/Icon';
 import { ClosingCta, FaqList } from '../components/Sections';
 import { Seo } from '../components/Seo';
-import { products, services, site } from '../content';
+import { industries, products, services, site } from '../content';
 import type { PageMeta } from '../seo';
 import type { DetailPageContent } from '../servicePages';
 
@@ -14,6 +14,14 @@ const sections = {
     relatedEyebrow: 'Related services',
     relatedTitle: 'One partner for your whole environment.',
     allLabel: 'View all services',
+  },
+  industry: {
+    label: 'Industries',
+    path: '/industries/',
+    items: industries,
+    relatedEyebrow: 'Other industries',
+    relatedTitle: 'Experience across Southeast Texas.',
+    allLabel: 'View all industries',
   },
   product: {
     label: 'Products',
@@ -27,7 +35,8 @@ const sections = {
 
 /**
  * Template for dedicated service pages (/managed/, /comanaged/, /cybersecurity/, /ai/) and
- * product pages (/products/…/). Content lives in src/servicePages.ts and src/productPages.ts.
+ * product pages (/products/…/) and industry pages (/industries/…/). Content lives in
+ * src/servicePages.ts, src/productPages.ts and src/industryPages.ts.
  */
 export default function DetailPage({
   page,
@@ -202,7 +211,7 @@ export default function DetailPage({
               {section.allLabel} <Icon name="arrow" className="size-4" />
             </Link>
           </div>
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
+          <div className={`mt-14 grid gap-5 ${related.length === 4 ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-3'}`}>
             {related.map((item) => (
               <Link
                 key={item.path}

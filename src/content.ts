@@ -48,6 +48,7 @@ export const site = {
 export const navItems: [label: string, path: string][] = [
   ['Services', '/services/'],
   ['Products', '/products/'],
+  ['Industries', '/industries/'],
   ['Why Recon', '/about/'],
   // Blog appears once there is at least one published post in content/blog/.
   ...(posts.length > 0 ? ([['Blog', '/blog/']] as [string, string][]) : []),
@@ -117,6 +118,54 @@ export const services: Service[] = [
       'Workflow optimization',
       'Governance and adoption support',
     ],
+  },
+];
+
+export type Industry = {
+  icon: IconName;
+  title: string;
+  /** Short name used in link text and breadcrumbs. */
+  shortName: string;
+  /** URL of the industry page (see src/industryPages.ts). */
+  path: string;
+  text: string;
+};
+
+export const industries: Industry[] = [
+  {
+    icon: 'factory',
+    title: 'Manufacturing',
+    shortName: 'Manufacturing',
+    path: '/industries/manufacturing/',
+    text: 'Reliable networks, security, and support that keep production moving.',
+  },
+  {
+    icon: 'briefcase',
+    title: 'Professional Services',
+    shortName: 'Professional Services',
+    path: '/industries/professional-services/',
+    text: 'Secure, dependable technology for firms entrusted with client information.',
+  },
+  {
+    icon: 'medical',
+    title: 'Healthcare',
+    shortName: 'Healthcare',
+    path: '/industries/healthcare/',
+    text: 'Protected patient information and reliable systems for clinics and practices.',
+  },
+  {
+    icon: 'heart',
+    title: 'Nonprofits',
+    shortName: 'Nonprofits',
+    path: '/industries/nonprofits/',
+    text: 'Dependable, budget-conscious IT that keeps the focus on the mission.',
+  },
+  {
+    icon: 'landmark',
+    title: 'Local Government',
+    shortName: 'Local Government',
+    path: '/industries/local-government/',
+    text: 'Secure, resilient technology for cities, counties, and public entities.',
   },
 ];
 

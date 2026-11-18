@@ -4,6 +4,7 @@ import { Icon, type IconName } from '../components/Icon';
 import { PostCard } from '../components/PostCard';
 import { ClosingCta, ProductGrid, ServiceGrid } from '../components/Sections';
 import { posts } from '../blog';
+import { industries } from '../content';
 import { Seo } from '../components/Seo';
 import { pageMeta } from '../seo';
 
@@ -213,6 +214,34 @@ export default function HomePage() {
         </div>
         <div className="mt-14">
           <ServiceGrid compact />
+        </div>
+      </section>
+
+      <section className="section-shell !pt-0">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="eyebrow">Industries we serve</p>
+            <h2 className="mt-5 max-w-2xl font-display text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              Built around the way your organization works.
+            </h2>
+          </div>
+          <Link to="/industries/" className="text-link">
+            Explore industries <Icon name="arrow" className="size-4" />
+          </Link>
+        </div>
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {industries.map((industry) => (
+            <Link
+              key={industry.path}
+              to={industry.path}
+              className="group flex items-center gap-4 rounded-2xl bg-white p-5 transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#111312] text-white">
+                <Icon name={industry.icon} className="size-5" />
+              </span>
+              <span className="font-display text-lg leading-tight tracking-tight">{industry.title}</span>
+            </Link>
+          ))}
         </div>
       </section>
 

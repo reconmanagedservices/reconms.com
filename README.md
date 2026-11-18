@@ -149,6 +149,7 @@ These live in the Cloudflare dashboard, not in this repo:
 | What | File |
 | --- | --- |
 | Phone, email, address, portal/careers links, nav, service/product cards, FAQs | `src/content.ts` |
+| Industry pages (/industries/…) | content in `src/industryPages.ts`, list in `src/content.ts` (`industries`) |
 | Dedicated service pages (/managed/, /comanaged/, /cybersecurity/, /ai/) | content in `src/servicePages.ts`, layout in `src/pages/ServiceDetailPage.tsx` |
 | Page titles and meta descriptions | `src/seo.ts` |
 | Pages | `src/pages/*.tsx` |
