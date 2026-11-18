@@ -313,3 +313,39 @@ export const faqs = [
       'Start with a brief conversation about your current environment, recurring issues, risks, and goals. We will recommend a practical next step and a support approach tailored to your organization.',
   },
 ];
+
+export type Leader = {
+  name: string;
+  /** Professional credential shown after the name, e.g. "PMP". */
+  credential?: string;
+  title: string;
+  /** 1200x960 WebP in public/assets/team/. */
+  photo: string;
+  bio: string[];
+  contact?: { label: string; href: string };
+};
+
+/** Leadership shown on the Why Recon page (src/pages/AboutPage.tsx). */
+export const leadership: Leader[] = [
+  {
+    name: 'Justin Hidalgo',
+    credential: 'PMP',
+    title: 'Chief Technology Officer',
+    photo: '/assets/team/justin-hidalgo.webp',
+    bio: [
+      'Justin has worked in enterprise IT for nearly 20 years, including leadership roles in local government across Southeast Texas. He specializes in public safety technology and brings a first responder’s perspective to it: he has served as a volunteer firefighter since 2013 and as a law enforcement officer since 2017, and he remains an active officer today.',
+      'At Recon, Justin leads the technical team and drives the innovation behind how we support and protect our clients. He is a certified Project Management Professional (PMP).',
+    ],
+    contact: { label: 'justin.hidalgo@reconms.com', href: 'mailto:justin.hidalgo@reconms.com' },
+  },
+  {
+    name: 'Betsy Elizondo',
+    title: 'Client Services Coordinator',
+    photo: '/assets/team/betsy-elizondo.webp',
+    bio: [
+      'Betsy has been building relationships since she was 12, when she started working alongside her mother at a school. She went on to become the school’s manager, running its day-to-day operations.',
+      'Betsy joined Recon in 2025 and manages our client relationships. She’s often the voice you’ll hear when you call for support, and she makes sure you’re happy with Recon every day.',
+    ],
+    contact: { label: site.phone, href: site.phoneHref },
+  },
+];

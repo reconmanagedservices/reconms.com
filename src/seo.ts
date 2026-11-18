@@ -1,4 +1,4 @@
-import { products, services, site } from './content';
+import { leadership, products, services, site } from './content';
 import { postPath, posts, type PostMeta } from './blog';
 import { industryPages } from './industryPages';
 import { productPages } from './productPages';
@@ -127,6 +127,16 @@ export const pageMeta = {
     description:
       'Meet the Beaumont-based managed IT team helping Southeast Texas organizations simplify technology, strengthen security, and plan with confidence.',
     path: '/about/',
+    schema: leadership.map((person) => ({
+      '@type': 'Person',
+      '@id': `${site.url}/about/#${person.name.toLowerCase().replace(/\W+/g, '-')}`,
+      name: person.name,
+      ...(person.credential && { honorificSuffix: person.credential }),
+      jobTitle: person.title,
+      image: `${site.url}${person.photo}`,
+      ...(person.contact?.href.startsWith('mailto:') && { email: person.contact.label }),
+      worksFor: { '@id': orgId },
+    })),
   },
   contact: {
     title: 'Contact Recon Managed Services',

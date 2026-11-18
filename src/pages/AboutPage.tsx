@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { Icon, type IconName } from '../components/Icon';
 import { ClosingCta, PageHero } from '../components/Sections';
 import { Seo } from '../components/Seo';
+import { leadership } from '../content';
 import { pageMeta } from '../seo';
 
 const principles: [title: string, text: string, icon: IconName][] = [
@@ -67,7 +68,54 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-shell">
+      <section className="section-shell" aria-labelledby="leadership-heading">
+        <div className="section-heading">
+          <p className="eyebrow">Leadership</p>
+          <h2 id="leadership-heading">Meet our leadership.</h2>
+          <p>
+            A few of the people guiding Recon. Behind them is our full team of technicians and specialists who support
+            clients across Southeast Texas every day.
+          </p>
+        </div>
+        <div className="mt-14 grid gap-5 md:grid-cols-2">
+          {leadership.map((person) => (
+            <article key={person.name} className="overflow-hidden rounded-[2rem] bg-white">
+              <img
+                src={person.photo}
+                alt={`${person.name}, ${person.title}`}
+                width={1200}
+                height={960}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[5/4] w-full object-cover"
+              />
+              <div className="p-7 sm:p-9 lg:p-10">
+                <p className="text-xs font-bold tracking-[.18em] text-black/50 uppercase">{person.title}</p>
+                <h3 className="mt-3 font-display text-3xl tracking-tight">
+                  {person.name}
+                  {person.credential && <span className="text-black/45">, {person.credential}</span>}
+                </h3>
+                <div className="mt-5 space-y-4 leading-7 text-black/62">
+                  {person.bio.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+                {person.contact && (
+                  <a
+                    href={person.contact.href}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 hover:underline"
+                  >
+                    <Icon name={person.contact.href.startsWith('tel:') ? 'phone' : 'mail'} className="size-4" />
+                    {person.contact.label}
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell !pt-0">
         <div className="grid gap-16 lg:grid-cols-2">
           <div className="rounded-[2.5rem] bg-[#111312] p-8 text-white sm:p-12">
             <p className="eyebrow text-white/45">Based in Beaumont</p>
