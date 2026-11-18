@@ -132,8 +132,8 @@ export default function AboutPage() {
               make this region stronger.
             </p>
             <p className="mt-5 max-w-lg leading-8 text-white/55">
-              From Beaumont, we serve organizations across Jefferson, Hardin, and Orange Counties, including Port Arthur,
-              Nederland, Orange, Lumberton, Vidor, and Silsbee.{' '}
+              From Beaumont, we serve organizations across Southeast Texas and Southwest Louisiana, including Port
+              Arthur, Orange, Silsbee, Jasper, Lake Charles, and Sulphur.{' '}
               <Link to="/contact/#service-area" className="font-semibold text-white underline-offset-4 hover:underline">
                 See our full service area
               </Link>

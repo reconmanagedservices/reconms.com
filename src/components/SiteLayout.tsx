@@ -124,7 +124,8 @@ export function SiteLayout() {
                 />
               </Link>
               <p className="mt-6 max-w-sm leading-7 text-white/45">
-                Managed IT, cybersecurity, and technology strategy for organizations across Southeast Texas.
+                Managed IT, cybersecurity, and technology strategy for organizations across Southeast Texas and Southwest
+                Louisiana.
               </p>
               <div className="mt-6 flex gap-3">
                 {socialLinks.map((social) => (

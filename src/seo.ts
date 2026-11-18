@@ -27,10 +27,10 @@ export type PageMeta = {
 const orgId = `${site.url}/#organization`;
 
 /** The towns and counties Recon serves, for schema.org areaServed. */
-const serviceAreaSchema = [
-  ...site.serviceArea.cities.map((city) => ({ '@type': 'City', name: `${city}, TX` })),
-  ...site.serviceArea.counties.map((county) => ({ '@type': 'AdministrativeArea', name: `${county}, TX` })),
-];
+const serviceAreaSchema = site.serviceArea.flatMap(({ state, cities, counties }) => [
+  ...cities.map((city) => ({ '@type': city.endsWith('Peninsula') ? 'Place' : 'City', name: `${city}, ${state}` })),
+  ...counties.map((county) => ({ '@type': 'AdministrativeArea', name: `${county}, ${state}` })),
+]);
 
 const sectionCrumbs = {
   service: { name: 'Services', path: '/services/' },
@@ -240,7 +240,7 @@ export function structuredData() {
       logo: `${site.url}/assets/recon-logo.png`,
       image: socialImage.url,
       description:
-        'Managed IT services, cybersecurity, co-managed IT, and technology strategy for organizations across Southeast Texas.',
+        'Managed IT services, cybersecurity, co-managed IT, and technology strategy for organizations across Southeast Texas and Southwest Louisiana.',
       telephone: '+1-409-757-8115',
       email: site.email,
       address: {

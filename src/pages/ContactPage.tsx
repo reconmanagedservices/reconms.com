@@ -2,7 +2,7 @@ import { ContactForm } from '../components/ContactForm';
 import { Icon } from '../components/Icon';
 import { FaqList, PageHero } from '../components/Sections';
 import { Seo } from '../components/Seo';
-import { site } from '../content';
+import { formatAreaList, site } from '../content';
 import { pageMeta } from '../seo';
 
 export default function ContactPage() {
@@ -84,20 +84,28 @@ export default function ContactPage() {
           <div>
             <p className="eyebrow">Areas we serve</p>
             <h2 className="mt-5 font-display text-4xl leading-none tracking-[-.04em] sm:text-5xl">
-              Serving Southeast Texas.
+              Serving Southeast Texas and Southwest Louisiana.
             </h2>
             <p className="mt-6 max-w-md leading-7 text-black/62">
-              Recon supports organizations throughout {site.serviceArea.counties.slice(0, -1).join(', ')}, and{' '}
-              {site.serviceArea.counties.at(-1)}, including these communities.
+              From our Beaumont office, Recon supports organizations on both sides of the Sabine River, including these
+              communities.
             </p>
           </div>
-          <ul className="mt-8 flex flex-wrap content-start gap-2.5 lg:mt-0" aria-label="Communities we serve">
-            {site.serviceArea.cities.map((city) => (
-              <li key={city} className="rounded-full bg-white px-4 py-2 text-sm font-semibold">
-                {city}
-              </li>
+          <div className="mt-10 space-y-10 lg:mt-0">
+            {site.serviceArea.map((area) => (
+              <div key={area.region}>
+                <h3 className="font-display text-2xl tracking-tight">{area.region}</h3>
+                <p className="mt-2 leading-7 text-black/62">All of {formatAreaList(area.counties)}, including:</p>
+                <ul className="mt-5 flex flex-wrap gap-2.5" aria-label={`Communities we serve in ${area.region}`}>
+                  {area.cities.map((city) => (
+                    <li key={city} className="rounded-full bg-white px-4 py-2 text-sm font-semibold">
+                      {city}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 

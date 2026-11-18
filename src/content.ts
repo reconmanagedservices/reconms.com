@@ -17,26 +17,59 @@ export const site = {
   },
   directionsUrl:
     'https://www.google.com/maps/search/?api=1&query=Recon%20Managed%20Services%2C%202590%20Calder%20Ave.%2C%20Beaumont%2C%20TX%2077702',
-  serviceArea: {
-    cities: [
-      'Beaumont',
-      'Lumberton',
-      'Nederland',
-      'Port Neches',
-      'Port Arthur',
-      'Groves',
-      'Sour Lake',
-      'Silsbee',
-      'Kountze',
-      'Orange',
-      'Bridge City',
-      'Vidor',
-      'Crystal Beach',
-      'Liberty',
-      'Winnie',
-    ],
-    counties: ['Jefferson County', 'Hardin County', 'Orange County'],
-  },
+  /** Regions Recon serves (Contact page service-area section and schema.org areaServed). */
+  serviceArea: [
+    {
+      region: 'Southeast Texas',
+      state: 'TX',
+      counties: ['Jefferson County', 'Hardin County', 'Orange County'],
+      cities: [
+          'Beaumont',
+          'Bolivar Peninsula',
+          'Bridge City',
+          'Buna',
+          'China',
+          'Crystal Beach',
+          'Dayton',
+          'Deweyville',
+          'Evadale',
+          'Fannett',
+          'Groves',
+          'Hamshire',
+          'Jasper',
+          'Kirbyville',
+          'Kountze',
+          'Liberty',
+          'Lumberton',
+          'Mauriceville',
+          'Mont Belvieu',
+          'Nederland',
+          'Nome',
+          'Orange',
+          'Port Arthur',
+          'Port Neches',
+          'Silsbee',
+          'Sour Lake',
+          'Vidor',
+          'Winnie',
+          'Woodville',
+      ],
+    },
+    {
+      region: 'Southwest Louisiana',
+      state: 'LA',
+      counties: ['Calcasieu Parish', 'Cameron Parish'],
+      cities: [
+          'Cameron',
+          'DeQuincy',
+          'Iowa',
+          'Lake Charles',
+          'Moss Bluff',
+          'Sulphur',
+          'Vinton',
+      ],
+    },
+  ],
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
   /** Online scheduling for a discovery call (opens in a new tab). */
@@ -305,7 +338,7 @@ export const faqs = [
   {
     question: 'Do you provide IT support outside Beaumont?',
     answer:
-      'Recon is based in Beaumont and serves organizations throughout Southeast Texas. Contact our team to discuss your locations, remote workforce, and on-site support needs.',
+      'Recon is based in Beaumont and serves organizations throughout Southeast Texas and Southwest Louisiana, from Jasper and Woodville to Lake Charles and Cameron. Contact our team to discuss your locations, remote workforce, and on-site support needs.',
   },
   {
     question: 'How do we get started?',
@@ -361,3 +394,15 @@ export const leadership: Leader[] = [
     ],
   },
 ];
+
+/**
+ * Joins county or parish names into one phrase, e.g. ['Jefferson County', 'Hardin County'] →
+ * 'Jefferson and Hardin Counties'.
+ */
+export function formatAreaList(areas: string[]) {
+  const kind = areas[0].split(' ').at(-1)!;
+  const names = areas.map((area) => area.slice(0, -kind.length - 1));
+  const joined =
+    names.length < 3 ? names.join(' and ') : `${names.slice(0, -1).join(', ')}, and ${names.at(-1)}`;
+  return `${joined} ${names.length > 1 ? (kind.endsWith('y') ? kind.slice(0, -1) + 'ies' : kind + 'es') : kind}`;
+}
