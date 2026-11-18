@@ -348,7 +348,7 @@ export const leadership: Leader[] = [
     languages: ['English', 'Spanish'],
     photo: '/assets/team/betsy-elizondo.webp',
     bio: [
-      'Betsy has been building relationships since she was 12, when she started working alongside her mother at a school. She went on to become the school’s manager, running its day-to-day operations. She has also held leadership roles in insurance claims adjusting, leading teams of adjusters.',
+      'Betsy has been building relationships since she was 12, when she started working alongside her mother at a school. She went on to become the school’s manager, running its day-to-day operations. She has also held leadership roles in insurance and call centers, leading teams in both.',
       'Betsy joined Recon in 2025 and manages our client relationships. She’s often the voice you’ll hear when you call for support, and she makes sure you’re happy with Recon every day. Betsy is bilingual and fluent in Spanish, so she can help clients in English or Spanish.',
       'Betsy is a member of La Iglesia Apostólica in Beaumont, where she started and leads the translation team. She lives in Beaumont with her husband and their two children, who also go to school in Beaumont.',
     ],
