@@ -229,7 +229,7 @@ export default function HomePage() {
             Explore industries <Icon name="arrow" className="size-4" />
           </Link>
         </div>
-        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((industry) => (
             <Link
               key={industry.path}

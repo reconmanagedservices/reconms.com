@@ -48,7 +48,10 @@ export default function DetailPage({
   meta: PageMeta;
 }) {
   const section = sections[kind];
-  const related = section.items.filter((item) => item.path !== page.path);
+  const others = section.items.filter((item) => item.path !== page.path);
+  const related = page.related
+    ? page.related.map((path) => others.find((item) => item.path === path)).filter((item) => item !== undefined)
+    : others;
 
   return (
     <>

@@ -142,11 +142,32 @@ export const industries: Industry[] = [
     text: 'Reliable networks, security, and support that keep production moving.',
   },
   {
+    icon: 'hardhat',
+    title: 'Construction & Industrial Contractors',
+    shortName: 'Construction & Industrial',
+    path: '/industries/construction-industrial-contractors/',
+    text: 'Connected job sites, secure field devices, and help meeting client security requirements.',
+  },
+  {
+    icon: 'truck',
+    title: 'Transportation & Logistics',
+    shortName: 'Transportation & Logistics',
+    path: '/industries/transportation-logistics/',
+    text: 'Dependable connectivity and security for fleets, ports, warehouses, and yards.',
+  },
+  {
     icon: 'briefcase',
     title: 'Professional Services',
     shortName: 'Professional Services',
     path: '/industries/professional-services/',
     text: 'Secure, dependable technology for firms entrusted with client information.',
+  },
+  {
+    icon: 'banknote',
+    title: 'Financial Services',
+    shortName: 'Financial Services',
+    path: '/industries/financial-services/',
+    text: 'Layered security and documentation for banks, credit unions, and agencies.',
   },
   {
     icon: 'medical',
@@ -168,6 +189,13 @@ export const industries: Industry[] = [
     shortName: 'Local Government',
     path: '/industries/local-government/',
     text: 'Secure, resilient technology for cities, counties, and public entities.',
+  },
+  {
+    icon: 'siren',
+    title: 'Public Safety',
+    shortName: 'Public Safety',
+    path: '/industries/public-safety/',
+    text: 'Around-the-clock reliability and protected data for police, fire, EMS, and dispatch.',
   },
 ];
 

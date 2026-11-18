@@ -20,8 +20,9 @@ export default function IndustriesPage() {
           <p className="eyebrow">Who we serve</p>
           <h2>Experience where it counts.</h2>
           <p>
-            Whether you run a production line, a professional practice, a clinic, a nonprofit, or a public office, your
-            technology plan should reflect how your organization actually works.
+            Whether you run a production line, a job site, a fleet, a practice, a branch, a clinic, a nonprofit, a
+            public office, or a dispatch center, your technology plan should reflect how your organization actually
+            works.
           </p>
         </div>
         <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">

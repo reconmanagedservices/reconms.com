@@ -6,7 +6,16 @@ import type { DetailPageContent } from './servicePages';
  * confirmed: named clients, certifications, special pricing, signed agreements (e.g. HIPAA BAAs),
  * or compliance guarantees. Each page is registered in src/seo.ts and src/App.tsx.
  */
-export type IndustryPageKey = 'manufacturing' | 'professionalServices' | 'healthcare' | 'nonprofits' | 'localGovernment';
+export type IndustryPageKey =
+  | 'manufacturing'
+  | 'constructionIndustrial'
+  | 'transportationLogistics'
+  | 'professionalServices'
+  | 'financialServices'
+  | 'healthcare'
+  | 'nonprofits'
+  | 'localGovernment'
+  | 'publicSafety';
 
 export type IndustryPageContent = DetailPageContent & { key: IndustryPageKey };
 
@@ -19,6 +28,7 @@ const steps = (consultation: string, onboarding: string, ongoing: string) => [
 export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
   manufacturing: {
     key: 'manufacturing',
+    related: ['/industries/construction-industrial-contractors/', '/industries/transportation-logistics/', '/industries/professional-services/'],
     path: '/industries/manufacturing/',
     shortName: 'Manufacturing',
     serviceType: 'Managed IT services for manufacturers',
@@ -130,8 +140,240 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
     ],
   },
 
+  constructionIndustrial: {
+    key: 'constructionIndustrial',
+    related: ['/industries/manufacturing/', '/industries/transportation-logistics/', '/industries/professional-services/'],
+    path: '/industries/construction-industrial-contractors/',
+    shortName: 'Construction & Industrial',
+    serviceType: 'Managed IT services for construction and industrial contractors',
+    titleTag: 'Construction & Contractor IT Services in Beaumont, TX | Recon',
+    description:
+      'Managed IT and cybersecurity for construction and industrial contractors in Southeast Texas: connected job sites, secure field devices, and client requirements.',
+    hero: {
+      title: 'IT for construction and industrial contractors.',
+      text: 'Connected job sites, secure field devices, and responsive support for general contractors, specialty trades, and industrial service companies across Southeast Texas.',
+    },
+    intro: {
+      eyebrow: 'From the office to the job site',
+      title: 'Your work doesn’t happen at a desk.',
+      paragraphs: [
+        'Contractors run on information that has to move between the office, the yard, and the field: estimates, drawings, schedules, timesheets, and photos. Crews need it on laptops, tablets, and phones, often from a trailer or a site with limited connectivity.',
+        'Recon helps construction and industrial contractors across Southeast Texas keep that information flowing securely, with dependable support, protected devices, and connectivity that follows your projects from mobilization to closeout.',
+        'For contractors serving refineries, petrochemical plants, and other industrial owners, we also help put the security controls in place that clients increasingly expect from their contractors, and document them.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why contractors choose Recon',
+      title: 'Support that keeps up with your projects.',
+      items: [
+        {
+          title: 'Ready for the field',
+          text: 'Managed laptops, tablets, and phones that stay secure and up to date wherever your crews are working.',
+        },
+        {
+          title: 'Job sites up and running fast',
+          text: 'Connectivity, cameras, and devices planned and set up as part of mobilizing a new site.',
+        },
+        {
+          title: 'Answers for client requirements',
+          text: 'Documented security controls that help you respond to owner and general contractor questionnaires.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we support',
+      title: 'IT for the office, the yard, and the field.',
+      items: [
+        {
+          icon: 'network',
+          title: 'Job site connectivity',
+          text: 'Internet, Wi-Fi, and secure connections for trailers and temporary offices, so crews can reach plans and project systems.',
+        },
+        {
+          icon: 'laptop',
+          title: 'Field device management',
+          text: 'Laptops, tablets, and phones configured, updated, and protected, with the ability to lock or wipe a lost device.',
+        },
+        {
+          icon: 'mail',
+          title: 'Payment fraud protection',
+          text: 'Email security and verification practices that help stop fake invoices and changed payment instructions.',
+        },
+        {
+          icon: 'cloud',
+          title: 'Project files and backup',
+          text: 'Shared drawings and documents that are easy to reach and backed up, so a failure or attack doesn’t erase project records.',
+        },
+        {
+          icon: 'camera',
+          title: 'Job site and yard cameras',
+          text: 'Video coverage for job sites, equipment yards, and laydown areas to help deter theft and document progress.',
+        },
+        {
+          icon: 'headset',
+          title: 'Support for office and field',
+          text: 'Responsive help desk support for estimators, project managers, superintendents, and office staff.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Client security requirements',
+      title: 'When an owner sends a security questionnaire, have an answer.',
+      paragraphs: [
+        'Industrial owners, general contractors, and cyber insurers increasingly ask contractors how they protect their systems and the client information they handle. Recon helps you put common controls in place and keep documentation of them, so responding to a questionnaire or prequalification request isn’t a scramble.',
+      ],
+      points: ['Multi-factor authentication and managed devices', 'Documented security controls', 'Input on questionnaires and prequalification'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'Getting started between projects, not in the middle of them.',
+      steps: steps(
+        'We learn how your office, yard, and crews work, which systems projects depend on, and what clients are asking for.',
+        'We document your environment, secure devices and accounts, and set a standard approach for mobilizing new job sites.',
+        'Responsive support, proactive maintenance, and planning that keeps pace with your project pipeline.',
+      ),
+    },
+    faqs: [
+      {
+        question: 'Can you set up internet and Wi-Fi on a new job site?',
+        answer:
+          'Yes. We help plan and set up connectivity for job site trailers and temporary offices, including cellular or wired service, Wi-Fi, and secure access to your company systems.',
+      },
+      {
+        question: 'Can you help us answer client security questionnaires?',
+        answer:
+          'Yes. We help put common controls in place, such as multi-factor authentication, managed devices, and backups, and give you documentation and input for your responses. Your company remains responsible for the answers it submits.',
+      },
+      {
+        question: 'Do you support estimating and project management software?',
+        answer:
+          'We support the computers, networks, accounts, and cloud services those applications depend on, and coordinate with the software vendor for application-specific issues.',
+      },
+      {
+        question: 'What happens if a crew member loses a laptop or tablet?',
+        answer:
+          'Managed devices are encrypted and can be locked or wiped remotely, and project files are stored and backed up centrally, so a lost device doesn’t mean lost or exposed data.',
+      },
+    ],
+  },
+
+  transportationLogistics: {
+    key: 'transportationLogistics',
+    related: ['/industries/manufacturing/', '/industries/construction-industrial-contractors/', '/industries/public-safety/'],
+    path: '/industries/transportation-logistics/',
+    shortName: 'Transportation & Logistics',
+    serviceType: 'Managed IT services for transportation and logistics companies',
+    titleTag: 'Transportation & Logistics IT Services in Beaumont, TX',
+    description:
+      'Managed IT and cybersecurity for trucking, freight, warehousing, and port-related companies in Southeast Texas: dependable dispatch, connectivity, and security.',
+    hero: {
+      title: 'IT for transportation and logistics.',
+      text: 'Dependable connectivity, security, and support for trucking companies, freight brokers, warehouses, and port-related businesses across Southeast Texas.',
+    },
+    intro: {
+      eyebrow: 'Freight doesn’t wait',
+      title: 'When systems stop, freight stops.',
+      paragraphs: [
+        'Transportation and logistics companies run on time-sensitive systems: dispatch and transportation management software, tracking, scanners, email, and phones. When one of them is down, loads sit, drivers wait, and customers call.',
+        'Recon helps trucking companies, freight brokers, warehouses, and port-related businesses across Southeast Texas keep those systems reliable and secure, with proactive monitoring, responsive support, and planning for the disruptions this region knows well.',
+        'We work alongside your software and telematics vendors, and plan changes around your dispatch hours and busiest shipping days.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why logistics companies choose Recon',
+      title: 'Keep loads moving.',
+      items: [
+        { title: 'Dependable operations', text: 'Proactive monitoring and maintenance for dispatch, warehouse, and office systems.' },
+        {
+          title: 'Protection from payment fraud',
+          text: 'Email security and verification practices that help stop fake invoices and changed payment details.',
+        },
+        {
+          title: 'Ready for storm season',
+          text: 'Backups, cloud services, and recovery planning so operations can continue during hurricanes and outages.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we support',
+      title: 'IT for dispatch, warehouse, and yard.',
+      items: [
+        {
+          icon: 'network',
+          title: 'Warehouse and yard networks',
+          text: 'Reliable Wi-Fi and network coverage for warehouses, docks, and yards, so scanners and devices stay connected.',
+        },
+        {
+          icon: 'server',
+          title: 'Dispatch and business systems',
+          text: 'Support for the servers, workstations, and connections behind your transportation management and accounting software.',
+        },
+        {
+          icon: 'shield',
+          title: 'Cybersecurity and fraud prevention',
+          text: 'Endpoint protection, multi-factor authentication, and email security that help prevent account takeover and payment fraud.',
+        },
+        {
+          icon: 'cloud',
+          title: 'Backup and disaster recovery',
+          text: 'Monitored backups and a recovery plan for critical systems, including planning for hurricanes and extended outages.',
+        },
+        {
+          icon: 'camera',
+          title: 'Cameras and access control',
+          text: 'Video coverage and controlled entry for yards, gates, docks, and warehouses.',
+        },
+        {
+          icon: 'phone',
+          title: 'Phones for dispatch and customers',
+          text: 'VoIP phone systems with call routing and mobile apps, so drivers and customers reach the right person.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Payment fraud',
+      title: 'Stop fraud before the payment goes out.',
+      paragraphs: [
+        'Logistics companies handle a steady flow of invoices, rate confirmations, and payment requests, which makes them a frequent target for impersonation and changed-payment scams. Recon helps you combine email protection and multi-factor authentication with simple verification steps, so a convincing email isn’t enough to redirect a payment.',
+      ],
+      points: ['Email impersonation protection', 'Multi-factor authentication on email and banking', 'Verification steps for payment changes'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'Getting started without slowing the freight.',
+      steps: steps(
+        'We learn how your dispatch, warehouse, and office operate, and which systems can’t go down.',
+        'We document your environment and plan changes around dispatch hours and shipping peaks.',
+        'Proactive monitoring, responsive support, and regular planning as your operation grows.',
+      ),
+    },
+    faqs: [
+      {
+        question: 'Can you work around our dispatch hours?',
+        answer:
+          'Yes. We plan maintenance and changes around your operation, and agree in advance on what can happen during working hours and what should wait.',
+      },
+      {
+        question: 'Do you support our transportation management software?',
+        answer:
+          'We support the computers, servers, networks, and accounts your transportation management, telematics, and accounting software depend on, and coordinate with those vendors for application-specific issues.',
+      },
+      {
+        question: 'How do you protect us from payment and invoice fraud?',
+        answer:
+          'With layers: email security that flags impersonation, multi-factor authentication on email and financial accounts, employee training, and verification steps for any change to payment details.',
+      },
+      {
+        question: 'How do you help us prepare for hurricanes?',
+        answer:
+          'We help you move critical systems to the cloud or keep them backed up off-site, document a recovery plan, and make sure your team can keep working remotely when the office or yard is closed.',
+      },
+    ],
+  },
+
   professionalServices: {
     key: 'professionalServices',
+    related: ['/industries/financial-services/', '/industries/healthcare/', '/industries/nonprofits/'],
     path: '/industries/professional-services/',
     shortName: 'Professional Services',
     serviceType: 'Managed IT services for professional services firms',
@@ -140,7 +382,7 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
       'Secure, responsive IT for law, accounting, engineering, and other professional firms in Southeast Texas: Microsoft 365, cybersecurity, and help desk support.',
     hero: {
       title: 'IT support for professional services firms.',
-      text: 'Secure, dependable technology for law, accounting, engineering, insurance, consulting, and other professional firms across Southeast Texas.',
+      text: 'Secure, dependable technology for law, accounting, engineering, architecture, consulting, and other professional firms across Southeast Texas.',
     },
     intro: {
       eyebrow: 'Your reputation runs on trust',
@@ -240,8 +482,127 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
     ],
   },
 
+  financialServices: {
+    key: 'financialServices',
+    related: ['/industries/professional-services/', '/industries/healthcare/', '/industries/local-government/'],
+    path: '/industries/financial-services/',
+    shortName: 'Financial Services',
+    serviceType: 'Managed IT services for financial services organizations',
+    titleTag: 'Financial Services IT & Cybersecurity in Beaumont, TX',
+    description:
+      'Managed IT and cybersecurity for banks, credit unions, insurance agencies, and financial firms in Southeast Texas, with layered, documented safeguards.',
+    hero: {
+      title: 'IT and cybersecurity for financial services.',
+      text: 'Layered security, dependable support, and clear documentation for community banks, credit unions, insurance agencies, and financial firms across Southeast Texas.',
+    },
+    intro: {
+      eyebrow: 'Trust is the business',
+      title: 'Protect customer information and stay ready for review.',
+      paragraphs: [
+        'Financial organizations hold exactly what attackers want: personal information, account details, and access to money. Customers, regulators, auditors, and insurers all expect strong protections, and the documentation to show them.',
+        'Recon helps community banks, credit unions, insurance agencies, wealth managers, and lenders across Southeast Texas protect customer information, keep systems available, and document the technical safeguards they have in place.',
+        'We work alongside your compliance officer, auditors, and core and software vendors. Compliance remains your organization’s responsibility; we focus on the technical controls and the information you need to demonstrate them.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why financial firms choose Recon',
+      title: 'Security you can document.',
+      items: [
+        {
+          title: 'Layered security',
+          text: 'Multi-factor authentication, encryption, email security, and monitoring around customer information.',
+        },
+        {
+          title: 'Ready for audits and reviews',
+          text: 'Documentation of technical safeguards to support examinations, audits, and vendor due diligence.',
+        },
+        {
+          title: 'Dependable operations',
+          text: 'Proactive maintenance, monitored backups, and responsive help so customers aren’t kept waiting.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we support',
+      title: 'IT for banks, agencies, and financial firms.',
+      items: [
+        {
+          icon: 'shield',
+          title: 'Layered cybersecurity',
+          text: 'Endpoint protection, email security, and security monitoring for the systems that hold customer information.',
+        },
+        {
+          icon: 'lock',
+          title: 'Access control and multi-factor authentication',
+          text: 'Role-based access to customer data, multi-factor authentication, and prompt removal of access when people leave.',
+        },
+        {
+          icon: 'clipboard',
+          title: 'Safeguard documentation',
+          text: 'Records of the technical controls in place, with input for audits, examinations, and vendor reviews.',
+        },
+        {
+          icon: 'cloud',
+          title: 'Backup and recovery',
+          text: 'Encrypted, monitored backups and a recovery plan for critical systems and records.',
+        },
+        {
+          icon: 'cap',
+          title: 'Security awareness training',
+          text: 'Practical training that helps employees recognize phishing, impersonation, and social engineering.',
+        },
+        {
+          icon: 'headset',
+          title: 'Responsive help desk',
+          text: 'Quick help for branch, agency, and office staff from technicians who know your systems.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Shared responsibility',
+      title: 'Technical safeguards that support your information security program.',
+      paragraphs: [
+        'The Gramm-Leach-Bliley Act requires financial institutions to protect customer information. Depending on your organization, specific expectations come from banking or credit union regulators, the FTC Safeguards Rule, or state insurance regulators, and many call for controls such as multi-factor authentication, encryption, and monitoring.',
+        'Recon helps put those technical controls in place and document them. We don’t provide legal advice or compliance certifications, so we work alongside your compliance officer and auditors.',
+      ],
+      points: ['Multi-factor authentication and encryption', 'Security monitoring and logging', 'Documentation for audits and vendor reviews'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'A careful start for a regulated business.',
+      steps: steps(
+        'We learn how your organization works, which systems hold customer information, and what your auditors and examiners expect.',
+        'We document your environment, address the most important security gaps first, and keep disruption to customers to a minimum.',
+        'Proactive monitoring, responsive support, and regular reviews of your safeguards as requirements evolve.',
+      ),
+    },
+    faqs: [
+      {
+        question: 'Can you make us compliant with GLBA or the FTC Safeguards Rule?',
+        answer:
+          'No IT provider can make an organization compliant on its own, because compliance includes policies, oversight, and administrative practices. Recon helps with the technical safeguards and documentation, and works alongside your compliance officer and advisers.',
+      },
+      {
+        question: 'Can you help with our vendor due diligence review?',
+        answer:
+          'Yes. We can provide information about how we deliver our services and protect your systems to support your vendor management process.',
+      },
+      {
+        question: 'Do you support core banking and agency management systems?',
+        answer:
+          'We support the computers, networks, accounts, and connections those systems depend on, and coordinate with your core, agency management, and other software vendors for application-specific issues.',
+      },
+      {
+        question: 'How do you protect against wire and payment fraud?',
+        answer:
+          'With layers: email security that flags impersonation, multi-factor authentication, employee training, and verification steps for payment and account changes.',
+      },
+    ],
+  },
+
   healthcare: {
     key: 'healthcare',
+    related: ['/industries/professional-services/', '/industries/public-safety/', '/industries/nonprofits/'],
     path: '/industries/healthcare/',
     shortName: 'Healthcare',
     serviceType: 'Managed IT services for healthcare organizations',
@@ -353,6 +714,7 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
 
   nonprofits: {
     key: 'nonprofits',
+    related: ['/industries/local-government/', '/industries/healthcare/', '/industries/professional-services/'],
     path: '/industries/nonprofits/',
     shortName: 'Nonprofits',
     serviceType: 'Managed IT services for nonprofit organizations',
@@ -466,6 +828,7 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
 
   localGovernment: {
     key: 'localGovernment',
+    related: ['/industries/public-safety/', '/industries/nonprofits/', '/industries/transportation-logistics/'],
     path: '/industries/local-government/',
     shortName: 'Local Government',
     serviceType: 'Managed IT services for local government',
@@ -569,6 +932,123 @@ export const industryPages: Record<IndustryPageKey, IndustryPageContent> = {
         question: 'Can you help with required cybersecurity training?',
         answer:
           'We can help you plan and track security awareness for your staff as part of your broader security program. Completing state-required training through a certified program remains your organization’s responsibility.',
+      },
+    ],
+  },
+  publicSafety: {
+    key: 'publicSafety',
+    related: ['/industries/local-government/', '/industries/healthcare/', '/industries/transportation-logistics/'],
+    path: '/industries/public-safety/',
+    shortName: 'Public Safety',
+    serviceType: 'Managed IT services for public safety agencies',
+    titleTag: 'Public Safety IT Services in Beaumont, TX | Recon Managed Services',
+    description:
+      'Managed IT and cybersecurity for police, fire, EMS, and emergency communications agencies in Southeast Texas: dependable systems and protected data.',
+    hero: {
+      title: 'IT for public safety agencies.',
+      text: 'Dependable systems and protected data for police departments, sheriff’s offices, fire departments, EMS, and emergency communications across Southeast Texas.',
+    },
+    intro: {
+      eyebrow: 'When every minute matters',
+      title: 'Technology first responders can count on.',
+      paragraphs: [
+        'Public safety agencies depend on technology around the clock: records and dispatch systems, mobile computers in vehicles, station networks, cameras, and phones. An outage isn’t an inconvenience, and the information these agencies hold is among the most sensitive there is.',
+        'Recon helps police, fire, EMS, and emergency communications agencies across Jefferson, Hardin, and Orange Counties keep systems available and secure, with proactive monitoring, responsive support, and security built around criminal justice and other protected information.',
+        'We work alongside your command staff, your IT or records personnel, your city or county, and the vendors behind your dispatch and records systems.',
+      ],
+    },
+    reasons: {
+      eyebrow: 'Why agencies choose Recon',
+      title: 'Dependable IT for those who serve.',
+      items: [
+        {
+          title: 'Built for 24/7 operations',
+          text: 'Proactive monitoring and planned maintenance for agencies that never close.',
+        },
+        {
+          title: 'Protected information',
+          text: 'Access controls, multi-factor authentication, and encryption around criminal justice and other sensitive data.',
+        },
+        {
+          title: 'Ready for the field',
+          text: 'Managed mobile computers and secure connections for officers and crews in vehicles and on scene.',
+        },
+      ],
+    },
+    included: {
+      eyebrow: 'What we support',
+      title: 'IT for stations, vehicles, and dispatch.',
+      items: [
+        {
+          icon: 'pulse',
+          title: 'Proactive monitoring',
+          text: 'Around-the-clock monitoring of servers, networks, and critical systems, so issues are caught early.',
+        },
+        {
+          icon: 'lock',
+          title: 'Access control and authentication',
+          text: 'Multi-factor authentication and role-based access for the systems that hold protected information.',
+        },
+        {
+          icon: 'laptop',
+          title: 'Mobile and in-vehicle devices',
+          text: 'Mobile computers and tablets configured, secured, and connected for use in the field.',
+        },
+        {
+          icon: 'network',
+          title: 'Station and multi-site networks',
+          text: 'Reliable, segmented networks for headquarters, substations, fire stations, and other facilities.',
+        },
+        {
+          icon: 'cloud',
+          title: 'Backup and disaster recovery',
+          text: 'Monitored backups and a recovery plan so critical systems can be restored quickly, including during severe weather.',
+        },
+        {
+          icon: 'camera',
+          title: 'Cameras and access control',
+          text: 'Video coverage and controlled entry for stations, evidence areas, and facilities.',
+        },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Criminal justice information',
+      title: 'Technical controls that support CJIS requirements.',
+      paragraphs: [
+        'Agencies that access criminal justice information must follow the FBI CJIS Security Policy, which sets requirements for areas such as multi-factor authentication, encryption, access control, and audit logging. Vendor personnel with access may also need to complete background checks and security training.',
+        'Recon helps put the technical controls in place, documents them, and coordinates with your agency on vendor requirements. Your agency remains responsible for its compliance and audits.',
+      ],
+      points: ['Advanced (multi-factor) authentication', 'Encryption of data in transit and at rest', 'Audit logging and access reviews'],
+    },
+    process: {
+      eyebrow: 'How it works',
+      title: 'A careful start for an agency that can’t go offline.',
+      steps: steps(
+        'We learn how your agency operates, which systems can never go down, and what your security requirements are.',
+        'We document your environment, coordinate vendor and personnel requirements, and plan changes around shifts and operations.',
+        'Proactive monitoring, responsive support, and regular reviews as your agency’s needs evolve.',
+      ),
+    },
+    faqs: [
+      {
+        question: 'Can you help us meet the CJIS Security Policy?',
+        answer:
+          'Recon helps with the technical controls the policy calls for, such as multi-factor authentication, encryption, access control, and logging, and documents them. Your agency remains responsible for its compliance, and we coordinate with you on vendor personnel requirements.',
+      },
+      {
+        question: 'Do you support dispatch and records management systems?',
+        answer:
+          'We support the computers, servers, networks, and connections those systems depend on, and coordinate with your dispatch and records vendors for application-specific issues.',
+      },
+      {
+        question: 'Can you work alongside our city or county IT department?',
+        answer:
+          'Yes. Through co-managed IT, Recon can add expertise, tools, and support capacity while your existing IT staff stay in control.',
+      },
+      {
+        question: 'How do you handle maintenance for a 24/7 agency?',
+        answer:
+          'We plan updates and changes with your agency in advance, schedule them for the least disruptive times, and make sure there’s a way to roll back if something doesn’t go as expected.',
       },
     ],
   },

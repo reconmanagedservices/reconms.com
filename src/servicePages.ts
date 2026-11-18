@@ -28,6 +28,8 @@ export type DetailPageContent = {
   /** Three or four steps. */
   process: { eyebrow: string; title: string; steps: { title: string; text: string }[] };
   faqs: { question: string; answer: string }[];
+  /** Paths of the related pages to show (defaults to every other page in the section). */
+  related?: string[];
 };
 
 export type ServicePageContent = DetailPageContent & { key: ServicePageKey };

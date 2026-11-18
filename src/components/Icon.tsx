@@ -161,6 +161,32 @@ const paths = {
       <path d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17.5h2" />
     </>
   ),
+  truck: (
+    <>
+      <path d="M2.5 6h11v10.5h-11zM13.5 9.5h4l3 3.5v3.5h-7" />
+      <circle cx="7" cy="17.5" r="1.8" />
+      <circle cx="17" cy="17.5" r="1.8" />
+    </>
+  ),
+  hardhat: (
+    <>
+      <path d="M3 17.5h18M4.5 17.5V16a7.5 7.5 0 0 1 15 0v1.5" />
+      <path d="M10 8.7V6h4v2.7M9 10v3M15 10v3" />
+    </>
+  ),
+  siren: (
+    <>
+      <path d="M7 18v-6a5 5 0 0 1 10 0v6M5 18h14v3H5z" />
+      <path d="M12 3v2M4.5 6.5l1.4 1.4M19.5 6.5l-1.4 1.4" />
+    </>
+  ),
+  banknote: (
+    <>
+      <rect x="2.5" y="6" width="19" height="12" rx="2" />
+      <circle cx="12" cy="12" r="2.5" />
+      <path d="M6 9.5v5M18 9.5v5" />
+    </>
+  ),
 } satisfies Record<string, ReactNode>;
 
 export type IconName = keyof typeof paths;

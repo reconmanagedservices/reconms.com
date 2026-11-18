@@ -95,14 +95,18 @@ export const pageMeta = {
     title: 'Industries',
     titleTag: 'IT Services by Industry in Southeast Texas | Recon Managed Services',
     description:
-      'Managed IT and cybersecurity for manufacturing, professional services, healthcare, nonprofits, and local government across Southeast Texas.',
+      'Managed IT and cybersecurity built for nine Southeast Texas industries, from manufacturing and contractors to healthcare, finance, and public safety.',
     path: '/industries/',
   },
   manufacturing: detailPageMeta(industryPages.manufacturing, 'industry'),
+  constructionIndustrial: detailPageMeta(industryPages.constructionIndustrial, 'industry'),
+  transportationLogistics: detailPageMeta(industryPages.transportationLogistics, 'industry'),
   professionalServices: detailPageMeta(industryPages.professionalServices, 'industry'),
+  financialServices: detailPageMeta(industryPages.financialServices, 'industry'),
   healthcare: detailPageMeta(industryPages.healthcare, 'industry'),
   nonprofits: detailPageMeta(industryPages.nonprofits, 'industry'),
   localGovernment: detailPageMeta(industryPages.localGovernment, 'industry'),
+  publicSafety: detailPageMeta(industryPages.publicSafety, 'industry'),
   products: {
     title: 'Business Technology Products',
     // Broad hub title; each product has its own page targeting its specific keyword.
