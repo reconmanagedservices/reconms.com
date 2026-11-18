@@ -7,7 +7,7 @@ export const site = {
   phone: '(409) 757-8115',
   phoneHref: 'tel:+14097578115',
   email: 'hello@reconms.com',
-  address: ['2590 Calder Avenue', 'Beaumont, TX 77702'],
+  address: ['2590 Calder Ave.', 'Beaumont, TX 77702'],
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
   /** Texas Private Security license, shown in the footer on every page. */

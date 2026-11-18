@@ -159,7 +159,7 @@ export const servicePages: Record<ServicePageKey, ServicePageContent> = {
       {
         question: 'Are you local to Beaumont?',
         answer:
-          'Yes. Recon is based at 2590 Calder Avenue in Beaumont and serves organizations throughout Southeast Texas.',
+          'Yes. Recon is based at 2590 Calder Ave. in Beaumont and serves organizations throughout Southeast Texas.',
       },
     ],
   },
