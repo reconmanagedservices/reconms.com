@@ -185,6 +185,10 @@ export function SiteLayout() {
                   </span>
                 ))}
               </address>
+              <p className="mt-3 text-sm leading-6 text-white/55">
+                <span className="sr-only">Office hours: </span>
+                Mon–Fri, 8 AM–5 PM
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-4 pt-7 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">

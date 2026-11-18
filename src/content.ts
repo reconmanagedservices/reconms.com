@@ -8,6 +8,35 @@ export const site = {
   phoneHref: 'tel:+14097578115',
   email: 'hello@reconms.com',
   address: ['2590 Calder Ave.', 'Beaumont, TX 77702'],
+  /** Office hours (support availability for managed clients is described on the service pages). */
+  hours: {
+    label: 'Monday–Friday, 8:00 AM–5:00 PM',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '08:00',
+    closes: '17:00',
+  },
+  directionsUrl:
+    'https://www.google.com/maps/search/?api=1&query=Recon%20Managed%20Services%2C%202590%20Calder%20Ave.%2C%20Beaumont%2C%20TX%2077702',
+  serviceArea: {
+    cities: [
+      'Beaumont',
+      'Lumberton',
+      'Nederland',
+      'Port Neches',
+      'Port Arthur',
+      'Groves',
+      'Sour Lake',
+      'Silsbee',
+      'Kountze',
+      'Orange',
+      'Bridge City',
+      'Vidor',
+      'Crystal Beach',
+      'Liberty',
+      'Winnie',
+    ],
+    counties: ['Jefferson County', 'Hardin County', 'Orange County'],
+  },
   customerPortal: 'https://portal.reconms.com',
   careers: 'https://my.reconms.com',
   /** Texas Private Security license, shown in the footer on every page. */

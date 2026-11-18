@@ -25,6 +25,12 @@ export type PageMeta = {
 
 const orgId = `${site.url}/#organization`;
 
+/** The towns and counties Recon serves, for schema.org areaServed. */
+const serviceAreaSchema = [
+  ...site.serviceArea.cities.map((city) => ({ '@type': 'City', name: `${city}, TX` })),
+  ...site.serviceArea.counties.map((county) => ({ '@type': 'AdministrativeArea', name: `${county}, TX` })),
+];
+
 const sectionCrumbs = {
   service: { name: 'Services', path: '/services/' },
   product: { name: 'Products', path: '/products/' },
@@ -48,10 +54,7 @@ function detailPageMeta(page: DetailPageContent, kind: keyof typeof sectionCrumb
         description: page.description,
         url,
         provider: { '@id': orgId },
-        areaServed: [
-          { '@type': 'City', name: 'Beaumont, TX' },
-          { '@type': 'AdministrativeArea', name: 'Southeast Texas' },
-        ],
+        areaServed: serviceAreaSchema,
       },
       {
         '@type': 'BreadcrumbList',
@@ -218,10 +221,14 @@ export function structuredData() {
         postalCode: '77702',
         addressCountry: 'US',
       },
-      areaServed: [
-        { '@type': 'City', name: 'Beaumont, TX' },
-        { '@type': 'AdministrativeArea', name: 'Southeast Texas' },
-      ],
+      areaServed: serviceAreaSchema,
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: site.hours.days,
+        opens: site.hours.opens,
+        closes: site.hours.closes,
+      },
+      hasMap: site.directionsUrl,
       sameAs: [site.linkedIn, site.facebook],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',

@@ -78,6 +78,14 @@ export default function AboutPage() {
               Our Southeast Texas roots shape how we work: responsive, direct, and invested in the organizations that
               make this region stronger.
             </p>
+            <p className="mt-5 max-w-lg leading-8 text-white/55">
+              From Beaumont, we serve organizations across Jefferson, Hardin, and Orange Counties, including Port Arthur,
+              Nederland, Orange, Lumberton, Vidor, and Silsbee.{' '}
+              <Link to="/contact/#service-area" className="font-semibold text-white underline-offset-4 hover:underline">
+                See our full service area
+              </Link>
+              .
+            </p>
           </div>
           <div className="flex flex-col justify-center">
             <p className="eyebrow">A clearer next step</p>
