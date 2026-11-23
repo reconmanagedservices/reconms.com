@@ -6,6 +6,8 @@ description: Looking for IT support in Beaumont, TX? Discover what to look for
   in an IT provider and why local businesses choose Recon Managed Services.
 category: IT Management
 image: /assets/blog/recon_how_to_choose_it_support_beaumont_featured.webp
+imageAlt: Business owner discussing managed IT support and technology solutions
+  with an IT professional.
 draft: false
 ---
 *Choosing an IT provider is about more than fixing computers. Here's what Southeast Texas businesses should look for in a technology partner—and why working with a local team can make all the difference.*
