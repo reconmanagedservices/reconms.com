@@ -9,7 +9,7 @@ category: IT Management
 image: /assets/blog/recon_proactive_it_monitoring_featured.webp
 imageAlt: IT technician reviewing proactive network and server monitoring
   dashboards to help prevent business downtime.
-draft: false
+draft: true
 ---
 # Why Proactive Monitoring Matters More Than Waiting for IT to Break
 
