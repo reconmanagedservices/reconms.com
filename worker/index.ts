@@ -63,7 +63,14 @@ export default {
     if (pathname.startsWith('/api/')) {
       return Response.json({ ok: false, error: 'not_found' }, { status: 404 });
     }
-    return env.ASSETS.fetch(request);
+    const asset = await env.ASSETS.fetch(request);
+    // public/robots.txt (reached here via run_worker_first, so _headers don't apply): declare UTF-8.
+    if (pathname === '/robots.txt' && asset.ok) {
+      const response = new Response(asset.body, asset);
+      response.headers.set('Content-Type', 'text/plain; charset=utf-8');
+      return response;
+    }
+    return asset;
   },
 
   async scheduled(_controller, env, ctx) {

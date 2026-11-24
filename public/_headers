@@ -13,3 +13,18 @@
 # Build output in /_app/ has content-hashed file names, so it can be cached forever.
 /_app/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Declare UTF-8 in the Content-Type header (by default Cloudflare sends it without a charset).
+# Every page URL ends in a slash (/about/, /blog/, …), so these two rules cover all HTML pages.
+/
+  Content-Type: text/html; charset=utf-8
+/*/
+  Content-Type: text/html; charset=utf-8
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+/blog/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8
+# RFC 9116 requires security.txt to be served as UTF-8 plain text.
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8
