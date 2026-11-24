@@ -9,9 +9,9 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    // Only API requests (and robots.txt, see worker/index.ts) run the Worker; everything else is
-    // served straight from the static files.
-    "run_worker_first": ["/api/*", "/robots.txt"],
+    // Only API requests (and robots.txt and the internal scheduled-posts file, see
+    // worker/index.ts) run the Worker; everything else is served straight from the static files.
+    "run_worker_first": ["/api/*", "/robots.txt", "/scheduled-posts.json"],
     // Pages live at /about/ (matching the old WordPress URLs); /about redirects to /about/.
     "html_handling": "force-trailing-slash",
     // Unknown URLs get dist/404.html with a real 404 status.
@@ -22,6 +22,11 @@
     "CONTACT_TO": "hello@reconms.com",
     "CONTACT_FROM": "Recon Website <website@reconms.com>"
   },
+  // Daily at 12:07 UTC (6:07 AM CST / 7:07 AM CDT): rebuild the site if a scheduled blog post's
+  // publish date has arrived (worker/schedule.ts).
+  "triggers": {
+    "crons": ["7 12 * * *"]
+  },
   "observability": {
     "enabled": true
   }
@@ -29,4 +34,6 @@
   //   TURNSTILE_SITE_KEY    Turnstile widget site key (public; a plain-text variable is fine)
   //   TURNSTILE_SECRET_KEY  Cloudflare Turnstile widget secret key
   //   RESEND_API_KEY        Resend API key with "sending access"
+  //   DEPLOY_HOOK_URL       Workers Builds deploy hook for the production branch (publishes
+  //                         scheduled blog posts; see README)
 }

@@ -107,6 +107,27 @@ it's configured by `.pages.yml`.
 
 To add a category option, edit the `values` list for `category` in `.pages.yml`.
 
+### Scheduling posts
+
+Give a post a future publish date and it stays off the live site (pages, blog list, sitemap, RSS
+and the site's JavaScript) until that date, then publishes automatically. How it works:
+
+- Each build leaves out posts dated after today (Central time) and lists their dates in
+  `dist/scheduled-posts.json` (not publicly reachable).
+- The Worker has a daily cron trigger (`triggers.crons` in `wrangler.jsonc`, 12:07 UTC = 6:07 AM
+  CST / 7:07 AM CDT). If a scheduled date has arrived, it calls a Workers Builds **deploy hook**,
+  and the new build (about two minutes) includes the post. See `worker/schedule.ts`.
+
+One-time setup in the Cloudflare dashboard:
+
+1. **Workers & Pages → reconms-com → Settings → Builds → Deploy Hooks:** create a hook for the
+   production branch and copy its URL.
+2. **Settings → Variables and Secrets → Add:** type **Secret**, name `DEPLOY_HOOK_URL`, value the
+   hook URL. Treat the URL like a password: anyone who has it can trigger builds.
+
+The cron's runs and messages ("Scheduled posts: …") appear under the Worker's **Logs**. If the
+secret is missing, a due post won't publish until the next push (any edit) rebuilds the site.
+
 ### Publishing without Pages CMS
 
 Create or edit a file in `content/blog/` directly on GitHub (Add file → Create new file) using the

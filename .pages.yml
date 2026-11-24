@@ -31,6 +31,7 @@ content:
         required: true
       - name: date
         label: Publish date
+        description: A future date schedules the post. It stays hidden until that morning (about 7 AM Central), then publishes automatically.
         type: date
         required: true
       - name: updated

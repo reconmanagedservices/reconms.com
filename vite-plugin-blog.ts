@@ -1,17 +1,33 @@
 /**
  * Turns the Markdown posts in content/blog/*.md into build-time modules, so no Markdown parser
  * ships to the browser (h2/h3 headings get ids, and the h2s form the table of contents):
- *   content/blog/<slug>.md?meta → export default { slug, title, date, … }  (small; for listings)
- *   content/blog/<slug>.md?body → export default { html, toc }           (loaded per post)
+ *   virtual:blog-posts          → export const posts = [{ slug, title, date, … }]  (for listings)
+ *                                  export const bodyLoaders = { [slug]: () => import(…?body) }
+ *   content/blog/<slug>.md?body → export default { html, toc }  (loaded per post)
  * The file name (without .md) is the post's URL: /<slug>/.
+ *
+ * In production builds, drafts and posts dated after today (Central time) are left out of
+ * virtual:blog-posts entirely, so not even their file names (which come from their titles) ship.
+ * Their publish dates go to dist/scheduled-posts.json for the Worker's daily check.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import type { Plugin } from 'vite';
 
 const BLOG_DIR = `${path.sep}content${path.sep}blog${path.sep}`;
+const VIRTUAL_ID = 'virtual:blog-posts';
+const RESOLVED_VIRTUAL_ID = `\0${VIRTUAL_ID}`;
+
+/** Posts are scheduled by calendar day in the office's time zone. */
+export const PUBLISH_TIME_ZONE = 'America/Chicago';
+
+/** Today's date (YYYY-MM-DD) in PUBLISH_TIME_ZONE. */
+export const publishToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: PUBLISH_TIME_ZONE }).format(new Date());
+
+/** Name of the file (in dist/) listing upcoming publish dates; read by the Worker's daily check. */
+export const SCHEDULE_FILE = 'scheduled-posts.json';
 
 const toIsoDate = (value: unknown, field: string, file: string) => {
   if (value === undefined || value === null || value === '') return undefined;
@@ -93,23 +109,80 @@ function parsePost(file: string) {
 }
 
 export default function blogPlugin(): Plugin {
-  // In production builds, drafts are compiled to nothing so their text never ships.
-  let excludeDrafts = false;
+  // In production builds, drafts and posts dated after today are compiled to nothing so their
+  // text never ships. `npm run dev` shows everything.
+  let isBuild = false;
+  let isSsrBuild = false;
+  let today = '';
+  let blogDir = '';
+  // Publish dates of posts held back from this build, so the Worker knows when to rebuild.
+  const scheduledDates = new Set<string>();
+
+  /** Whether a post is left out of this build. */
+  const isHidden = (meta: ReturnType<typeof parsePost>['meta']) => isBuild && (meta.draft || meta.date > today);
+
+  const postFiles = () =>
+    readdirSync(blogDir)
+      .filter((name) => name.endsWith('.md') && name !== 'README.md')
+      .sort()
+      .map((name) => path.join(blogDir, name));
+
   return {
     name: 'recon-blog',
     enforce: 'pre',
     configResolved(config) {
-      excludeDrafts = config.command === 'build';
+      isBuild = config.command === 'build';
+      isSsrBuild = Boolean(config.build.ssr);
+      today = publishToday();
+      blogDir = path.join(config.root, 'content', 'blog');
+    },
+    resolveId(id) {
+      return id === VIRTUAL_ID ? RESOLVED_VIRTUAL_ID : null;
+    },
+    configureServer(server) {
+      // Adding, removing or editing a post refreshes the post list in `npm run dev`.
+      const refresh = (file: string) => {
+        if (!file.includes(BLOG_DIR) || !file.endsWith('.md')) return;
+        const mod = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_ID);
+        if (mod) server.moduleGraph.invalidateModule(mod);
+        server.ws.send({ type: 'full-reload' });
+      };
+      server.watcher.add(blogDir);
+      server.watcher.on('add', refresh).on('unlink', refresh).on('change', refresh);
+    },
+    generateBundle() {
+      if (!isBuild || isSsrBuild) return;
+      this.emitFile({
+        type: 'asset',
+        fileName: SCHEDULE_FILE,
+        source: `${JSON.stringify({ timeZone: PUBLISH_TIME_ZONE, dates: [...scheduledDates].sort() })}\n`,
+      });
     },
     load(id) {
+      if (id === RESOLVED_VIRTUAL_ID) {
+        const posts = [];
+        for (const file of postFiles()) {
+          this.addWatchFile(file);
+          const { meta } = parsePost(file);
+          if (isHidden(meta)) {
+            if (!meta.draft) scheduledDates.add(meta.date);
+            continue;
+          }
+          posts.push(meta);
+        }
+        const loaders = posts
+          .map((meta) => `  ${JSON.stringify(meta.slug)}: () => import(${JSON.stringify(`/content/blog/${meta.slug}.md?body`)}).then((m) => m.default),`)
+          .join('\n');
+        return `export const posts = ${JSON.stringify(posts)};\nexport const bodyLoaders = {\n${loaders}\n};\n`;
+      }
+
       const [file, query] = id.split('?');
       if (!file.endsWith('.md') || !file.includes(BLOG_DIR)) return null;
       this.addWatchFile(file);
+      if (query !== 'body') throw new Error(`Import blog posts from "${VIRTUAL_ID}" (got ${id})`);
       const { meta, body } = parsePost(file);
-      if (excludeDrafts && meta.draft) return 'export default null;';
-      if (query === 'meta') return `export default ${JSON.stringify(meta)};`;
-      if (query === 'body') return `export default ${JSON.stringify(body)};`;
-      throw new Error(`Import blog posts with ?meta or ?body (got ${id})`);
+      if (isHidden(meta)) throw new Error(`${file} is a draft or scheduled post and must not be bundled`);
+      return `export default ${JSON.stringify(body)};`;
     },
   };
 }

@@ -29,4 +29,6 @@ The post itself, written in Markdown.
 - `title` and `date` are required. Everything else is optional.
 - Images go in `public/assets/blog/` and are referenced as `/assets/blog/<file>`.
 - `draft: true` keeps a post off the live site (it still shows in `npm run dev`).
+- A future `date` schedules the post: it stays off the live site until that morning (about 7 AM
+  Central), then publishes automatically. See "Scheduling posts" in the main README.
 - Add `updated: YYYY-MM-DD` when you make a significant change to an older post.

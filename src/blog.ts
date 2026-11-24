@@ -1,3 +1,5 @@
+import { bodyLoaders, posts as postList } from 'virtual:blog-posts';
+
 /**
  * Blog posts, read from content/blog/*.md at build time (see vite-plugin-blog.ts).
  * Post metadata is bundled for listings; each post's HTML body loads only on its own page.
@@ -19,29 +21,21 @@ export type PostMeta = {
   readingMinutes: number;
 };
 
-// Drafts compile to `null` in production builds (see vite-plugin-blog.ts).
-const metaModules = import.meta.glob<PostMeta | null>(['/content/blog/*.md', '!/content/blog/README.md'], {
-  query: '?meta',
-  import: 'default',
-  eager: true,
-});
 /** A post's rendered HTML plus its table of contents (the post's h2 headings). */
 export type PostBody = { html: string; toc: { id: string; text: string }[] };
 
-const bodyLoaders = import.meta.glob<PostBody>(['/content/blog/*.md', '!/content/blog/README.md'], {
-  query: '?body',
-  import: 'default',
-});
-
-/** Published posts, newest first. Drafts are only included in `npm run dev`. */
-export const posts: PostMeta[] = Object.values(metaModules)
-  .filter((post): post is PostMeta => post !== null && (import.meta.env.DEV || !post.draft))
+/**
+ * Published posts, newest first. Production builds leave out drafts and future-dated posts
+ * (see vite-plugin-blog.ts); `npm run dev` includes them.
+ */
+export const posts: PostMeta[] = postList
+  .slice()
   .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
 
 export const postPath = (post: Pick<PostMeta, 'slug'>) => `/${post.slug}/`;
 
 export function loadPostBody(slug: string): Promise<PostBody> {
-  const load = bodyLoaders[`/content/blog/${slug}.md`];
+  const load = bodyLoaders[slug];
   if (!load) return Promise.reject(new Error(`No post named ${slug}`));
   return load();
 }

@@ -2,10 +2,13 @@
  * Cloudflare Worker for reconms.com.
  *
  * Static pages are served straight from ./dist by Cloudflare's asset handling and never
- * reach this code. Only requests matching `run_worker_first` in wrangler.jsonc (/api/* and
- * /robots.txt) run here.
+ * reach this code. Only requests matching `run_worker_first` in wrangler.jsonc (/api/*,
+ * /robots.txt and the scheduled-posts file) run here.
+ *
+ * It also runs once a day (`triggers.crons` in wrangler.jsonc) to publish scheduled blog posts.
  */
 import { handleContact, handleContactConfig } from './contact';
+import { publishScheduledPosts, SCHEDULE_PATH } from './schedule';
 
 export interface Env {
   ASSETS: Fetcher;
@@ -26,6 +29,11 @@ export interface Env {
   RESEND_API_KEY?: string;
   /** Local development only: "true" logs the email instead of sending it. */
   EMAIL_DRY_RUN?: string;
+  /**
+   * Secret: Workers Builds deploy hook URL (Settings → Builds → Deploy Hooks). The daily check
+   * calls it to rebuild the site when a scheduled blog post's date arrives.
+   */
+  DEPLOY_HOOK_URL?: string;
 }
 
 export default {
@@ -46,9 +54,19 @@ export default {
     if (pathname === '/api/contact') {
       return handleContact(request, env);
     }
+    // Internal file for the daily check; not part of the public site.
+    if (pathname === SCHEDULE_PATH) {
+      return env.ASSETS.fetch(new URL('/404.html', request.url)).then(
+        (page) => new Response(page.body, { status: 404, headers: page.headers }),
+      );
+    }
     if (pathname.startsWith('/api/')) {
       return Response.json({ ok: false, error: 'not_found' }, { status: 404 });
     }
     return env.ASSETS.fetch(request);
+  },
+
+  async scheduled(_controller, env, ctx) {
+    ctx.waitUntil(publishScheduledPosts(env));
   },
 } satisfies ExportedHandler<Env>;
